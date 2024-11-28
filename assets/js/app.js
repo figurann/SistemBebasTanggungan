@@ -103,14 +103,49 @@ if (document.getElementById("resetPasswordForm")) {
     e.preventDefault();
     resetValidation(resetPasswordForm);
 
-    if (!username.value || !newPassword.value || !confirmPassword.value) {
-      if (!username.value) username.classList.add("is-invalid");
-      if (!newPassword.value) newPassword.classList.add("is-invalid");
-      if (!confirmPassword.value) confirmPassword.classList.add("is-invalid");
+    // Validasi semua field kosong
+    if (!username.value && !newPassword.value && !confirmPassword.value) {
+      username.classList.add("is-invalid");
+      newPassword.classList.add("is-invalid");
+      confirmPassword.classList.add("is-invalid");
       showAlert("Peringatan!", "Semua field harus diisi!", "error");
       return;
     }
 
+    // Validasi username kosong
+    if (!username.value) {
+      username.classList.add("is-invalid");
+      showAlert("Peringatan!", "Username harus diisi!", "error");
+      return;
+    }
+
+    // Validasi kedua password kosong
+    if (!newPassword.value && !confirmPassword.value) {
+      newPassword.classList.add("is-invalid");
+      confirmPassword.classList.add("is-invalid");
+      showAlert(
+        "Peringatan!",
+        "Password baru dan Konfirmasi Password harus diisi!",
+        "error"
+      );
+      return;
+    }
+
+    // Validasi password baru kosong
+    if (!newPassword.value) {
+      newPassword.classList.add("is-invalid");
+      showAlert("Peringatan!", "Password baru harus diisi!", "error");
+      return;
+    }
+
+    // Validasi konfirmasi password kosong
+    if (!confirmPassword.value) {
+      confirmPassword.classList.add("is-invalid");
+      showAlert("Peringatan!", "Konfirmasi password harus diisi!", "error");
+      return;
+    }
+
+    // Validasi kecocokan password
     if (newPassword.value !== confirmPassword.value) {
       newPassword.classList.add("is-invalid");
       confirmPassword.classList.add("is-invalid");
@@ -118,6 +153,7 @@ if (document.getElementById("resetPasswordForm")) {
       return;
     }
 
+    // Jika semua validasi berhasil
     showAlert(
       "Berhasil!",
       "Password berhasil direset! Anda akan dialihkan ke halaman login..",
