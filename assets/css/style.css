@@ -1,3 +1,4 @@
+/* ========= Reset dan Base Styles ========= */
 * {
   margin: 0;
   padding: 0;
@@ -13,15 +14,19 @@ body {
   justify-content: center;
 }
 
-/* Login Container - Ukuran lebih compact */
+/* ========= Layout Container ========= */
 .login-container {
   width: 100%;
   max-width: 700px;
   padding: 20px;
   margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
 }
 
-/* Login Box - Padding lebih compact */
 .login-box {
   background: white;
   border-radius: 10px;
@@ -30,14 +35,7 @@ body {
   width: 100%;
 }
 
-/* Logo */
-.logo-img {
-  max-width: 120px;
-  height: auto;
-  margin-bottom: 1.5rem;
-}
-
-/* Header Text Styling */
+/* ========= Typography & Text Styles ========= */
 .login-box h4 {
   font-size: 1.4rem;
   margin-bottom: 0.5rem;
@@ -50,7 +48,14 @@ body {
   margin-bottom: 2rem;
 }
 
-/* Form Elements */
+/* ========= Image Elements ========= */
+.logo-img {
+  max-width: 120px;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+/* ========= Form Elements ========= */
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -90,7 +95,7 @@ body {
   box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
 }
 
-/* Remember Me Checkbox */
+/* ========= Checkbox Styles ========= */
 .form-check {
   margin-bottom: 1.5rem;
 }
@@ -106,7 +111,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* Login Button */
+/* ========= Button Styles ========= */
 .btn-primary {
   padding: 0.75rem;
   font-weight: 500;
@@ -122,16 +127,17 @@ body {
   box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
 }
 
-/* Forgot Password Link */
+/* ========= Link Styles ========= */
 .forgot-password-container {
   margin-top: 1rem;
+  text-align: center;
 }
 
 .forgot-password-text {
   color: #6c757d;
   font-size: 0.9rem;
-  display: inline;
   margin-bottom: 0;
+  display: block;
 }
 
 .forgot-password {
@@ -139,7 +145,6 @@ body {
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.3s ease;
-  display: inline;
 }
 
 .forgot-password:hover {
@@ -147,61 +152,7 @@ body {
   text-decoration: underline;
 }
 
-.password-toggle {
-  display: none;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .login-container {
-    max-width: 90%;
-    padding: 15px;
-  }
-
-  .login-box {
-    padding: 1.75rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .login-container {
-    padding: 10px;
-  }
-
-  .login-box {
-    padding: 1.5rem;
-  }
-
-  .btn-primary {
-    padding: 0.7rem;
-  }
-}
-
-/* Valid Feedback */
-.valid-feedback {
-  display: none;
-  color: #28a745; /* Hijau untuk valid input */
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-}
-
-.was-validated .form-control:valid ~ .valid-feedback {
-  display: block;
-}
-
-/* Invalid Feedback */
-.invalid-feedback {
-  display: none;
-  color: #ff0000; /* Ganti warna merah dengan kuning (#f39c12) */
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-}
-
-.was-validated .form-control:invalid ~ .invalid-feedback {
-  display: block;
-}
-
-/* Alert/Modal Container */
+/* ========= Alert Styles ========= */
 .alert-overlay {
   position: fixed;
   top: 0;
@@ -215,7 +166,6 @@ body {
   z-index: 1000;
 }
 
-/* Alert Box */
 .alert-box {
   background: white;
   border-radius: 8px;
@@ -226,7 +176,19 @@ body {
   animation: slideIn 0.3s ease;
 }
 
-/* Alert Icon */
+.alert-title {
+  font-size: 1.25rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.alert-message {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1.25rem;
+}
+
 .alert-icon {
   width: 48px;
   height: 48px;
@@ -238,38 +200,22 @@ body {
   justify-content: center;
 }
 
-.alert-icon.success {
-  border-color: #52c41a;
-}
-
 .alert-icon svg {
   width: 24px;
   height: 24px;
   fill: #ff4d4f;
 }
 
+.alert-icon.success {
+  border-color: #28a745;
+}
+
 .alert-icon.success svg {
-  fill: #52c41a;
+  fill: #28a745;
 }
 
-/* Alert Title */
-.alert-title {
-  font-size: 1.25rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-/* Alert Message */
-.alert-message {
-  font-size: 0.95rem;
-  color: #666;
-  margin-bottom: 1.25rem;
-}
-
-/* Alert Button */
 .alert-button {
-  background: #e74c3c; /* Ubah menjadi warna merah jika error */
+  background: #1a73e8;
   color: white;
   border: none;
   padding: 0.5rem 2rem;
@@ -279,28 +225,11 @@ body {
   transition: background 0.3s ease;
 }
 
-.alert-button.success {
-  background: #52c41a; /* Ubah menjadi hijau jika sukses */
-}
-
 .alert-button:hover {
-  background: #c0392b; /* Hover effect merah lebih gelap */
+  background: #1557b0;
 }
 
-.alert-button.success:hover {
-  background: #4caf50; /* Hover effect hijau lebih gelap */
-}
-
-.alert-button.error {
-  background: #f44336; /* Warna merah */
-  color: white;
-}
-
-.alert-button.error:hover {
-  background: #d32f2f; /* Warna merah lebih gelap ketika dihover */
-}
-
-/* Animation */
+/* ========= Animations ========= */
 @keyframes slideIn {
   from {
     transform: translateY(-20px);
@@ -312,6 +241,27 @@ body {
   }
 }
 
-.card-header {
-  background-color: #42a5f5;
+/* ========= Form Validation ========= */
+.invalid-feedback {
+  font-size: 12px;
+  margin-top: 0.25rem;
+}
+
+.form-control.is-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+/* ========= Responsive Design ========= */
+@media (max-width: 576px) {
+  .login-box {
+    padding: 25px;
+    margin: 15px;
+  }
+}
+
+@media (max-width: 320px) {
+  .login-box {
+    padding: 20px;
+  }
 }
