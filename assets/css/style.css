@@ -24,29 +24,29 @@ body {
 /* Login Box - Padding lebih compact */
 .login-box {
   background: white;
-  border-radius: 10px; /* Dikurangi dari 15px */
-  padding: 2rem 2.5rem; /* Dikurangi dari 3rem 4rem */
+  border-radius: 10px;
+  padding: 2rem 2.5rem;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
   width: 100%;
 }
 
 /* Logo */
 .logo-img {
-  max-width: 120px; /* Dikurangi dari 200px */
+  max-width: 120px;
   height: auto;
   margin-bottom: 1.5rem;
 }
 
 /* Header Text Styling */
 .login-box h4 {
-  font-size: 1.4rem; /* Dikurangi dari 1.75rem */
+  font-size: 1.4rem;
   margin-bottom: 0.5rem;
   color: #333;
 }
 
 .login-box p {
   color: #666;
-  font-size: 0.95rem; /* Dikurangi dari 1.1rem */
+  font-size: 0.95rem;
   margin-bottom: 2rem;
 }
 
@@ -130,8 +130,8 @@ body {
 .forgot-password-text {
   color: #6c757d;
   font-size: 0.9rem;
-  display: inline; /* Ubah dari block ke inline */
-  margin-bottom: 0; /* Hilangkan margin bottom */
+  display: inline;
+  margin-bottom: 0;
 }
 
 .forgot-password {
@@ -139,12 +139,16 @@ body {
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.3s ease;
-  display: inline; /* Ubah dari inline-block ke inline */
+  display: inline;
 }
 
 .forgot-password:hover {
   color: #0a58ca;
   text-decoration: underline;
+}
+
+.password-toggle {
+  display: none;
 }
 
 /* Responsive Adjustments */
@@ -173,10 +177,22 @@ body {
   }
 }
 
+/* Valid Feedback */
+.valid-feedback {
+  display: none;
+  color: #28a745; /* Hijau untuk valid input */
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.was-validated .form-control:valid ~ .valid-feedback {
+  display: block;
+}
+
 /* Invalid Feedback */
 .invalid-feedback {
   display: none;
-  color: #dc3545;
+  color: #ff0000; /* Ganti warna merah dengan kuning (#f39c12) */
   font-size: 0.85rem;
   margin-top: 0.25rem;
 }
@@ -253,7 +269,7 @@ body {
 
 /* Alert Button */
 .alert-button {
-  background: #1a73e8;
+  background: #e74c3c; /* Ubah menjadi warna merah jika error */
   color: white;
   border: none;
   padding: 0.5rem 2rem;
@@ -264,15 +280,24 @@ body {
 }
 
 .alert-button.success {
-  background: #52c41a;
+  background: #52c41a; /* Ubah menjadi hijau jika sukses */
 }
 
 .alert-button:hover {
-  background: #1557b0;
+  background: #c0392b; /* Hover effect merah lebih gelap */
 }
 
 .alert-button.success:hover {
-  background: #389e0d;
+  background: #4caf50; /* Hover effect hijau lebih gelap */
+}
+
+.alert-button.error {
+  background: #f44336; /* Warna merah */
+  color: white;
+}
+
+.alert-button.error:hover {
+  background: #d32f2f; /* Warna merah lebih gelap ketika dihover */
 }
 
 /* Animation */
@@ -286,12 +311,7 @@ body {
     opacity: 1;
   }
 }
-<<<<<<< HEAD
-=======
 
 .card-header {
-  background-color: #42a5f5; /* Warna biru medium */
+  background-color: #42a5f5;
 }
-
-/*# sourceMappingURL=style.css.map */
->>>>>>> 94dfc9b11e8ab2d77fd3b799586e33264df0a08d
