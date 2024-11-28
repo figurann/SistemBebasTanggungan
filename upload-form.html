@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sistem Bebas Tanggungan - Upload File</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="Themesdesign" />
+
+    <link rel="shortcut icon" href="assets/images/logo_polinema.png" />
+
+    <!-- Bootstrap core CSS -->
+    <link
+      rel="stylesheet"
+      href="assets/css/bootstrap.min.css"
+      type="text/css"
+    />
+
+    <!-- Material Icon -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="assets/css/materialdesignicons.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container py-5">
+        <div class="card shadow-sm">
+            <div class="card-header text-center">
+                <h2 class="text-white">Upload Form Bebas Tanggungan UKT</h2>
+            </div>
+            <div class="card-body">
+                <form action="upload.php" method="post" enctype="multipart/form-data" class="text-center">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">
+                            Silahkan upload dokumen pernyataan bebas tanggungan biaya UKT <br>
+                            Pilih file untuk diunggah</label>
+                        <input class="form-control" type="file" id="formFile" name="uploadedFile" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>

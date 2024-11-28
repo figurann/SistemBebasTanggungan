@@ -1305,4 +1305,9 @@ body {
   justify-content: center;
   width: 100%;
 }
+
+.card-header {
+  background-color: #42a5f5; /* Warna biru medium */
+}
+
 /*# sourceMappingURL=style.css.map */
