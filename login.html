@@ -1,257 +1,137 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sistem Bebas Tanggungan - Login</title>
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="Themesdesign" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Sistem Bebas Tanggungan</title>
 
-    <link rel="shortcut icon" href="assets/images/logo_polinema.png" />
-
-    <!-- Bootstrap core CSS -->
+    <!-- Favicon -->
     <link
-      rel="stylesheet"
-      href="assets/css/bootstrap.min.css"
-      type="text/css"
+      rel="shortcut icon"
+      href="assets/images/logo_polinema.png"
+      type="image/x-icon"
     />
 
-    <!-- Material Icon -->
+    <!-- Bootstrap CSS -->
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      type="text/css"
-      href="assets/css/materialdesignicons.min.css"
+    />
+
+    <!-- Material Icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
     />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/alert_style.css" />
   </head>
-
   <body>
-    <!-- START Auth -->
-    <section class="authentication-box vh-100">
-      <div class="bg-overlay"></div>
-      <div class="container-fluid p-0">
-        <div class="row g-0 align-items-center">
-          <div class="col-lg-3">
-            <div class="bg-white vh-100">
-              <div
-                class="row g-0 justify-content-center d-flex vh-100 align-items-center"
-              >
-                <div class="col-lg-11">
-                  <div class="authen-box">
-                    <div class="text-center pb-4 mb-2">
-                      <img
-                        src="assets/images/logo_polinema.png"
-                        alt=""
-                        height="100"
-                      />
-                    </div>
-                    <div class="auth-contents">
-                      <div class="text-center">
-                        <h4 class="fw-normal">
-                          Selamat Datang di
-                          <span class="fw-bold">Sistem Bebas Tanggungan!</span>
-                        </h4>
-                        <p class="text-muted">
-                          Dimohon untuk Sign In untuk melanjutkan ke Sistem..
-                        </p>
-                      </div>
-                      <form class="custom-form mt-4 pt-2">
-                        <div class="mb-3">
-                          <label class="form-label fw-bold f-15"
-                            >Username</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="email"
-                            placeholder="Masukkan Username"
-                          />
-                        </div>
-                        <div class="mb-3">
-                          <label class="form-label fw-bold f-15"
-                            >Password</label
-                          >
-                          <input
-                            type="password"
-                            class="form-control"
-                            id="password"
-                            placeholder="Masukkan Password"
-                          />
-                        </div>
-                        <div class="mt-4">
-                          <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              class="custom-control-input"
-                              id="customControlInline"
-                            />
-                            <label
-                              class="custom-control-label f-14 text-muted fw-bold"
-                              for="customControlInline"
-                              >Ingat saya</label
-                            >
-                          </div>
-                        </div>
-                        <div class="text-center mt-3">
-                          <button
-                            class="btn btn-success shadow-none w-100 rounded-pill"
-                            type="submit"
-                          >
-                            Log In
-                          </button>
-                        </div>
-                        <hr />
-                        <div class="mt-3 text-center">
-                          <p class="text-muted mb-0">
-                            Lupa Password?
-                            <a
-                              href="forgot_password.html"
-                              class="fw-bold text-success"
-                            >
-                              Ganti Disini!
-                            </a>
-                          </p>
-                        </div>
-                      </form>
-                      <!-- end form -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- end -->
-          <div class="col-lg-9">
-            <div class="row g-0 justify-content-center auth-carousel">
-              <div class="col-lg-7">
-                <div class="d-none d-lg-inline-block">
-                  <div
-                    id="carouselExampleIndicators"
-                    class="carousel slide"
-                    data-bs-ride="carousel"
-                  >
-                    <div class="carousel-indicators">
-                      <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="0"
-                        class="active"
-                        aria-current="true"
-                        aria-label="Slide 1"
-                      ></button>
-                      <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="1"
-                        aria-label="Slide 2"
-                      ></button>
-                      <button
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide-to="2"
-                        aria-label="Slide 3"
-                      ></button>
-                    </div>
-                    <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <div class="testi-contain text-white">
-                          <p class="mt-4 pt-2 lh-lg f-20">
-                            “Dipuji tidak terbang, dihina tidak tumbang, tapi
-                            kalau ditransfer makasih bang 😁”
-                          </p>
-                          <div class="d-flex mt-4 align-items-center">
-                            <div class="testi-img">
-                              <img
-                                src="assets/images/users/user_1.png"
-                                class="me-3 img-fluid avatar-md img-thumbnail rounded-circle"
-                                alt="..."
-                              />
-                            </div>
-                            <div class="flex-1 ms-2">
-                              <h5 class="mt-0 mb-0 f-19">Pak Bambang</h5>
-                              <p class="mb-0 f-15">
-                                <i
-                                  class="mdi mdi-circle text-success f-12 me-2"
-                                ></i
-                                >Admin
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- end -->
-                      <div class="carousel-item">
-                        <div class="testi-contain text-white">
-                          <p class="mt-4 pt-2 lh-lg f-20">
-                            “Baru juga gajian, ngedip bentar.. eh udah hilang”
-                          </p>
-                          <div class="d-flex mt-4 align-items-center">
-                            <div class="testi-img">
-                              <img
-                                src="assets/images/users/user_2.png"
-                                class="me-3 img-fluid avatar-md img-thumbnail rounded-circle"
-                                alt="..."
-                              />
-                            </div>
-                            <div class="flex-1 ms-2">
-                              <h5 class="mt-0 mb-0 f-19">Mas Agus</h5>
-                              <p class="mb-0 f-15">
-                                <i
-                                  class="mdi mdi-circle text-success f-12 me-2"
-                                ></i
-                                >Admin
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- end -->
-                      <div class="carousel-item">
-                        <div class="testi-contain text-white">
-                          <p class="mt-4 pt-2 lh-lg f-20">
-                            “Udah hubungan tanpa status, eh kelakuannya juga
-                            minus”
-                          </p>
-                          <div class="d-flex mt-4 align-items-center">
-                            <div class="testi-img">
-                              <img
-                                src="assets/images/users/user_3.png"
-                                class="me-3 avatar-md img-fluid img-thumbnail rounded-circle"
-                                alt="..."
-                              />
-                            </div>
-                            <div class="flex-1 ms-2">
-                              <h5 class="mt-0 mb-0 f-19">Budi</h5>
-                              <p class="mb-0 f-15">
-                                <i
-                                  class="mdi mdi-circle text-success f-12 me-2"
-                                ></i
-                                >Mahasiswa
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- end -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- end col -->
-            </div>
-          </div>
-          <!-- end col -->
+    <div class="login-container">
+      <div class="login-box">
+        <!-- Logo -->
+        <div class="text-center mb-4">
+          <img
+            src="assets/images/logo_polinema.png"
+            alt="Logo"
+            class="logo-img"
+          />
         </div>
-      </div>
-    </section>
-    <!-- END Auth -->
 
-    <!-- bootstrap -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <!-- CUSTOM JS -->
+        <!-- Header Text -->
+        <div class="text-center mb-4">
+          <h4>
+            <span class="fw-normal">Selamat Datang di</span>
+            <span class="fw-bold">Sistem Bebas Tanggungan!</span>
+          </h4>
+          <p class="text-muted">
+            Silakan Login untuk melanjutkan ke dalam Sistem. Terima kasih!
+          </p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="needs-validation" novalidate>
+          <!-- Username Field -->
+          <div class="form-group mb-3">
+            <label class="form-label">Username</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="material-icons">person</i>
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                name="username"
+                id="username"
+                placeholder="Masukkan Username"
+                required
+              />
+              <div class="invalid-feedback">Username tidak boleh kosong</div>
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group mb-3">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="material-icons">lock</i>
+              </span>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                placeholder="Masukkan Password"
+                required
+              />
+              <span
+                class="input-group-text password-toggle"
+                onclick="togglePassword()"
+              >
+                <i class="material-icons" id="passwordIcon">visibility_off</i>
+              </span>
+              <div class="invalid-feedback">Password tidak boleh kosong</div>
+            </div>
+          </div>
+
+          <!-- Remember Me Checkbox -->
+          <div class="form-check mb-3">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="rememberMe"
+              name="rememberMe"
+            />
+            <label class="form-check-label" for="rememberMe">
+              Ingat saya
+            </label>
+          </div>
+
+          <!-- Login Button -->
+          <button type="submit" class="btn btn-primary w-100 mb-3">
+            Login
+          </button>
+
+          <!-- Forgot Password Link -->
+          <div class="text-center forgot-password-container">
+            <span class="forgot-password-text"
+              >Mau ganti Password karena lupa sama Password sendiri? </span
+            ><a href="forgot_password.html" class="forgot-password"
+              >Ganti disini!</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="assets/js/alert.js"></script>
     <script src="assets/js/app.js"></script>
   </body>
 </html>

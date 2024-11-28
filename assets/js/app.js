@@ -1,23 +1,53 @@
-/* Theme Name: 115
-  Author: Themesdesign
-  Version: 1.0.0
-  File Description: Main JS file of the template
-*/
+// Toggle Password Visibility
+function togglePassword() {
+  const passwordInput = document.getElementById("password");
+  const passwordIcon = document.getElementById("passwordIcon");
 
-// Show password input value
-
-document.getElementById('password-addon').addEventListener('click', function () {
-	var passwordInput = document.getElementById("password-input");
-	if (passwordInput.type === "password") {
-		passwordInput.type = "text";
-	} else {
-		passwordInput.type = "password";
-	}
-});
-
-// two-step move next
-function moveToNext(elem, count) {
-    if (elem.value.length > 0) {
-        document.getElementById("digit" + count + "-input").focus();
-    }
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    passwordIcon.textContent = "visibility";
+  } else {
+    passwordInput.type = "password";
+    passwordIcon.textContent = "visibility_off";
+  }
 }
+
+// Form Validation and Submit
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  // Validasi form
+  if (!username && !password) {
+    showAlert("Peringatan!", "Username dan password harus diisi!");
+    return;
+  }
+
+  if (!username) {
+    showAlert("Peringatan!", "Username harus diisi!");
+    return;
+  }
+
+  if (!password) {
+    showAlert("Peringatan!", "Password harus diisi!");
+    return;
+  }
+
+  // Simulasi login berhasil (ganti dengan logika login yang sebenarnya)
+  if (username === "admin" && password === "admin123") {
+    showAlert(
+      "Berhasil!",
+      "Login sukses. Anda akan dialihkan ke dashboard...",
+      "success"
+    );
+
+    // Redirect ke dashboard setelah 2 detik
+    setTimeout(() => {
+      window.location.href = "dashboard.html"; // Sesuaikan dengan URL dashboard
+    }, 2000);
+  } else {
+    showAlert("Gagal!", "Username atau password salah!");
+  }
+});
