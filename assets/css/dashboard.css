@@ -1,0 +1,138 @@
+/* ========= Base Styles ========= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+/* ========= Layout & Container Styles ========= */
+.container {
+  min-height: calc(100vh - 64px);
+}
+
+.content {
+  padding: 20px 30px;
+}
+
+.main-content {
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 124px);
+}
+
+/* ========= Header & Title Styles ========= */
+.title-section {
+  background-color: white;
+  padding: 20px 30px;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+}
+
+.title-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* ========= Logo Animation Styles ========= */
+.logo {
+  height: 40px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+/* ========= Title Styles ========= */
+.main-title {
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* ========= Navigation Base Styles ========= */
+.horizontal-nav {
+  align-items: center;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  height: 60px;
+  padding: 0 30px;
+  width: 100%;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0 5px;
+  position: relative;
+}
+
+.nav-links li a {
+  color: #333;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  padding: 20px 15px;
+  text-decoration: none;
+}
+
+/* ========= Dropdown Menu Styles ========= */
+.dropdown-content {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  display: none;
+  min-width: 200px;
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #333 !important;
+  display: block;
+  padding: 12px 16px !important;
+  text-decoration: none;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* ========= Interactive States Styles ========= */
+.nav-links li.active a,
+.nav-links li:hover > a {
+  background-color: transparent;
+  color: #000;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ========= Icon Styles ========= */
+.nav-links li a i {
+  margin-right: 8px;
+  color: #808080;
+}
+
+.nav-links li.active a i,
+.nav-links li:hover > a i {
+  color: #666;
+}
