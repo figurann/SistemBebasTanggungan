@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Sistem Bebas Tanggungan</title>
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="../assets/images/logo_polinema.png"
+      type="image/x-icon"
+    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/mahasiswa/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <header class="title-section">
+      <div class="title-container">
+        <a href="../dashboardAkademik.html" class="title-link">
+          <img
+            src="../assets/images/logo_polinema.png"
+            alt="Logo Polinema"
+            class="logo"
+          />
+          <h1 class="main-title">Sistem Bebas Tanggungan</h1>
+        </a>
+      </div>
+
+      <div class="header-icons">
+        <div class="notification-icon">
+          <i class="fas fa-bell"></i>
+          <div class="notification-bubble">3</div>
+        </div>
+
+        <div class="profile-container">
+          <img
+            src=""
+            alt="User Profile"
+            class="profile-pic"
+          />
+          <span class="username">Admin Akademik</span>
+
+          <div class="profile-dropdown">
+            <a href="../forgot_password.html">Reset Password</a>
+            <a href="../login.html" id="logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <nav class="horizontal-nav">
+        <ul class="nav-links">
+          <li class="active">
+            <a href="dashboardAkademik.html"><i class="fas fa-home"></i> Dashboard</a>
+          </li>
+          <li class="dropdown">
+            <a href="#"><i class="fas fa-money-bill"></i>UKT</a>
+            <div class="dropdown-content">
+              <a href="#">Status Pembayaran</a>
+              <a href="#">Verifikasi Dokumen</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="main-content">
+        <div class="content">
+          <!-- Dynamic content will be loaded here -->
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/js/mahasiswa/dashboard.js"></script>
+  </body>
+</html>
