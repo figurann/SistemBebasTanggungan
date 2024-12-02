@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Simulasi validasi username (ganti dengan validasi actual)
-    if (username === "admin") {
+    if (username === "mahasiswa") {
       return {
         success: true,
         message: "Password berhasil direset",

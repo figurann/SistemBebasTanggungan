@@ -4,14 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Sistem Bebas Tanggungan</title>
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="assets/images/logo_polinema.png"
+      type="image/x-icon"
+    />
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="assets/css/dashboard.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
   </head>
+
   <body>
-    <!-- Header Section -->
     <header class="title-section">
       <div class="title-container">
         <a href="dashboard.html" class="title-link">
@@ -23,49 +32,53 @@
           <h1 class="main-title">Sistem Bebas Tanggungan</h1>
         </a>
       </div>
+
+      <div class="header-icons">
+        <div class="notification-icon">
+          <i class="fas fa-bell"></i>
+          <div class="notification-bubble">3</div>
+        </div>
+
+        <div class="profile-container">
+          <img
+            src="assets/images/user_1.jpg"
+            alt="User Profile"
+            class="profile-pic"
+          />
+          <span class="username">mahasiswa</span>
+
+          <div class="profile-dropdown">
+            <a href="forgot_password.html">Reset Password</a>
+            <a href="login.html" id="logout">Logout</a>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <!-- Main Container -->
     <div class="container">
-      <!-- Navigation Section -->
       <nav class="horizontal-nav">
         <ul class="nav-links">
           <li class="active">
-            <a href="#">
-              <i class="fas fa-home"></i>
-              Dashboard
-            </a>
+            <a href="#"><i class="fas fa-home"></i> Dashboard</a>
           </li>
           <li class="dropdown">
-            <a href="#">
-              <i class="fas fa-graduation-cap"></i>
-              Akademik
-            </a>
+            <a href="#"><i class="fas fa-graduation-cap"></i> Akademik</a>
             <div class="dropdown-content">
               <a href="#">Option 1</a>
-              <a href="#">Option 2</a>
-              <a href="#">Option 3</a>
             </div>
           </li>
           <li class="dropdown">
-            <a href="#">
-              <i class="fas fa-money-bill"></i>
-              UKT
-            </a>
+            <a href="#"><i class="fas fa-money-bill"></i> UKT</a>
             <div class="dropdown-content">
               <a href="#">Login</a>
-              <a href="#">Register</a>
-              <a href="#">Recover Password</a>
-              <a href="#">Lock Screen</a>
             </div>
           </li>
         </ul>
       </nav>
 
-      <!-- Main Content -->
       <main class="main-content">
         <div class="content">
-          <!-- Content will be added here later -->
+          <!-- Dynamic content will be loaded here -->
         </div>
       </main>
     </div>

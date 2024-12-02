@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Simulasi kredensial
-    if (username === "admin" && password === "admin123") {
+    if (username === "mahasiswa" && password === "mahasiswa") {
       return {
         success: true,
         token: "dummy_token_" + Math.random(),
