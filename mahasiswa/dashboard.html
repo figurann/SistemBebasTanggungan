@@ -14,6 +14,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/mahasiswa/dashboard.css" />
+    <link rel="stylesheet" href="../assets/css/mahasiswa/card.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -23,7 +24,7 @@
   <body>
     <header class="title-section">
       <div class="title-container">
-        <a href="../dashboard.html" class="title-link">
+        <a href="../mahasiswa/dashboard.html" class="title-link">
           <img
             src="../assets/images/logo_polinema.png"
             alt="Logo Polinema"
@@ -81,11 +82,14 @@
 
       <main class="main-content">
         <div class="content">
-          <!-- Dynamic content will be loaded here -->
+          <div id="card-container">
+            <!-- Card components will be dynamically inserted here -->
+          </div>
         </div>
       </main>
     </div>
 
     <script src="../assets/js/mahasiswa/dashboard.js"></script>
+    <script src="../assets/js/mahasiswa/card.js"></script>
   </body>
 </html>

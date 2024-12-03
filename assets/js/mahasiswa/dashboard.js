@@ -100,7 +100,9 @@ function initializeNotificationHandlers({ notificationIcon }) {
 }
 
 function handleNotificationClick() {
+  // Implementasi notifikasi bisa ditambahkan di sini
   console.log("Notification clicked");
+  // Contoh: Bisa menampilkan modal atau dropdown notifikasi
 }
 
 // ========= Logout Handlers =========
@@ -132,6 +134,7 @@ function showLogoutConfirmation() {
 
   document.body.appendChild(modal);
 
+  // Event listener untuk tombol Tidak
   document.getElementById("cancel-logout").addEventListener("click", () => {
     modal.classList.add("modal-fade-out");
     setTimeout(() => {
@@ -139,14 +142,16 @@ function showLogoutConfirmation() {
     }, 300);
   });
 
+  // Event listener untuk tombol Iya
   document.getElementById("confirm-logout").addEventListener("click", () => {
     modal.classList.add("modal-fade-out");
     setTimeout(() => {
       document.body.removeChild(modal);
-      window.location.href = "login.html";
+      window.location.href = "../login.html";
     }, 300);
   });
 
+  // Animasi fade in
   setTimeout(() => modal.classList.add("modal-fade-in"), 0);
 }
 
@@ -176,4 +181,17 @@ function handleGlobalError(msg, url, lineNo, columnNo, error) {
     )}`
   );
   return false;
+}
+
+// ========= Utility Functions =========
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }
