@@ -22,6 +22,7 @@
   </head>
 
   <body>
+    <!-- Header Section -->
     <header class="title-section">
       <div class="title-container">
         <a href="../mahasiswa/dashboard.html" class="title-link">
@@ -35,19 +36,13 @@
       </div>
 
       <div class="header-icons">
-        <div class="notification-icon">
-          <i class="fas fa-bell"></i>
-          <div class="notification-bubble">3</div>
-        </div>
-
         <div class="profile-container">
           <img
             src="../assets/images/mahasiswa/mahasiswa_1.jpg"
             alt="User Profile"
             class="profile-pic"
           />
-          <span class="username">mahasiswa</span>
-
+          <span class="username">2341760168</span>
           <div class="profile-dropdown">
             <a href="../forgot_password.html">Reset Password</a>
             <a href="../login.html" id="logout">Logout</a>
@@ -56,7 +51,9 @@
       </div>
     </header>
 
+    <!-- Main Container -->
     <div class="container">
+      <!-- Navigation -->
       <nav class="horizontal-nav">
         <ul class="nav-links">
           <li class="active">
@@ -80,113 +77,101 @@
         </ul>
       </nav>
 
+      <!-- Main Content -->
       <main class="main-content">
         <div class="content">
           <div id="card-container">
-            <!-- Card for Laporan Tugas Akhir -->
-            <div class="dashboard-card">
-              <div class="card-icon">
-                <img
-                  src="../assets/images/mahasiswa/gambar_LaporanTugasAkhir.png"
-                  alt="Laporan Tugas Akhir"
-                  class="icon-image"
-                />
-              </div>
-              <h3 class="card-title">Laporan Tugas Akhir</h3>
-              <div class="card-content">
-                <p>Upload dokumen Tugas Akhir Anda dan pantau statusnya.</p>
-                <div class="progress-container">
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 70%"></div>
-                  </div>
-                </div>
-                <span class="card-status pending">Pending</span>
-              </div>
-              <div class="card-footer">
-                <span class="card-date">3 Desember 2024</span>
-                <button class="card-action">Upload</button>
-              </div>
-            </div>
-
-            <!-- Card for Biaya UKT -->
-            <div class="dashboard-card">
-              <div class="card-icon">
-                <img
-                  src="../assets/images/mahasiswa/gambar_BiayaUKT.png"
-                  alt="Biaya UKT"
-                  class="icon-image"
-                />
-              </div>
-              <h3 class="card-title">Biaya UKT</h3>
-              <div class="card-content">
-                <p>Informasi mengenai biaya UKT dan status pembayarannya.</p>
-                <div class="progress-container">
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%"></div>
-                  </div>
-                </div>
-                <span class="card-status approved">Approved</span>
-              </div>
-              <div class="card-footer">
-                <span class="card-date">1 Desember 2024</span>
-                <button class="card-action">Lihat</button>
-              </div>
-            </div>
-
-            <!-- Card for Surat Bebas Kompensasi -->
-            <div class="dashboard-card">
-              <div class="card-icon">
-                <img
-                  src="../assets/images/mahasiswa/gambar_SuratBebasKompensasi.png"
-                  alt="Surat Bebas Kompensasi"
-                  class="icon-image"
-                />
-              </div>
-              <h3 class="card-title">Surat Bebas Kompensasi</h3>
-              <div class="card-content">
-                <p>Details about your compensation clearance letter status.</p>
-                <div class="progress-container">
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 60%"></div>
-                  </div>
-                </div>
-                <span class="card-status pending">Pending</span>
-              </div>
-              <div class="card-footer">
-                <span class="card-date">2 Desember 2024</span>
-                <button class="card-action">Verifikasi</button>
-              </div>
-            </div>
-
-            <!-- Card for Surat Bebas Peminjaman Buku -->
-            <div class="dashboard-card">
-              <div class="card-icon">
-                <img
-                  src="../assets/images/mahasiswa/gambar_SuratBebasPeminjamanBuku.png"
-                  alt="Surat Bebas Peminjaman Buku"
-                  class="icon-image"
-                />
-              </div>
-              <h3 class="card-title">Surat Bebas Peminjaman Buku</h3>
-              <div class="card-content">
-                <p>Periksa status surat bebas peminjaman buku Anda.</p>
-                <div class="progress-container">
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: 30%"></div>
-                  </div>
-                </div>
-                <span class="card-status pending">Pending</span>
-              </div>
-              <div class="card-footer">
-                <span class="card-date">4 Desember 2024</span>
-                <button class="card-action">Upload</button>
-              </div>
-            </div>
+            <!-- Cards will be dynamically inserted here by JavaScript -->
           </div>
         </div>
       </main>
     </div>
 
+    <!-- Modal Templates -->
+    <template id="uploadModalTemplate">
+      <div class="modal-overlay">
+        <div class="modal">
+          <div class="modal-content">
+            <h3>Upload Dokumen</h3>
+            <form id="uploadForm" class="upload-form">
+              <div class="form-group">
+                <label for="documentFile">Pilih File:</label>
+                <input
+                  type="file"
+                  id="documentFile"
+                  class="file-input"
+                  required
+                />
+              </div>
+              <div class="modal-buttons">
+                <button
+                  type="button"
+                  class="modal-button modal-button-secondary"
+                >
+                  Batal
+                </button>
+                <button type="submit" class="modal-button modal-button-primary">
+                  Upload
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="detailModalTemplate">
+      <div class="modal-overlay">
+        <div class="modal">
+          <div class="modal-content">
+            <h3>Detail Dokumen</h3>
+            <div class="detail-content">
+              <!-- Detail content will be dynamically inserted -->
+            </div>
+            <div class="modal-buttons">
+              <button class="modal-button modal-button-secondary">Tutup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="verificationModalTemplate">
+      <div class="modal-overlay">
+        <div class="modal">
+          <div class="modal-content">
+            <h3>Status Verifikasi</h3>
+            <div class="verification-content">
+              <p>Status verifikasi sedang dalam proses.</p>
+              <p>Silahkan cek kembali nanti.</p>
+            </div>
+            <div class="modal-buttons">
+              <button class="modal-button modal-button-secondary">Tutup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Loading Indicator Template -->
+    <template id="loadingTemplate">
+      <div class="loading-overlay">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+          <span>Memuat...</span>
+        </div>
+      </div>
+    </template>
+
+    <!-- Error Message Template -->
+    <template id="errorTemplate">
+      <div class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        <span class="error-text"></span>
+      </div>
+    </template>
+
+    <!-- Scripts -->
     <script src="../assets/js/mahasiswa/dashboard.js"></script>
     <script src="../assets/js/mahasiswa/card.js"></script>
   </body>

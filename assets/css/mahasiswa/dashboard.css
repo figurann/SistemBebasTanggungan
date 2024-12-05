@@ -54,8 +54,11 @@
 
 .main-title {
   color: #333;
-  font-size: 24px;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  height: 40px;
+  line-height: 40px;
 }
 
 /* ========= Navigation Styles ========= */
@@ -92,8 +95,12 @@
   /* Transisi halus */
 }
 
+.nav-links li a i {
+  margin-right: 10px; /* Menambah spasi antara icon dan teks */
+}
+
 .nav-links li.active a,
-.nav-links li:hover>a {
+.nav-links li:hover > a {
   background-color: transparent;
   color: #000;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -102,7 +109,7 @@
 }
 
 .nav-links li.active a i,
-.nav-links li:hover>a i {
+.nav-links li:hover > a i {
   color: #666;
 }
 
@@ -129,31 +136,9 @@
   display: block;
 }
 
-/* ========= Header Icons & Notification Styles ========= */
+/* ========= Header Icons ========= */
 .header-icons {
   display: flex;
-  align-items: center;
-}
-
-.notification-icon {
-  position: relative;
-  margin-right: 20px;
-  cursor: pointer;
-  font-size: 30px;
-}
-
-.notification-bubble {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
 
