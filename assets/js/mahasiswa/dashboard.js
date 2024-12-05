@@ -32,6 +32,12 @@ function initializeApp() {
 // ========= Navigation Handlers =========
 function initializeNavigationHandlers({ navLinks }) {
   navLinks.forEach((link) => {
+    link.addEventListener("mouseover", function () {
+      this.classList.add("hover"); // Tindakan hover
+    });
+    link.addEventListener("mouseout", function () {
+      this.classList.remove("hover"); // Menghapus kelas hover
+    });
     link.addEventListener("click", function (e) {
       handleNavigation(e, this, navLinks);
     });
@@ -100,59 +106,20 @@ function initializeNotificationHandlers({ notificationIcon }) {
 }
 
 function handleNotificationClick() {
-  // Implementasi notifikasi bisa ditambahkan di sini
-  console.log("Notification clicked");
-  // Contoh: Bisa menampilkan modal atau dropdown notifikasi
+  console.log("Menampilkan notifikasi...");
+  // Implementasi logika untuk menampilkan notifikasi, jika ada
 }
 
-// ========= Logout Handlers =========
+// ========= Logout Handler =========
 function initializeLogoutHandler({ logoutButton }) {
-  logoutButton?.addEventListener("click", (e) => {
-    e.preventDefault();
-    handleLogout();
-  });
+  logoutButton.addEventListener("click", handleLogout);
 }
 
-function handleLogout() {
-  showLogoutConfirmation();
-}
-
-function showLogoutConfirmation() {
-  const modal = document.createElement("div");
-  modal.className = "modal-overlay";
-  modal.innerHTML = `
-    <div class="modal">
-      <div class="modal-content">
-        <p>Apakah kamu mau Logout dari Sistem Bebas Tanggungan?</p>
-        <div class="modal-buttons">
-          <button class="modal-button modal-button-secondary" id="cancel-logout">Tidak</button>
-          <button class="modal-button modal-button-primary" id="confirm-logout">Iya</button>
-        </div>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(modal);
-
-  // Event listener untuk tombol Tidak
-  document.getElementById("cancel-logout").addEventListener("click", () => {
-    modal.classList.add("modal-fade-out");
-    setTimeout(() => {
-      document.body.removeChild(modal);
-    }, 300);
-  });
-
-  // Event listener untuk tombol Iya
-  document.getElementById("confirm-logout").addEventListener("click", () => {
-    modal.classList.add("modal-fade-out");
-    setTimeout(() => {
-      document.body.removeChild(modal);
-      window.location.href = "../login.html";
-    }, 300);
-  });
-
-  // Animasi fade in
-  setTimeout(() => modal.classList.add("modal-fade-in"), 0);
+function handleLogout(event) {
+  event.preventDefault();
+  // Logika logout, bisa menghapus sesi atau mengalihkan ke halaman login
+  console.log("Logout...");
+  window.location.href = "../login.html"; // Ubah sesuai dengan URL logout
 }
 
 // ========= Window Event Handlers =========

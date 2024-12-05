@@ -2,92 +2,80 @@
 const dashboardCards = [
   {
     id: 1,
-    title: "Status Tugas Akhir",
-    icon: "fa-book",
-    iconBg: "#e3f2fd",
-    iconColor: "#1976d2",
-    content: "Upload dokumen Tugas Akhir",
+    title: "Laporan Tugas Akhir",
+    content: "Upload dokumen Tugas Akhir Anda dan pantau statusnya.",
     status: "pending",
-    progress: 30,
+    progress: 70,
     date: "2024-12-03",
     action: "Upload",
+    image: "../assets/images/mahasiswa/gambar_LaporanTugasAkhir.png",
   },
   {
     id: 2,
-    title: "Pembayaran UKT",
-    icon: "fa-money-bill",
-    iconBg: "#e8f5e9",
-    iconColor: "#2e7d32",
-    content: "Semester Genap 2024/2025",
+    title: "Biaya UKT",
+    content: "Informasi mengenai biaya UKT dan status pembayarannya.",
     status: "approved",
     progress: 100,
     date: "2024-12-01",
     action: "Lihat",
+    image: "../assets/images/mahasiswa/gambar_BiayaUKT.png",
   },
   {
     id: 3,
-    title: "Bebas Perpustakaan",
-    icon: "fa-book-reader",
-    iconBg: "#fff3e0",
-    iconColor: "#f57c00",
-    content: "Verifikasi peminjaman buku",
+    title: "Surat Bebas Kompensasi",
+    content: "Details about your compensation clearance letter status.",
     status: "pending",
     progress: 60,
     date: "2024-12-02",
     action: "Verifikasi",
+    image: "../assets/images/mahasiswa/gambar_SuratBebasKompensasi.png",
   },
   {
     id: 4,
-    title: "Pengumpulan Berkas",
-    icon: "fa-folder",
-    iconBg: "#f3e5f5",
-    iconColor: "#7b1fa2",
-    content: "Dokumen persyaratan wisuda",
+    title: "Surat Bebas Peminjaman Buku",
+    content: "Periksa status surat bebas peminjaman buku Anda.",
     status: "pending",
-    progress: 45,
+    progress: 30,
     date: "2024-12-04",
     action: "Upload",
+    image: "../assets/images/mahasiswa/gambar_SuratBebasPeminjamanBuku.png",
   },
 ];
 
 // Fungsi untuk membuat kartu dashboard
 function createDashboardCard(cardData) {
-  return `
-        <div class="dashboard-card">
-            <div class="card-header">
-                <div class="card-icon" style="background-color: ${
-                  cardData.iconBg
-                }">
-                    <i class="fas ${cardData.icon}" style="color: ${
-    cardData.iconColor
-  }"></i>
-                </div>
-                <h3 class="card-title">${cardData.title}</h3>
-            </div>
-            <div class="card-content">
-                <p>${cardData.content}</p>
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${
-                          cardData.progress
-                        }%; background-color: ${cardData.iconColor}"></div>
-                    </div>
-                </div>
-                <span class="card-status status-${cardData.status}">
-                    ${
-                      cardData.status.charAt(0).toUpperCase() +
-                      cardData.status.slice(1)
-                    }
-                </span>
-            </div>
-            <div class="card-footer">
-                <span class="card-date">${formatDate(cardData.date)}</span>
-                <button class="card-action" onclick="handleCardAction(${
-                  cardData.id
-                })">${cardData.action}</button>
-            </div>
-        </div>
-    `;
+  return `  
+      <div class="dashboard-card">  
+          <div class="card-icon">  
+              <img src="${cardData.image}" alt="${
+    cardData.title
+  }" class="icon-image" />  
+          </div>  
+          <h3 class="card-title">${cardData.title}</h3>  
+          <div class="card-content">  
+              <p>${cardData.content}</p>  
+              <div class="progress-container">  
+                  <div class="progress-bar">  
+                      <div class="progress-fill" style="width: ${
+                        cardData.progress
+                      }%;"></div>  
+                  </div>  
+              </div>  
+              <span class="card-status status-${cardData.status}">  
+                  ${
+                    cardData.status.charAt(0).toUpperCase() +
+                    cardData.status.slice(1)
+                  }  
+              </span>  
+          </div>  
+          <div class="card-footer">  
+              <span class="card-date">${formatDate(cardData.date)}</span>  
+              <button class="card-action" onclick="handleCardAction(${
+                cardData.id
+              })">${cardData.action}</button>  
+          </div>  
+      </div>  
+  `;
 }
 
 // Fungsi untuk memformat tanggal
@@ -120,20 +108,20 @@ function handleCardAction(cardId) {
 function showUploadModal(title) {
   const modal = document.createElement("div");
   modal.className = "modal-overlay";
-  modal.innerHTML = `
-        <div class="modal">
-            <div class="modal-content">
-                <h3>Upload Dokumen - ${title}</h3>
-                <form id="uploadForm">
-                    <input type="file" class="file-input" required>
-                    <div class="modal-buttons">
-                        <button type="button" class="modal-button modal-button-secondary" onclick="closeModal(this)">Batal</button>
-                        <button type="submit" class="modal-button modal-button-primary">Upload</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    `;
+  modal.innerHTML = `  
+      <div class="modal">  
+          <div class="modal-content">  
+              <h3>Upload Dokumen - ${title}</h3>  
+              <form id="uploadForm">  
+                  <input type="file" class="file-input" required>  
+                  <div class="modal-buttons">  
+                      <button type="button" class="modal-button modal-button-secondary" onclick="closeModal(this)">Batal</button>  
+                      <button type="submit" class="modal-button modal-button-primary">Upload</button>  
+                  </div>  
+              </form>  
+          </div>  
+      </div>  
+  `;
   document.body.appendChild(modal);
 
   // Handle form submission
@@ -150,21 +138,21 @@ function showUploadModal(title) {
 function showDetailModal(card) {
   const modal = document.createElement("div");
   modal.className = "modal-overlay";
-  modal.innerHTML = `
-        <div class="modal">
-            <div class="modal-content">
-                <h3>Detail ${card.title}</h3>
-                <div class="detail-content">
-                    <p><strong>Status:</strong> ${card.status}</p>
-                    <p><strong>Progress:</strong> ${card.progress}%</p>
-                    <p><strong>Tanggal:</strong> ${formatDate(card.date)}</p>
-                </div>
-                <div class="modal-buttons">
-                    <button class="modal-button modal-button-secondary" onclick="closeModal(this)">Tutup</button>
-                </div>
-            </div>
-        </div>
-    `;
+  modal.innerHTML = `  
+      <div class="modal">  
+          <div class="modal-content">  
+              <h3>Detail ${card.title}</h3>  
+              <div class="detail-content">  
+                  <p><strong>Status:</strong> ${card.status}</p>  
+                  <p><strong>Progress:</strong> ${card.progress}%</p>  
+                  <p><strong>Tanggal:</strong> ${formatDate(card.date)}</p>  
+              </div>  
+              <div class="modal-buttons">  
+                  <button class="modal-button modal-button-secondary" onclick="closeModal(this)">Tutup</button>  
+              </div>  
+          </div>  
+      </div>  
+  `;
   document.body.appendChild(modal);
   setTimeout(() => modal.classList.add("modal-fade-in"), 0);
 }
@@ -173,20 +161,20 @@ function showDetailModal(card) {
 function showVerificationModal(card) {
   const modal = document.createElement("div");
   modal.className = "modal-overlay";
-  modal.innerHTML = `
-        <div class="modal">
-            <div class="modal-content">
-                <h3>Verifikasi ${card.title}</h3>
-                <div class="detail-content">
-                    <p>Status verifikasi sedang dalam proses.</p>
-                    <p>Silahkan cek kembali nanti.</p>
-                </div>
-                <div class="modal-buttons">
-                    <button class="modal-button modal-button-secondary" onclick="closeModal(this)">Tutup</button>
-                </div>
-            </div>
-        </div>
-    `;
+  modal.innerHTML = `  
+      <div class="modal">  
+          <div class="modal-content">  
+              <h3>Verifikasi ${card.title}</h3>  
+              <div class="detail-content">  
+                  <p>Status verifikasi sedang dalam proses.</p>  
+                  <p>Silahkan cek kembali nanti.</p>  
+              </div>  
+              <div class="modal-buttons">  
+                  <button class="modal-button modal-button-secondary" onclick="closeModal(this)">Tutup</button>  
+              </div>  
+          </div>  
+      </div>  
+  `;
   document.body.appendChild(modal);
   setTimeout(() => modal.classList.add("modal-fade-in"), 0);
 }

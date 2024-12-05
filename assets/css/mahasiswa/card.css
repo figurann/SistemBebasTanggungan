@@ -6,33 +6,29 @@
 }
 
 .dashboard-card {
-  background: white;
+  background: #ffffff;
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dashboard-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
 .card-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   display: flex;
-  align-items: center;
+  /* Agar gambar berada di tengah */
   justify-content: center;
-  margin-right: 15px;
-  font-size: 20px;
+  /* Memastikan gambar berada di tengah horizontal */
+  margin-bottom: 15px;
+  /* Menambah jarak antara gambar dan judul */
+}
+
+.card-icon img {
+  width: 60%;
+  /* Ukuran gambar, sesuaikan sesuai kebutuhan */
+  height: auto;
+  /* Menjaga aspek rasio */
+  max-width: 150px;
+  /* Batas maksimum ukuran lebar */
 }
 
 .card-title {
@@ -41,70 +37,32 @@
   color: #333;
 }
 
+
 .card-content {
   margin-bottom: 15px;
-}
-
-.card-status {
   font-size: 14px;
-  padding: 5px 10px;
-  border-radius: 15px;
-  display: inline-block;
-}
-
-.status-pending {
-  background-color: #fff3cd;
-  color: #856404;
-}
-
-.status-approved {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.status-rejected {
-  background-color: #f8d7da;
-  color: #721c24;
+  color: #555;
 }
 
 .card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
-}
-
-.card-date {
-  font-size: 13px;
-  color: #666;
-}
-
-.card-action {
-  padding: 8px 15px;
-  border-radius: 5px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.card-action:hover {
-  background-color: #0056b3;
+  display: flex;
+  flex-direction: column;
 }
 
 .progress-container {
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
 .progress-bar {
-  width: 100%;
+  flex: 1;
   height: 8px;
   background-color: #e9ecef;
   border-radius: 4px;
   overflow: hidden;
+  margin-right: 10px;
 }
 
 .progress-fill {
@@ -113,20 +71,41 @@
   transition: width 0.3s ease;
 }
 
-/* Modal styles for file upload */
-.file-input {
-  width: 100%;
-  padding: 10px;
-  margin: 15px 0;
-  border: 2px dashed #ddd;
+.card-status {
+  font-size: 14px;
+  color: #666;
+}
+
+.card-status.pending {
+  color: #ff5722;
+  /* Warna oranye untuk 'Pending' */
+}
+
+.card-status.approved {
+  color: #4caf50;
+  /* Warna hijau untuk 'Approved' */
+}
+
+.card-date {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+  /* Tambahkan margin untuk jarak yang lebih baik */
+}
+
+.card-action {
+  padding: 8px 12px;
+  /* Kontrol padding tombol */
   border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  /* Tambah margin atas untuk jarak */
 }
 
-.detail-content {
-  text-align: left;
-  margin: 15px 0;
-}
-
-.detail-content p {
-  margin: 10px 0;
+.card-action:hover {
+  background-color: #0056b3;
 }
