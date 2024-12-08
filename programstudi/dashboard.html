@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Sistem Bebas Tanggungan</title>
+
     <!-- Favicon -->
     <link
       rel="shortcut icon"
       href="../assets/images/logo_polinema.png"
       type="image/x-icon"
     />
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/mahasiswa/dashboard.css" />
     <link
@@ -17,12 +19,15 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
     <style>
-      /* Add any custom CSS styles for layout */
+      /* Styling untuk container fitur */
       .container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
         padding: 20px;
+      }
+
+      .features {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap; /* Pastikan fitur menumpuk pada layar kecil */
       }
 
       .feature-container {
@@ -30,6 +35,15 @@
         border-radius: 8px;
         padding: 20px;
         background-color: #f9f9f9;
+        flex: 1 1 300px; /* Menjamin fitur memiliki lebar minimum */
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .feature-container i {
+        font-size: 40px;
+        color: #007bff;
+        margin-bottom: 15px;
       }
 
       .feature-container h2 {
@@ -59,7 +73,7 @@
   <body>
     <header class="title-section">
       <div class="title-container">
-        <a href="dashboard.html" class="title-link">
+        <a href="../dashboardProdi.html" class="title-link">
           <img
             src="../assets/images/logo_polinema.png"
             alt="Logo Polinema"
@@ -76,7 +90,11 @@
         </div>
 
         <div class="profile-container">
-          <img src="" alt="User Profile" class="profile-pic" />
+          <img
+            src=""
+            alt="User Profile"
+            class="profile-pic"
+          />
           <span class="username">Admin Prodi</span>
 
           <div class="profile-dropdown">
@@ -87,15 +105,40 @@
       </div>
     </header>
 
-      <div class="feature-container">
-        <h2>Verifikasi Dokumen Mahasiswa</h2>
-        <a href="#" class="btn">Masuk ke Verifikasi</a>
-      </div>
+    <div class="container">
+      <nav class="horizontal-nav">
+        <ul class="nav-links">
+          <li class="active">
+            <a href="dashboardProdi.html"><i class="fas fa-home"></i> Dashboard</a>
+          </li>
+          <li class="dropdown">
+            <a href="#"><i class="fas fa-briefcase"></i> Tugas Akhir</a>
+            <div class="dropdown-content">
+              <a href="#">Verifikasi Dokumen</a>
+              <a href="#">Status Tanggungan</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
 
-      <div class="feature-container">
-        <h2>Status Tanggungan Mahasiswa</h2>
-        <a href="#" class="btn">Lihat Status</a>
-      </div>
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="features">
+          <!-- Feature 1: Verifikasi Dokumen Mahasiswa -->
+          <div class="feature-container">
+            <i class="fas fa-check-circle"></i> <!-- Icon for Verifikasi Dokumen -->
+            <h2>Verifikasi Dokumen Mahasiswa</h2>
+            <a href="#" class="btn">Masuk ke Verifikasi</a>
+          </div>
+
+          <!-- Feature 2: Status Tanggungan Mahasiswa -->
+          <div class="feature-container">
+            <i class="fas fa-file-invoice"></i> <!-- Icon for Status Tanggungan -->
+            <h2>Status Tanggungan Mahasiswa</h2>
+            <a href="#" class="btn">Lihat Status</a>
+          </div>
+        </div>
+      </main>
     </div>
 
     <script src="../assets/js/mahasiswa/dashboard.js"></script>

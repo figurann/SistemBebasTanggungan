@@ -18,6 +18,57 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <style>
+      /* Add custom CSS styles */
+      .container {
+        padding: 20px;
+      }
+
+      /* Flex container for features */
+      .features {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap; /* Ensures features stack on smaller screens */
+      }
+
+      .feature-container {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        flex: 1 1 300px; /* Ensures each feature box grows but maintains a minimum width */
+        text-align: center;
+        box-sizing: border-box; /* Include padding in width calculation */
+      }
+
+      .feature-container i {
+        font-size: 40px;
+        color: #007bff;
+        margin-bottom: 15px;
+      }
+
+      .feature-container h2 {
+        margin-bottom: 10px;
+      }
+
+      .feature-container p {
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 4px;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
   </head>
 
   <body>
@@ -56,13 +107,14 @@
     </header>
 
     <div class="container">
+      <!-- Navigation -->
       <nav class="horizontal-nav">
         <ul class="nav-links">
           <li class="active">
             <a href="dashboardAkademik.html"><i class="fas fa-home"></i> Dashboard</a>
           </li>
           <li class="dropdown">
-            <a href="#"><i class="fas fa-money-bill"></i>UKT</a>
+            <a href="#"><i class="fas fa-money-bill"></i> UKT</a>
             <div class="dropdown-content">
               <a href="#">Status Pembayaran</a>
               <a href="#">Verifikasi Dokumen</a>
@@ -71,9 +123,22 @@
         </ul>
       </nav>
 
+      <!-- Main Content -->
       <main class="main-content">
-        <div class="content">
-          <!-- Dynamic content will be loaded here -->
+        <div class="features">
+          <!-- Feature 1: Status Pembayaran -->
+          <div class="feature-container">
+            <i class="fas fa-credit-card"></i> <!-- Icon for Status Pembayaran -->
+            <h2>Status Pembayaran</h2>
+            <a href="#" class="btn">Lihat Status</a>
+          </div>
+
+          <!-- Feature 2: Verifikasi Dokumen -->
+          <div class="feature-container">
+            <i class="fas fa-check-circle"></i> <!-- Icon for Verifikasi Dokumen -->
+            <h2>Verifikasi Dokumen</h2>
+            <a href="#" class="btn">Masuk ke Verifikasi</a>
+          </div>
         </div>
       </main>
     </div>
