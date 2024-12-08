@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Redirect setelah 2 detik
         setTimeout(() => {
-          window.location.href = "dashboard.html";
+          window.location.href = "mahasiswa/dashboard_mhs.html";
         }, 2000);
       } else {
         showAlert(

@@ -4,26 +4,62 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Sistem Bebas Tanggungan</title>
-
     <!-- Favicon -->
     <link
       rel="shortcut icon"
       href="../assets/images/logo_polinema.png"
       type="image/x-icon"
     />
-
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../assets/css/mahasiswa/dashboard.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <style>
+      /* Add any custom CSS styles for layout */
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .feature-container {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #f9f9f9;
+      }
+
+      .feature-container h2 {
+        margin-bottom: 10px;
+      }
+
+      .feature-container p {
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 4px;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
   </head>
 
   <body>
     <header class="title-section">
       <div class="title-container">
-        <a href="../dashboardProdi.html" class="title-link">
+        <a href="dashboard.html" class="title-link">
           <img
             src="../assets/images/logo_polinema.png"
             alt="Logo Polinema"
@@ -40,11 +76,7 @@
         </div>
 
         <div class="profile-container">
-          <img
-            src=""
-            alt="User Profile"
-            class="profile-pic"
-          />
+          <img src="" alt="User Profile" class="profile-pic" />
           <span class="username">Admin Prodi</span>
 
           <div class="profile-dropdown">
@@ -55,28 +87,15 @@
       </div>
     </header>
 
-    <div class="container">
-      <nav class="horizontal-nav">
-        <ul class="nav-links">
-          <li class="active">
-            <a href="dashboardProdi.html"><i class="fas fa-home"></i> Dashboard</a>
-          </li>
-          <li class="dropdown">
-            <a href="#"><i class="fas fa-briefcase"></i>Tugas Akhir</a>
-            <div class="dropdown-content">
-              <a href="#">Pengumpulan </a>
-              <a href="#">Verifikasi Dokumen</a>
-              <a href="#">Status Tanggungan</a>
-            </div>
-          </li>
-        </ul>
-      </nav>
+      <div class="feature-container">
+        <h2>Verifikasi Dokumen Mahasiswa</h2>
+        <a href="#" class="btn">Masuk ke Verifikasi</a>
+      </div>
 
-      <main class="main-content">
-        <div class="content">
-          <!-- Dynamic content will be loaded here -->
-        </div>
-      </main>
+      <div class="feature-container">
+        <h2>Status Tanggungan Mahasiswa</h2>
+        <a href="#" class="btn">Lihat Status</a>
+      </div>
     </div>
 
     <script src="../assets/js/mahasiswa/dashboard.js"></script>
