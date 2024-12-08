@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status Tanggungan - Sistem Bebas Tanggungan</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+  <style>
+    /* Basic reset */
+    body, h1, table {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    /* Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    td {
+      background-color: #fafafa;
+    }
+
+    .status-bebas {
+      color: green;
+    }
+
+    .status-tanggungan {
+      color: red;
+    }
+
+    /* Button Styles */
+    .btn {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      table {
+        font-size: 14px;
+      }
+      th, td {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Status Tanggungan Mahasiswa</h1>
+  </header>
+
+  <main>
+    <!-- Container for Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Nama Mahasiswa</th>
+            <th>Status Tanggungan</th>
+            <th>Detail Tanggungan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Row 1: Mahasiswa A -->
+          <tr>
+            <td>Mahasiswa A</td>
+            <td class="status-bebas">Sudah Bebas</td>
+            <td>Semua dokumen sudah diverifikasi dan tidak ada tanggungan.</td>
+          </tr>
+          <!-- Row 2: Mahasiswa B -->
+          <tr>
+            <td>Mahasiswa B</td>
+            <td class="status-tanggungan">Masih Tanggungan</td>
+            <td>Dokumen belum lengkap, verifikasi dokumen diperlukan.</td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+
+      <!-- Add button to view more or manage statuses -->
+      <a href="#" class="btn">Kelola Status Tanggungan</a>
+    </div>
+  </main>
+</body>
+</html>

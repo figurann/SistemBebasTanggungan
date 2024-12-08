@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengembalian Buku - Sistem Bebas Tanggungan</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Pengembalian Buku</h1>
+  </header>
+
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>Nama Mahasiswa</th>
+          <th>Judul Buku</th>
+          <th>Tanggal Pinjam</th>
+          <th>Status Pengembalian</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example Row -->
+        <tr>
+          <td>Mahasiswa A</td>
+          <td>Teori Komputer</td>
+          <td>2024-11-01</td>
+          <td id="status-1">Belum Dikembalikan</td>
+          <td>
+            <button class="btn" onclick="prosesPengembalian(1)">Kembalikan</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Mahasiswa B</td>
+          <td>Algoritma dan Struktur Data</td>
+          <td>2024-10-15</td>
+          <td id="status-2">Sudah Dikembalikan</td>
+          <td>
+            <button class="btn" onclick="prosesPengembalian(2)">Kembalikan</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    function prosesPengembalian(id) {
+      const statusElement = document.getElementById(`status-${id}`);
+      if (statusElement.innerText === "Belum Dikembalikan") {
+        statusElement.innerText = "Sudah Dikembalikan";
+      } else {
+        alert("Buku sudah dikembalikan.");
+      }
+    }
+  </script>
+</body>
+</html>

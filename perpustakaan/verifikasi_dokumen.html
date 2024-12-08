@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifikasi Dokumen - Sistem Bebas Tanggungan</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Verifikasi Dokumen Mahasiswa</h1>
+  </header>
+
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>Nama Mahasiswa</th>
+          <th>Dokumen</th>
+          <th>Status Verifikasi</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mahasiswa A</td>
+          <td>Proposal Skripsi</td>
+          <td id="status-1">Belum Diverifikasi</td>
+          <td>
+            <button class="btn" onclick="verifikasiDokumen(1)">Verifikasi</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Mahasiswa B</td>
+          <td>Laporan Akhir</td>
+          <td id="status-2">Sudah Diverifikasi</td>
+          <td>
+            <button class="btn" onclick="verifikasiDokumen(2)">Verifikasi Ulang</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script>
+    function verifikasiDokumen(id) {
+      const statusElement = document.getElementById(`status-${id}`);
+      if (statusElement.innerText === "Belum Diverifikasi") {
+        statusElement.innerText = "Sudah Diverifikasi";
+      } else {
+        statusElement.innerText = "Belum Diverifikasi";
+      }
+    }
+  </script>
+</body>
+</html>
