@@ -1,9 +1,9 @@
 <?php
-$serverName = "DESKTOP-V6HT1LI"; 
+$serverName = "pigu\SQLEXPRESS";
 $connectionOptions = array(
     "Database" => "bebastang",
-    "Uid" => "", 
-    "PWD" => "" 
+    "Uid" => "",
+    "PWD" => ""
 );
 
 $conn = sqlsrv_connect($serverName, $connectionOptions);

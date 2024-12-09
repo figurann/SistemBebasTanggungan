@@ -10,8 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     error_log("Login attempt - Username: $user, Password: $pass");
 
     // Use a query to check exact matching
-    $stmt = sqlsrv_prepare($conn, 
-      "SELECT * FROM users WHERE username = ? AND password = ?", 
+    $stmt = sqlsrv_prepare(
+      $conn,
+      "SELECT * FROM users WHERE username = ? AND password = ?",
       array(&$user, &$pass)
     );
 
@@ -21,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $result = sqlsrv_execute($stmt);
-    
+
     if ($result === false) {
       error_log("Execute statement error: " . print_r(sqlsrv_errors(), true));
       throw new Exception("Query execution failed");
@@ -36,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $rowCount = count($rows);
 
     error_log("Query result - Rows found: $rowCount");
-    
+
     if ($rowCount > 0) {
       echo json_encode([
         "success" => true,
@@ -47,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
       error_log("No matching user found");
       echo json_encode([
-        "success" => false, 
+        "success" => false,
         "message" => "Username atau password salah",
         "details" => "No user match in database"
       ]);
@@ -56,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     error_log("Kesalahan server: " . $e->getMessage());
     http_response_code(500);
     echo json_encode([
-      "success" => false, 
+      "success" => false,
       "message" => "Kesalahan server: " . $e->getMessage()
     ]);
   }
@@ -65,4 +66,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   echo json_encode(["success" => false, "message" => "Metode tidak valid"]);
 }
 sqlsrv_close($conn);
-?>

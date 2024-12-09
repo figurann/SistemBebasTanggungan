@@ -17,8 +17,3 @@ INSERT INTO users (username, password, role) VALUES
 ('admin_perpus', 'perpus123', 'admin_perpus'),
 ('superadmin', 'super123', 'superadmin');
 GO
-
-
-
-
-

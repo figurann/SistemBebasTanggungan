@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Akademik - Sistem Bebas Tanggungan</title>
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="../assets/images/logo_polinema.png"
+      type="image/x-icon"
+    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/akademik/dashboard.css" />
+    <link rel="stylesheet" href="../assets/css/akademik/card.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Header Section -->
+    <header class="title-section">
+      <div class="title-container">
+        <a href="../akademik/dashboard.html" class="title-link">
+          <img
+            src="../assets/images/logo_polinema.png"
+            alt="Logo Polinema"
+            class="logo"
+          />
+          <h1 class="main-title">Sistem Bebas Tanggungan</h1>
+        </a>
+      </div>
+
+      <div class="header-icons">
+        <div class="profile-container">
+          <img
+            src="../assets/images/default_profile.png"
+            alt="User Profile"
+            class="profile-pic"
+          />
+          <span class="username">Admin Akademik</span>
+          <div class="profile-dropdown">
+            <a href="../forgot_password.html">Reset Password</a>
+            <a href="../login.html" id="logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Navigation -->
+      <nav class="horizontal-nav">
+        <ul class="nav-links">
+          <li class="active">
+            <a href="#"><i class="fas fa-home"></i> Dashboard</a>
+          </li>
+          <li class="dropdown">
+            <a href="#"><i class="fas fa-money-bill"></i> UKT</a>
+            <div class="dropdown-content">
+              <a href="#">Upload Tugas Akhir</a>
+              <a href="#">Upload Dokumen Pelunasan Buku Perpustakaan</a>
+              <a href="#">Status</a>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="#"><i class="fas fa-money-bill"></i> UKT</a>
+            <div class="dropdown-content">
+              <a href="#">Upload Bukti Pembayaran UKT</a>
+              <a href="#">Status</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content">
+          <div id="card-container">
+            <!-- Cards will be dynamically inserted here by JavaScript -->
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal Templates -->
+    <template id="uploadModalTemplate">
+      <div class="modal-overlay">
+        <div class="modal">
+          <div class="modal-content">
+            <h3>Verifikasi Dokumen</h3>
+            <form id="uploadForm" class="upload-form">
+              <div class="form-group">
+                <label for="documentFile">Status Verifikasi:</label>
+                <select id="verificationStatus" class="form-control" required>
+                  <option value="approved">Disetujui</option>
+                  <option value="rejected">Ditolak</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="notes">Catatan:</label>
+                <textarea id="notes" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="modal-buttons">
+                <button
+                  type="button"
+                  class="modal-button modal-button-secondary"
+                >
+                  Batal
+                </button>
+                <button type="submit" class="modal-button modal-button-primary">
+                  Simpan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Loading Indicator Template -->
+    <template id="loadingTemplate">
+      <div class="loading-overlay">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+          <span>Memuat...</span>
+        </div>
+      </div>
+    </template>
+
+    <!-- Error Message Template -->
+    <template id="errorTemplate">
+      <div class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        <span class="error-text"></span>
+      </div>
+    </template>
+
+    <!-- Scripts -->
+    <script src="../assets/js/akademik/dashboard.js"></script>
+    <script src="../assets/js/akademik/card.js"></script>
+  </body>
+</html>

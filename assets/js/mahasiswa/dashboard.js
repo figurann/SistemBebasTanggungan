@@ -33,10 +33,10 @@ function initializeApp() {
 function initializeNavigationHandlers({ navLinks }) {
   navLinks.forEach((link) => {
     link.addEventListener("mouseover", function () {
-      this.classList.add("hover"); // Tindakan hover
+      this.classList.add("hover");
     });
     link.addEventListener("mouseout", function () {
-      this.classList.remove("hover"); // Menghapus kelas hover
+      this.classList.remove("hover");
     });
     link.addEventListener("click", function (e) {
       handleNavigation(e, this, navLinks);
@@ -45,11 +45,9 @@ function initializeNavigationHandlers({ navLinks }) {
 }
 
 function handleNavigation(event, clickedLink, allLinks) {
-  allLinks.forEach((item) => item.classList.remove("active"));
-  clickedLink.classList.add("active");
-
-  if (clickedLink.classList.contains("dropdown")) {
-    event.preventDefault();
+  if (!clickedLink.classList.contains("dropdown")) {
+    allLinks.forEach((item) => item.classList.remove("active"));
+    clickedLink.classList.add("active");
   }
 }
 
@@ -73,14 +71,6 @@ function initializeProfileHandlers({ profileContainer, profileDropdown }) {
 
     profileContainer.addEventListener("mouseleave", () => {
       hideProfileDropdown();
-    });
-
-    profileDropdown.addEventListener("mouseenter", (e) => {
-      e.stopPropagation();
-    });
-
-    profileDropdown.addEventListener("mouseleave", (e) => {
-      e.stopPropagation();
     });
   }
 }
@@ -107,7 +97,6 @@ function initializeNotificationHandlers({ notificationIcon }) {
 
 function handleNotificationClick() {
   console.log("Menampilkan notifikasi...");
-  // Implementasi logika untuk menampilkan notifikasi, jika ada
 }
 
 // ========= Logout Handler =========
@@ -117,15 +106,17 @@ function initializeLogoutHandler({ logoutButton }) {
 
 function handleLogout(event) {
   event.preventDefault();
-  // Logika logout, bisa menghapus sesi atau mengalihkan ke halaman login
-  console.log("Logout...");
-  window.location.href = "../login.html"; // Ubah sesuai dengan URL logout
+  window.location.href = "../login.html";
 }
 
 // ========= Window Event Handlers =========
 function initializeWindowHandlers({ profileDropdown }) {
+  let resizeTimer;
   window.addEventListener("resize", () => {
-    profileDropdown.style.display = "none";
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      profileDropdown.style.display = "none";
+    }, 250);
   });
 }
 

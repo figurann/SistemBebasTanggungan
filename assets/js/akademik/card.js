@@ -1,67 +1,45 @@
-// Data dummy untuk kartu dashboard mahasiswa
+// Data dummy untuk kartu dashboard akademik
 const dashboardCards = [
   {
     id: 1,
-    title: "Tugas Akhir",
-    content: "Upload dan pantau status dokumen Tugas Akhir Anda.",
+    title: "Verifikasi Tugas Akhir",
+    content: "Verifikasi dokumen tugas akhir mahasiswa yang telah diupload.",
     status: "pending",
     progress: 70,
     date: "2024-03-20",
-    action: "Upload",
-    image: "../assets/images/mahasiswa/gambar_TugasAkhir.png",
-    details: {
-      fileName: "",
-      uploadDate: "",
-      verifiedBy: "",
-      notes: "",
-    },
+    action: "Verifikasi",
+    image: "../assets/images/akademik/gambar_VerifikasiTA.png",
   },
   {
     id: 2,
-    title: "Pembayaran UKT",
-    content: "Upload bukti pembayaran UKT semester ini.",
+    title: "Verifikasi UKT",
+    content: "Verifikasi bukti pembayaran UKT mahasiswa semester ini.",
     status: "approved",
     progress: 100,
     date: "2024-03-19",
-    action: "Lihat Detail",
-    image: "../assets/images/mahasiswa/gambar_UKT.png",
-    details: {
-      semester: "Genap 2023/2024",
-      amount: "Rp 5.000.000",
-      paymentDate: "2024-02-15",
-      verifiedBy: "Admin Keuangan",
-    },
+    action: "Lihat",
+    image: "../assets/images/akademik/gambar_VerifikasiUKT.png",
   },
   {
     id: 3,
-    title: "Perpustakaan",
-    content: "Upload dokumen bebas peminjaman buku perpustakaan.",
+    title: "Verifikasi Perpustakaan",
+    content: "Verifikasi dokumen bebas peminjaman buku perpustakaan.",
     status: "pending",
     progress: 45,
     date: "2024-03-18",
-    action: "Upload",
-    image: "../assets/images/mahasiswa/gambar_Perpustakaan.png",
-    details: {
-      fileName: "",
-      uploadDate: "",
-      verifiedBy: "",
-      notes: "",
-    },
+    action: "Verifikasi",
+    image: "../assets/images/akademik/gambar_VerifikasiPerpus.png",
   },
   {
     id: 4,
-    title: "Status Bebas Tanggungan",
-    content: "Pantau status bebas tanggungan Anda secara keseluruhan.",
+    title: "Daftar Mahasiswa",
+    content:
+      "Lihat dan kelola daftar mahasiswa yang mengajukan bebas tanggungan.",
     status: "pending",
     progress: 60,
     date: "2024-03-17",
-    action: "Lihat Status",
-    image: "../assets/images/mahasiswa/gambar_Status.png",
-    details: {
-      totalRequirements: 4,
-      completedRequirements: 2,
-      lastUpdate: "2024-03-17",
-    },
+    action: "Lihat Detail",
+    image: "../assets/images/akademik/gambar_DaftarMahasiswa.png",
   },
 ];
 
@@ -83,7 +61,16 @@ function createDashboardCard(cardData) {
           </div>
         </div>
         <span class="card-status status-${cardData.status}">
-          ${formatStatus(cardData.status)}
+          ${
+            cardData.status === "rejected"
+              ? "Ditolak"
+              : cardData.status === "approved"
+              ? "Disetujui"
+              : cardData.status === "pending"
+              ? "Menunggu"
+              : cardData.status.charAt(0).toUpperCase() +
+                cardData.status.slice(1)
+          }
         </span>
       </div>
       <div class="card-footer">
@@ -96,16 +83,6 @@ function createDashboardCard(cardData) {
   `;
 }
 
-// Fungsi format status
-function formatStatus(status) {
-  const statusMap = {
-    pending: "Menunggu",
-    approved: "Disetujui",
-    rejected: "Ditolak",
-  };
-  return statusMap[status] || status;
-}
-
 // Fungsi format tanggal
 function formatDate(dateString) {
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -114,14 +91,21 @@ function formatDate(dateString) {
 
 // Fungsi untuk menampilkan modal
 function showModal(modalType, data) {
-  const modalContent = createModalContent(modalType, data);
+  const existingModal = document.querySelector(".modal-overlay");
+  if (existingModal) {
+    existingModal.remove();
+  }
+
   const modalOverlay = document.createElement("div");
   modalOverlay.className = "modal-overlay";
   modalOverlay.dataset.cardId = data.id;
-  modalOverlay.innerHTML = modalContent;
+  modalOverlay.innerHTML = createModalContent(modalType, data);
 
   document.body.appendChild(modalOverlay);
-  requestAnimationFrame(() => modalOverlay.classList.add("modal-fade-in"));
+
+  requestAnimationFrame(() => {
+    modalOverlay.classList.add("modal-fade-in");
+  });
 
   // Event listener untuk tombol Escape
   const escapeHandler = (e) => {
@@ -143,24 +127,27 @@ function showModal(modalType, data) {
 // Fungsi untuk membuat konten modal
 function createModalContent(type, data) {
   switch (type) {
-    case "upload":
+    case "verification":
       return `
         <div class="modal">
           <div class="modal-content">
-            <h3>Upload Dokumen - ${data.title}</h3>
-            <form id="uploadForm" class="upload-form">
+            <h3>Verifikasi ${data.title}</h3>
+            <form id="verificationForm">
               <div class="form-group">
-                <label for="documentFile">Pilih File:</label>
-                <input type="file" id="documentFile" class="file-input" required />
-                <small class="form-text">Format yang diizinkan: PDF, maksimal 5MB</small>
+                <label for="verificationStatus">Status Verifikasi:</label>
+                <select id="verificationStatus" class="form-control" required>
+                  <option value="">Pilih Status</option>
+                  <option value="approved">Disetujui</option>
+                  <option value="rejected">Ditolak</option>
+                </select>
               </div>
               <div class="form-group">
-                <label for="description">Keterangan:</label>
-                <textarea id="description" class="form-control" rows="3"></textarea>
+                <label for="verificationNotes">Catatan:</label>
+                <textarea id="verificationNotes" class="form-control" rows="3" placeholder="Tambahkan catatan jika diperlukan..."></textarea>
               </div>
               <div class="modal-buttons">
-                <button type="button" class="modal-button modal-button-secondary">Batal</button>
-                <button type="submit" class="modal-button modal-button-primary">Upload</button>
+                <button type="button" class="modal-button modal-button-secondary" onclick="closeModal(this)">Batal</button>
+                <button type="submit" class="modal-button modal-button-primary">Simpan</button>
               </div>
             </form>
           </div>
@@ -172,34 +159,23 @@ function createModalContent(type, data) {
           <div class="modal-content">
             <h3>Detail ${data.title}</h3>
             <div class="detail-content">
-              ${createDetailContent(data)}
+              <p><strong>Status:</strong> ${
+                data.status === "approved"
+                  ? "Disetujui"
+                  : data.status === "rejected"
+                  ? "Ditolak"
+                  : "Menunggu"
+              }</p>
+              <p><strong>Progress:</strong> ${data.progress}%</p>
+              <p><strong>Tanggal:</strong> ${formatDate(data.date)}</p>
             </div>
             <div class="modal-buttons">
-              <button class="modal-button modal-button-secondary">Tutup</button>
+              <button class="modal-button modal-button-secondary" onclick="closeModal(this)">Tutup</button>
             </div>
           </div>
         </div>
       `;
-    default:
-      return "";
   }
-}
-
-// Fungsi untuk membuat konten detail
-function createDetailContent(data) {
-  let content = "";
-
-  if (data.details) {
-    for (const [key, value] of Object.entries(data.details)) {
-      const formattedKey = key
-        .replace(/([A-Z])/g, " $1")
-        .toLowerCase()
-        .replace(/^./, (str) => str.toUpperCase());
-      content += `<p><strong>${formattedKey}:</strong> ${value || "-"}</p>`;
-    }
-  }
-
-  return content;
 }
 
 // Fungsi untuk menutup modal
@@ -215,55 +191,50 @@ function handleCardAction(cardId) {
   if (!card) return;
 
   const action = card.action.toLowerCase();
-  if (action.includes("upload")) {
-    showModal("upload", card);
-  } else if (action.includes("detail") || action.includes("status")) {
+  if (action === "verifikasi") {
+    showModal("verification", card);
+  } else if (action.includes("lihat")) {
     showModal("detail", card);
   }
 }
 
-// Fungsi untuk menangani submit form
-function handleFormSubmission(form, cardId) {
-  const file = form.querySelector("#documentFile").files[0];
-  const description = form.querySelector("#description").value;
+// Fungsi untuk menangani submit form verifikasi
+function handleVerificationSubmit(form, cardId) {
+  const status = form.querySelector("#verificationStatus").value;
+  const notes = form.querySelector("#verificationNotes").value;
 
-  if (!file) {
-    showError("Silakan pilih file terlebih dahulu");
-    return;
-  }
-
-  if (file.size > 5 * 1024 * 1024) {
-    showError("Ukuran file tidak boleh lebih dari 5MB");
+  if (!status) {
+    showError("Silakan pilih status verifikasi");
     return;
   }
 
   showLoadingState(form);
 
-  // Simulasi upload
+  // Simulasi proses verifikasi
   setTimeout(() => {
     hideLoadingState(form);
     closeModal(form.closest(".modal-overlay"));
-    showSuccess("Dokumen berhasil diupload");
-    updateCardStatus(cardId, "pending");
-  }, 2000);
+    showSuccess("Verifikasi berhasil disimpan");
+    updateCardStatus(cardId, status);
+  }, 1500);
 }
 
 // Fungsi untuk menampilkan loading state
 function showLoadingState(form) {
   const submitBtn = form.querySelector(".modal-button-primary");
-  const allInputs = form.querySelectorAll("input, button, textarea");
+  const allInputs = form.querySelectorAll("input, select, textarea, button");
 
   allInputs.forEach((input) => (input.disabled = true));
-  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengupload...';
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
 }
 
 // Fungsi untuk menyembunyikan loading state
 function hideLoadingState(form) {
   const submitBtn = form.querySelector(".modal-button-primary");
-  const allInputs = form.querySelectorAll("input, button, textarea");
+  const allInputs = form.querySelectorAll("input, select, textarea, button");
 
   allInputs.forEach((input) => (input.disabled = false));
-  submitBtn.innerHTML = "Upload";
+  submitBtn.innerHTML = "Simpan";
 }
 
 // Fungsi untuk menampilkan pesan error
@@ -298,7 +269,12 @@ function updateCardStatus(cardId, newStatus) {
   const statusElement = card.querySelector(".card-status");
 
   statusElement.className = `card-status status-${newStatus}`;
-  statusElement.textContent = formatStatus(newStatus);
+  statusElement.textContent =
+    newStatus === "approved"
+      ? "Disetujui"
+      : newStatus === "rejected"
+      ? "Ditolak"
+      : "Menunggu";
 }
 
 // Inisialisasi saat dokumen dimuat
@@ -317,13 +293,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Event listener untuk submit form
+  // Event listener untuk submit form verifikasi
   document.addEventListener("submit", (e) => {
-    if (e.target.id === "uploadForm") {
+    if (e.target.id === "verificationForm") {
       e.preventDefault();
       const modalOverlay = e.target.closest(".modal-overlay");
       const cardId = parseInt(modalOverlay.dataset.cardId);
-      handleFormSubmission(e.target, cardId);
+      handleVerificationSubmit(e.target, cardId);
     }
   });
 });
