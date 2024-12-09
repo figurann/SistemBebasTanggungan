@@ -1,56 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verifikasi Dokumen - Sistem Bebas Tanggungan</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Akademik - Sistem Bebas Tanggungan</title>
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="../assets/images/logo_polinema.png"
+      type="image/x-icon"
+    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/mahasiswa/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      /* Add custom CSS styles */
+      .container {
+        padding: 20px;
+      }
+
+      /* Flex container for features */
+      .features {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap; /* Ensures features stack on smaller screens */
+      }
+
+      .feature-container {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        flex: 1 1 300px; /* Ensures each feature box grows but maintains a minimum width */
+        text-align: center;
+        box-sizing: border-box; /* Include padding in width calculation */
+      }
+
+      .feature-container i {
+        font-size: 40px;
+        color: #007bff;
+        margin-bottom: 15px;
+      }
+
+      .feature-container h2 {
+        margin-bottom: 10px;
+      }
+
+      .feature-container p {
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 4px;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr th {
+            background-color: #007bff;
+        }
+    </style>
+  </head>
 <body>
-  <header>
-    <h1>Verifikasi Dokumen Mahasiswa</h1>
+  <header class="title-section">
+    <div class="title-container">
+      <a href="../dashboardPerpus.html" class="title-link">
+        <img
+          src="../assets/images/logo_polinema.png"
+          alt="Logo Polinema"
+          class="logo"
+        />
+        <h1 class="main-title">Sistem Bebas Tanggungan</h1>
+      </a>
+    </div>
+
+    <div class="header-icons">
+      <div class="notification-icon">
+        <i class="fas fa-bell"></i>
+        <div class="notification-bubble">3</div>
+      </div>
+
+      <div class="profile-container">
+        <img
+          src=""
+          alt="User Profile"
+          class="profile-pic"
+        />
+        <span class="username">Admin Perpustakaan</span>
+
+        <div class="profile-dropdown">
+          <a href="../forgot_password.html">Reset Password</a>
+          <a href="../login.html" id="logout">Logout</a>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <table>
-      <thead>
-        <tr>
-          <th>Nama Mahasiswa</th>
-          <th>Dokumen</th>
-          <th>Status Verifikasi</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Mahasiswa A</td>
-          <td>Proposal Skripsi</td>
-          <td id="status-1">Belum Diverifikasi</td>
-          <td>
-            <button class="btn" onclick="verifikasiDokumen(1)">Verifikasi</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Mahasiswa B</td>
-          <td>Laporan Akhir</td>
-          <td id="status-2">Sudah Diverifikasi</td>
-          <td>
-            <button class="btn" onclick="verifikasiDokumen(2)">Verifikasi Ulang</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </main>
+  <div class="container">
+    <!-- Navigation -->
+    <nav class="horizontal-nav">
+      <ul class="nav-links">
+        <li class="active">
+        </li>
+        <li class="dropdown">
+          <a href="#"><i class="fas fa-book"></i> Perpustakaan</a>
+          <div class="dropdown-content">
+            <a href="pengembalian_buku.html">Pengembalian Buku</a>
+            <a href="verifikasi_dokumen.html">Verifikasi Dokumen</a>
+            <a href="status_tanggungan.html">Status Tanggungan</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
 
-  <script>
-    function verifikasiDokumen(id) {
-      const statusElement = document.getElementById(`status-${id}`);
-      if (statusElement.innerText === "Belum Diverifikasi") {
-        statusElement.innerText = "Sudah Diverifikasi";
-      } else {
-        statusElement.innerText = "Belum Diverifikasi";
+    <main class="main-content">
+      <div class="features">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama Mahasiswa</th>
+              <th>Dokumen</th>
+              <th>Status Verifikasi</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mahasiswa A</td>
+              <td>Proposal Skripsi</td>
+              <td id="status-1">Belum Diverifikasi</td>
+              <td>
+                <button class="btn" onclick="verifikasiDokumen(1)">Verifikasi</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Mahasiswa B</td>
+              <td>Laporan Akhir</td>
+              <td id="status-2">Sudah Diverifikasi</td>
+              <td>
+                <button class="btn" onclick="verifikasiDokumen(2)">Verifikasi Ulang</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <script>
+      function verifikasiDokumen(id) {
+        const statusElement = document.getElementById(`status-${id}`);
+        if (statusElement.innerText === "Belum Diverifikasi") {
+          statusElement.innerText = "Sudah Diverifikasi";
+        } else {
+          statusElement.innerText = "Belum Diverifikasi";
+        }
       }
-    }
-  </script>
+    </script>
+  </div>
 </body>
 </html>
