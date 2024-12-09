@@ -1,5 +1,5 @@
 <?php
-$serverName = "pigu\SQLEXPRESS";
+$serverName = "LAPTOP-OGTLJMKB";
 $connectionOptions = array(
     "Database" => "bebastang",
     "Uid" => "",
