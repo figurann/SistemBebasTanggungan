@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Sistem Bebas Tanggungan</title>
+    <title>Mahasiswa - Sistem Bebas Tanggungan</title>
 
     <!-- Favicon -->
     <link
@@ -13,68 +13,19 @@
     />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../assets/css/mahasiswa/dashboard.css" />
+    <link rel="stylesheet" href="../assets/css/perpustakaan/dashboard.css" />
+    <link rel="stylesheet" href="../assets/css/perpustakaan/card.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <style>
-      /* Add custom CSS styles */
-      .container {
-        padding: 20px;
-      }
-
-      /* Flex container for features */
-      .features {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap; /* Ensures features stack on smaller screens */
-      }
-
-      .feature-container {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 20px;
-        background-color: #f9f9f9;
-        flex: 1 1 300px; /* Ensures each feature box grows but maintains a minimum width */
-        text-align: center;
-        box-sizing: border-box; /* Include padding in width calculation */
-      }
-
-      .feature-container i {
-        font-size: 40px;
-        color: #007bff;
-        margin-bottom: 15px;
-      }
-
-      .feature-container h2 {
-        margin-bottom: 10px;
-      }
-
-      .feature-container p {
-        margin-bottom: 15px;
-      }
-
-      .btn {
-        display: inline-block;
-        padding: 10px 15px;
-        color: #fff;
-        background-color: #007bff;
-        text-decoration: none;
-        border-radius: 4px;
-        text-align: center;
-      }
-
-      .btn:hover {
-        background-color: #0056b3;
-      }
-    </style>
   </head>
 
   <body>
+    <!-- Header Section -->
     <header class="title-section">
       <div class="title-container">
-        <a href="../dashboardPerpus.html" class="title-link">
+        <a href="../mahasiswa/dashboard.html" class="title-link">
           <img
             src="../assets/images/logo_polinema.png"
             alt="Logo Polinema"
@@ -84,15 +35,14 @@
         </a>
       </div>
 
-
+      <div class="header-icons">
         <div class="profile-container">
           <img
-            src=""
+            src="../assets/images/mahasiswa/mahasiswa_1.jpg"
             alt="User Profile"
             class="profile-pic"
           />
-          <span class="username">Admin Perpustakaan</span>
-
+          <span class="username">2341760168</span>
           <div class="profile-dropdown">
             <a href="../forgot_password.html">Reset Password</a>
             <a href="../login.html" id="logout">Logout</a>
@@ -101,33 +51,107 @@
       </div>
     </header>
 
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Navigation -->
+      <nav class="horizontal-nav">
+        <ul class="nav-links">
+          <li class="active">
+            <a href="#"><i class="fas fa-home"></i> Dashboard</a>
+          </li>
+        </ul>
+      </nav>
+
       <!-- Main Content -->
       <main class="main-content">
-        <div class="features">
-          <!-- Feature 1: Pengembalian Buku -->
-          <div class="feature-container">
-            <i class="fas fa-undo-alt"></i> <!-- Icon for Pengembalian Buku -->
-            <h2>Pengembalian Buku</h2>
-            <a href="pengembalian_buku.html" class="btn">Proses Pengembalian</a>
-          </div>
-
-          <!-- Feature 2: Verifikasi Dokumen -->
-          <div class="feature-container">
-            <i class="fas fa-check-circle"></i> <!-- Icon for Verifikasi Dokumen -->
-            <h2>Verifikasi Dokumen</h2>
-            <a href="verifikasi_dokumen.html" class="btn">Masuk ke Verifikasi</a>
-          </div>
-
-          <!-- Feature 3: Status Tanggungan -->
-          <div class="feature-container">
-            <i class="fas fa-file-invoice"></i> <!-- Icon for Status Tanggungan -->
-            <h2>Status Tanggungan</h2>
-            <a href="status_tanggungan.html" class="btn">Lihat Status</a>
+        <div class="content">
+          <div id="card-container">
+            <!-- Cards will be dynamically inserted here by JavaScript -->
           </div>
         </div>
       </main>
     </div>
 
-    <script src="../assets/js/Akademik/dashboardAkademik.js"></script>
+    <!-- Modal Templates -->
+    <template id="uploadModalTemplate">
+      <div class="modal-overlay">
+        <div class="modal">
+          <div class="modal-content">
+            <h3>Upload Dokumen</h3>
+            <form id="uploadForm" class="upload-form">
+              <div class="form-group">
+                <label for="documentFile">Pilih File:</label>
+                <input
+                  type="file"
+                  id="documentFile"
+                  class="file-input"
+                  required
+                />
+                <small class="form-text"
+                  >Format yang diizinkan: PDF, maksimal 5MB</small
+                >
+              </div>
+              <div class="form-group">
+                <label for="description">Keterangan:</label>
+                <textarea
+                  id="description"
+                  class="form-control"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="modal-buttons">
+                <button
+                  type="button"
+                  class="modal-button modal-button-secondary"
+                >
+                  Batal
+                </button>
+                <button type="submit" class="modal-button modal-button-primary">
+                  Upload
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="detailModalTemplate">
+      <div class="modal-overlay">
+        <div class="modal">
+          <div class="modal-content">
+            <h3>Detail Dokumen</h3>
+            <div class="detail-content">
+              <!-- Detail content will be dynamically inserted -->
+            </div>
+            <div class="modal-buttons">
+              <button class="modal-button modal-button-secondary">Tutup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Loading Indicator Template -->
+    <template id="loadingTemplate">
+      <div class="loading-overlay">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+          <span>Memuat...</span>
+        </div>
+      </div>
+    </template>
+
+    <!-- Error Message Template -->
+    <template id="errorTemplate">
+      <div class="error-message">
+        <i class="fas fa-exclamation-circle"></i>
+        <span class="error-text"></span>
+      </div>
+    </template>
+
+    <!-- Scripts -->
+    <script src="../assets/js/Perpustakaan/dashboard.js"></script>
+    <script src="../assets/js/Perpustakaan/card.js"></script>
   </body>
 </html>
