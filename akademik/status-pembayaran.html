@@ -68,6 +68,26 @@
       .btn:hover {
         background-color: #0056b3;
       }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr th {
+            background-color: #007bff;
+        }
     </style>
   </head>
 
@@ -111,13 +131,13 @@
       <nav class="horizontal-nav">
         <ul class="nav-links">
           <li class="active">
-            <a href="dashboard_Aka.html"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="dashboard_aka.html"><i class="fas fa-home"></i> Dashboard</a>
           </li>
           <li class="dropdown">
             <a href="#"><i class="fas fa-money-bill"></i> UKT</a>
             <div class="dropdown-content">
-              <a href="../akademik/status-pembayaran.html">Status Pembayaran</a>
-              <a href="../akademik/verifikasi-dokumen.html">Verifikasi Dokumen</a>
+              <a href="status-pembayaran.html">Status Pembayaran</a>
+              <a href="verifikasi-dokumen.html">Verifikasi Dokumen</a>
             </div>
           </li>
         </ul>
@@ -126,22 +146,56 @@
       <!-- Main Content -->
       <main class="main-content">
         <div class="features">
-          <!-- Feature 1: Status Pembayaran -->
-          <div class="feature-container">
-            <i class="fas fa-credit-card"></i> <!-- Icon for Status Pembayaran -->
-            <h2>Status Pembayaran</h2>
-            <a href="status-pembayaran.html" class="btn">Lihat Status</a>
-          </div>
-
-          <!-- Feature 2: Verifikasi Dokumen -->
-          <div class="feature-container">
-            <i class="fas fa-check-circle"></i> <!-- Icon for Verifikasi Dokumen -->
-            <h2>Verifikasi Dokumen</h2>
-            <a href="verifikasi-dokumen.html" class="btn">Masuk ke Verifikasi</a>
-          </div>
+            <h1 style="text-align: center;">Daftar Status Pembayaran Mahasiswa</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>NIM</th>
+                        <th>Jurusan</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Ahmad Pratama</td>
+                        <td>210123456</td>
+                        <td>Teknik Informatika</td>
+                        <td>Belum Lunas</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Siti Rahma</td>
+                        <td>210234567</td>
+                        <td>Manajemen</td>
+                        <td>Belum Lunas</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Budi Santoso</td>
+                        <td>210345678</td>
+                        <td>Teknik Sipil</td>
+                        <td>Belum Lunas</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Ayu Lestari</td>
+                        <td>210456789</td>
+                        <td>Teknik Informatika</td>
+                        <td>Belum Lunas</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Rian Kurniawan</td>
+                        <td>210567890</td>
+                        <td>Sistem Informasi</td>
+                        <td>Belum Lunas</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-      </main>
-    </div>
 
     <script src="../assets/js/mahasiswa/dashboard.js"></script>
   </body>

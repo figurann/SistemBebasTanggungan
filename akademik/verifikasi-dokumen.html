@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Akademik - verifikasi Dokumen</title>
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="../assets/images/logo_polinema.png"
+      type="image/x-icon"
+    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/mahasiswa/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      /* Add custom CSS styles */
+      .container {
+        padding: 20px;
+      }
+
+      /* Flex container for features */
+      .features {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap; /* Ensures features stack on smaller screens */
+      }
+
+      .feature-container {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        flex: 1 1 300px; /* Ensures each feature box grows but maintains a minimum width */
+        text-align: center;
+        box-sizing: border-box; /* Include padding in width calculation */
+      }
+
+      .feature-container i {
+        font-size: 40px;
+        color: #007bff;
+        margin-bottom: 15px;
+      }
+
+      .feature-container h2 {
+        margin-bottom: 10px;
+      }
+
+      .feature-container p {
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        color: #fff;
+        background-color: green;
+        text-decoration: none;
+        border-radius: 4px;
+        text-align: center;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr th {
+            background-color: #007bff;
+        }
+    </style>
+  </head>
+
+  <body>
+    <header class="title-section">
+      <div class="title-container">
+        <a href="../dashboard_aka.html" class="title-link">
+          <img
+            src="../assets/images/logo_polinema.png"
+            alt="Logo Polinema"
+            class="logo"
+          />
+          <h1 class="main-title">Sistem Bebas Tanggungan</h1>
+        </a>
+      </div>
+
+      <div class="header-icons">
+        <div class="notification-icon">
+          <i class="fas fa-bell"></i>
+          <div class="notification-bubble">3</div>
+        </div>
+
+        <div class="profile-container">
+          <img
+            src=""
+            alt="User Profile"
+            class="profile-pic"
+          />
+          <span class="username">Admin Akademik</span>
+
+          <div class="profile-dropdown">
+            <a href="../forgot_password.html">Reset Password</a>
+            <a href="../login.html" id="logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Navigation -->
+      <nav class="horizontal-nav">
+        <ul class="nav-links">
+          <li class="active">
+            <a href="dashboard_aka.html"><i class="fas fa-home"></i> Dashboard</a>
+          </li>
+          <li class="dropdown">
+            <a href="#"><i class="fas fa-money-bill"></i> UKT</a>
+            <div class="dropdown-content">
+              <a href="status-pembayaran.html">Status Pembayaran</a>
+              <a href="verifikasi-dokumen.html">Verifikasi Dokumen</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="features">
+            <h1 style="text-align: center;">Daftar Dokumen Yang Harus Diverifikasi</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>NIM</th>
+                        <th>Dokumen</th>
+                        <th>Status Verifikasi</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Ahmad Pratama</td>
+                        <td>210123456</td>
+                        <td>Bukti Pembayaran Semester 1</td>
+                        <td>Belum Diverifikasi</td>
+                        <td><button class="btn" onclick="verifikasi(1)">Verifikasi</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Siti Rahma</td>
+                        <td>210234567</td>
+                        <td>Bukti Pembayaran Semester 2</td>
+                        <td>Belum Diverifikasi</td>
+                        <td><button class="btn" onclick="verifikasi(2)">Verifikasi</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Budi Santoso</td>
+                        <td>210345678</td>
+                        <td>Bukti Pembayaran Semester 3</td>
+                        <td>Belum Diverifikasi</td>
+                        <td><button class="btn" onclick="verifikasi(3)">Verifikasi</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Ayu Lestari</td>
+                        <td>210456789</td>
+                        <td>Bukti Pembayaran Semester 4</td>
+                        <td>Belum Diverifikasi</td>
+                        <td><button class="btn" onclick="verifikasi(4)">Verifikasi</button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Rian Kurniawan</td>
+                        <td>210567890</td>
+                        <td>Bukti Pembayaran Semester 5</td>
+                        <td>Belum Diverifikasi</td>
+                        <td><button class="btn" onclick="verifikasi(5)">Verifikasi</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            function verifikasi(id) {
+                const row = document.querySelectorAll("tbody tr")[id - 1];
+                const statusCell = row.querySelector("td:nth-child(5)");
+                statusCell.textContent = "Sudah Diverifikasi";
+                statusCell.style.color = "green";
+            }
+        </script>
+    <script src="../assets/js/mahasiswa/dashboard.js"></script>
+  </body>
+</html>
