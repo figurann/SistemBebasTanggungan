@@ -59,35 +59,13 @@ function initializeProfileHandlers({ profileContainer, profileDropdown }) {
     }
   });
 
-  if (window.innerWidth <= 768) {
-    profileContainer.addEventListener("click", (e) => {
-      e.stopPropagation();
-      toggleProfileDropdown(profileDropdown);
-    });
-  } else {
-    profileContainer.addEventListener("mouseenter", () => {
-      showProfileDropdown();
-    });
+  profileContainer.addEventListener("mouseenter", () => {
+    profileDropdown.style.display = "block";
+  });
 
-    profileContainer.addEventListener("mouseleave", () => {
-      hideProfileDropdown();
-    });
-  }
-}
-
-function toggleProfileDropdown(dropdown) {
-  dropdown.style.display =
-    dropdown.style.display === "block" ? "none" : "block";
-}
-
-function showProfileDropdown() {
-  const profileDropdown = DOM.profileDropdown();
-  profileDropdown.style.display = "block";
-}
-
-function hideProfileDropdown() {
-  const profileDropdown = DOM.profileDropdown();
-  profileDropdown.style.display = "none";
+  profileContainer.addEventListener("mouseleave", () => {
+    profileDropdown.style.display = "none";
+  });
 }
 
 // ========= Notification Handlers =========
@@ -101,12 +79,31 @@ function handleNotificationClick() {
 
 // ========= Logout Handler =========
 function initializeLogoutHandler({ logoutButton }) {
-  logoutButton.addEventListener("click", handleLogout);
+  if (logoutButton) {
+    logoutButton.addEventListener("click", handleLogout);
+  }
 }
 
 function handleLogout(event) {
   event.preventDefault();
-  window.location.href = "../login.html";
+  console.log("Logout button clicked. Redirecting to login.php...");
+
+  const logoutPath = "../../views/login.php";
+
+  // Debug: Verify Path
+  fetch(logoutPath, { method: "HEAD" })
+    .then((response) => {
+      if (response.ok) {
+        window.location.href = logoutPath;
+      } else {
+        console.error("Error: File login.php not found.");
+        alert("Error: Cannot find the login page.");
+      }
+    })
+    .catch(() => {
+      console.error("Network error. Redirecting with fallback...");
+      window.location.assign(logoutPath);
+    });
 }
 
 // ========= Window Event Handlers =========
@@ -139,17 +136,4 @@ function handleGlobalError(msg, url, lineNo, columnNo, error) {
     )}`
   );
   return false;
-}
-
-// ========= Utility Functions =========
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
 }

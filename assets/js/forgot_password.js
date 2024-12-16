@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Redirect ke halaman login setelah 2 detik
         setTimeout(() => {
-          window.location.href = "login.html";
+          window.location.href = "login.php";
         }, 2000);
       } else {
         showAlert(

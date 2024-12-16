@@ -4,11 +4,11 @@ const dashboardCards = [
     id: 1,
     title: "Laporan Tugas Akhir",
     content: "Upload dokumen Tugas Akhir Anda dan pantau statusnya.",
-    status: "rejected", 
+    status: "rejected",
     progress: 70,
     date: "2024-12-03",
-    action: "Upload Ulang", 
-    image: "../assets/images/mahasiswa/gambar_LaporanTugasAkhir.png",
+    action: "Upload Ulang",
+    image: "../../assets/images/mahasiswa/gambar_LaporanTugasAkhir.png",
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const dashboardCards = [
     progress: 100,
     date: "2024-12-01",
     action: "Upload",
-    image: "../assets/images/mahasiswa/gambar_BiayaUKT.png",
+    image: "../../assets/images/mahasiswa/gambar_BiayaUKT.png",
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const dashboardCards = [
     progress: 60,
     date: "2024-12-02",
     action: "Verifikasi",
-    image: "../assets/images/mahasiswa/gambar_SuratBebasKompensasi.png",
+    image: "../../assets/images/mahasiswa/gambar_SuratBebasKompensasi.png",
   },
   {
     id: 4,
@@ -38,7 +38,7 @@ const dashboardCards = [
     progress: 30,
     date: "2024-12-04",
     action: "Upload",
-    image: "../assets/images/mahasiswa/gambar_SuratBebasPeminjamanBuku.png",
+    image: "../../assets/images/mahasiswa/gambar_SuratBebasPeminjamanBuku.png",
   },
   {
     id: 5,
@@ -48,7 +48,7 @@ const dashboardCards = [
     progress: 30,
     date: "2024-12-04",
     action: "Lihat",
-    image: "../assets/images/mahasiswa/gambar_SuratBebasPeminjamanBuku.png",
+    image: "../../assets/images/mahasiswa/gambar_SuratBebasPeminjamanBuku.png",
   },
   {
     id: 6,
@@ -58,7 +58,7 @@ const dashboardCards = [
     progress: 30,
     date: "2024-12-04",
     action: "Lihat",
-    image: "../assets/images/mahasiswa/gambar_SuratBebasPeminjamanBuku.png",
+    image: "../../assets/images/mahasiswa/gambar_SuratBebasPeminjamanBuku.png",
   },
 ];
 
