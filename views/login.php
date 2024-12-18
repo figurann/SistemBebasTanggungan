@@ -8,12 +8,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = htmlspecialchars(trim($_POST["username"]));
     $pass = htmlspecialchars(trim($_POST["password"]));
 
-    // Query ke database
-    $stmt = sqlsrv_prepare(
-      $conn,
-      "SELECT * FROM users WHERE username = ?",
-      array(&$user)
-    );
+    // Query ke database dengan join untuk mendapatkan informasi lengkap
+    $query = "SELECT 
+        u.username,
+        u.password,
+        u.level as role,
+        COALESCE(m.NIM, a.NIDN) as id_pengguna,
+        COALESCE(m.nama, a.nama) as nama,
+        CASE 
+            WHEN m.NIM IS NOT NULL THEN 'mahasiswa'
+            WHEN a.NIDN IS NOT NULL THEN 'admin'
+            ELSE NULL 
+        END as tipe_pengguna,
+        m.id_prodi
+    FROM pengguna.[User] u
+    LEFT JOIN pengguna.Mahasiswa m ON u.username = m.username
+    LEFT JOIN pengguna.Admin a ON u.username = a.username
+    WHERE u.username = ?";
+
+    $stmt = sqlsrv_prepare($conn, $query, array(&$user));
 
     if ($stmt === false) {
       error_log("Prepare statement error: " . print_r(sqlsrv_errors(), true));
@@ -29,36 +42,48 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
-    // Validasi password
+    // Validasi password dan set session
     if ($row) {
-      // Jika password di database menggunakan plain text (saat ini)
       if ($pass === $row["password"]) {
-        // Set session untuk user
+        // Set session variables
         $_SESSION['user'] = $user;
         $_SESSION['role'] = $row["role"];
+        $_SESSION['nama'] = $row["nama"];
+        $_SESSION['id_pengguna'] = $row["id_pengguna"];
+        $_SESSION['tipe_pengguna'] = $row["tipe_pengguna"];
+        
+        // Khusus untuk mahasiswa, simpan id_prodi
+        if ($row["tipe_pengguna"] === "mahasiswa") {
+          $_SESSION['id_prodi'] = $row["id_prodi"];
+        }
 
         // Simpan cookie jika "Remember Me" dicentang
         if (!empty($_POST['rememberMe'])) {
-          setcookie("remember_me", bin2hex(random_bytes(16)), time() + (86400 * 30), "/");
+          $token = bin2hex(random_bytes(16));
+          setcookie("remember_me", $token, time() + (86400 * 30), "/", "", true, true);
         }
 
-        // Logging role untuk memastikan data benar
-        error_log("Login berhasil untuk username: $user dengan role: " . $row["role"]);
+        // Logging untuk tracking
+        error_log("Login berhasil - Username: $user, Role: " . $row["role"] . ", Tipe: " . $row["tipe_pengguna"]);
 
-        // Kirim respons JSON dengan informasi user
+        // Kirim respons JSON
         echo json_encode([
           "success" => true,
           "message" => "Login berhasil",
           "role" => $row["role"],
+          "nama" => $row["nama"],
+          "tipe_pengguna" => $row["tipe_pengguna"],
           "token" => bin2hex(random_bytes(16))
         ]);
       } else {
+        error_log("Login gagal - Password salah untuk username: $user");
         echo json_encode([
           "success" => false,
           "message" => "Username atau password salah"
         ]);
       }
     } else {
+      error_log("Login gagal - Username tidak ditemukan: $user");
       echo json_encode([
         "success" => false,
         "message" => "Username tidak ditemukan"
@@ -67,7 +92,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   } catch (Exception $e) {
     error_log("Login error: " . $e->getMessage());
     http_response_code(500);
-    echo json_encode(["success" => false, "message" => "Kesalahan server"]);
+    echo json_encode([
+      "success" => false, 
+      "message" => "Terjadi kesalahan pada server"
+    ]);
   }
   sqlsrv_close($conn);
   exit();
