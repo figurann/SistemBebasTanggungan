@@ -1,5 +1,5 @@
 <?php
-$serverName = "pigu\SQLEXPRESS"; //Sesuaikan sama Nama Server di Perangkat kamu
+$serverName = "LAPTOP-OGTLJMKB"; //Sesuaikan sama Nama Server di Perangkat kamu
 $connectionOptions = array(
     "Database" => "bebastang",
     "Uid" => "",

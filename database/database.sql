@@ -4,6 +4,7 @@ GO
 USE bebastang;
 GO
 
+
 -- Create Schemas
 CREATE SCHEMA pengguna AUTHORIZATION dbo;
 GO
