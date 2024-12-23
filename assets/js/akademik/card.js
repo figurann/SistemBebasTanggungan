@@ -20,27 +20,6 @@ const dashboardCards = [
     action: "Lihat",
     image: "../assets/images/akademik/gambar_VerifikasiUKT.png",
   },
-  {
-    id: 3,
-    title: "Verifikasi Perpustakaan",
-    content: "Verifikasi dokumen bebas peminjaman buku perpustakaan.",
-    status: "pending",
-    progress: 45,
-    date: "2024-03-18",
-    action: "Verifikasi",
-    image: "../assets/images/akademik/gambar_VerifikasiPerpus.png",
-  },
-  {
-    id: 4,
-    title: "Daftar Mahasiswa",
-    content:
-      "Lihat dan kelola daftar mahasiswa yang mengajukan bebas tanggungan.",
-    status: "pending",
-    progress: 60,
-    date: "2024-03-17",
-    action: "Lihat Detail",
-    image: "../assets/images/akademik/gambar_DaftarMahasiswa.png",
-  },
 ];
 
 // Fungsi untuk membuat kartu dashboard
