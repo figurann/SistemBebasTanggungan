@@ -108,7 +108,10 @@ INSERT INTO pengguna.[User] (username, password, level) VALUES
 ('admin_perpus', 'perpus123', 'admin_perpus'),
 ('superadmin', 'super123', 'superadmin'),
 ('2341720001', 'mhs123', 'mahasiswa'),
-('2341720002', 'mhs123', 'mahasiswa');
+('2341720002', 'mhs123', 'mahasiswa'),
+('2341720003', 'mhs123', 'mahasiswa'),
+('2341720004', 'mhs123', 'mahasiswa'),
+('2341720005', 'mhs123', 'mahasiswa');
 
 INSERT INTO pengguna.Admin (NIDN, nama, NIK, tempat_lahir, tanggal_lahir, alamat, no_telp, jenis_kelamin, username) VALUES
 ('0001010101', 'Dr. Ahmad', '1234567890123456', 'Jakarta', '1980-01-01', 'Jl. Admin 1', '081234567890', 'Laki-laki', 'admin001'),
@@ -116,7 +119,10 @@ INSERT INTO pengguna.Admin (NIDN, nama, NIK, tempat_lahir, tanggal_lahir, alamat
 
 INSERT INTO pengguna.Mahasiswa (NIM, nama, NIK, tempat_lahir, tanggal_lahir, alamat, no_telp, jenis_kelamin, id_prodi, username) VALUES
 ('2341720001', 'Budi Santoso', '1234567890123458', 'Malang', '2000-03-03', 'Jl. Mhs 1', '081234567892', 'Laki-laki', 1, '2341720001'),
-('2341720002', 'Ani Wulandari', '1234567890123459', 'Bandung', '2000-04-04', 'Jl. Mhs 2', '081234567893', 'Perempuan', 2, '2341720002');
+('2341720002', 'Ani Wulandari', '1234567890123459', 'Bandung', '2000-04-04', 'Jl. Mhs 2', '081234567893', 'Perempuan', 2, '2341720002'),
+('2341720003', 'Siti Rahmawati', '1234567890123460', 'Surabaya', '2000-05-05', 'Jl. Mhs 3', '081234567894', 'Perempuan', 3, '2341720003'),
+('2341720004', 'Andi Wijaya', '1234567890123461', 'Yogyakarta', '2000-06-06', 'Jl. Mhs 4', '081234567895', 'Laki-laki', 4, '2341720004'),
+('2341720005', 'Dewi Lestari', '1234567890123462', 'Semarang', '2000-07-07', 'Jl. Mhs 5', '081234567896', 'Perempuan', 5, '2341720005');
 
 INSERT INTO dokumen.JenisDokumen (nama_dokumen, tingkat) VALUES
 ('Laporan Skripsi', 'jurusan'),
@@ -126,7 +132,10 @@ INSERT INTO dokumen.JenisDokumen (nama_dokumen, tingkat) VALUES
 
 INSERT INTO dokumen.UploadDokumen (path_dokumen, status, id_dokumen, NIM, NIDN) VALUES
 ('/uploads/skripsi_2341720001.pdf', 'Menunggu', 1, '2341720001', NULL),
-('/uploads/bebas_lab_2341720002.pdf', 'Diverifikasi', 2, '2341720002', '0001010101');
+('/uploads/bebas_lab_2341720002.pdf', 'Diverifikasi', 2, '234172002', NULL),
+('/uploads/bebas_pustaka_234172003.pdf', 'Menunggu', 3, '2341720003', NULL),
+('/uploads/bebas_administrasi_234172004.pdf', 'Diverifikasi', 3, '234172000', NULL);
 
 INSERT INTO dokumen.Komentar (isi_komentar, id_upload) VALUES
-('Dokumen sudah lengkap', 2);
+('Dokumen sudah lengkap', 2),
+('Dokumen sudah lengkap', 3);
