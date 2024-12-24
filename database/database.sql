@@ -114,8 +114,10 @@ INSERT INTO pengguna.[User] (username, password, level) VALUES
 ('2341720005', 'mhs123', 'mahasiswa');
 
 INSERT INTO pengguna.Admin (NIDN, nama, NIK, tempat_lahir, tanggal_lahir, alamat, no_telp, jenis_kelamin, username) VALUES
-('0001010101', 'Dr. Ahmad', '1234567890123456', 'Jakarta', '1980-01-01', 'Jl. Admin 1', '081234567890', 'Laki-laki', 'admin001'),
-('0002020202', 'Dr. Sarah', '1234567890123457', 'Surabaya', '1982-02-02', 'Jl. Admin 2', '081234567891', 'Perempuan', 'admin002');
+('0001010101', 'Dr. Ahmad', '1234567890123456', 'Jakarta', '1980-01-01', 'Jl. Admin 1', '081234567890', 'Laki-laki', 'admin_prodi'),
+('0002020202', 'Dr. Sarah', '1234567890123457', 'Surabaya', '1982-02-02', 'Jl. Admin 2', '081234567891', 'Perempuan', 'admin_akademik'),
+('0003030303', 'Dr. Budi', '1234567890123458', 'Semarang', '1981-04-01', 'Jl. Admin 3', '081833333333', 'Laki-laki', 'admin_perpus')
+('0004030404', 'Dr. Yuni', '1234567890123459', 'Makasar', '1979-05-08', 'Jl. Admin 4', '081833333334', 'Perempuan', 'superadmin');
 
 INSERT INTO pengguna.Mahasiswa (NIM, nama, NIK, tempat_lahir, tanggal_lahir, alamat, no_telp, jenis_kelamin, id_prodi, username) VALUES
 ('2341720001', 'Budi Santoso', '1234567890123458', 'Malang', '2000-03-03', 'Jl. Mhs 1', '081234567892', 'Laki-laki', 1, '2341720001'),
@@ -134,7 +136,7 @@ INSERT INTO dokumen.UploadDokumen (path_dokumen, status, id_dokumen, NIM, NIDN) 
 ('/uploads/skripsi_2341720001.pdf', 'Menunggu', 1, '2341720001', NULL),
 ('/uploads/bebas_lab_2341720002.pdf', 'Diverifikasi', 2, '234172002', NULL),
 ('/uploads/bebas_pustaka_234172003.pdf', 'Menunggu', 3, '2341720003', NULL),
-('/uploads/bebas_administrasi_234172004.pdf', 'Diverifikasi', 3, '234172000', NULL);
+('/uploads/bebas_administrasi_234172004.pdf', 'Diverifikasi', 4, '234172000', NULL);
 
 INSERT INTO dokumen.Komentar (isi_komentar, id_upload) VALUES
 ('Dokumen sudah lengkap', 2),
