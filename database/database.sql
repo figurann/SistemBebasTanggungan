@@ -133,11 +133,14 @@ INSERT INTO dokumen.JenisDokumen (nama_dokumen, tingkat) VALUES
 ('Surat Bebas Administrasi', 'pusat');
 
 INSERT INTO dokumen.UploadDokumen (path_dokumen, status, id_dokumen, NIM, NIDN) VALUES
-('/uploads/skripsi_2341720001.pdf', 'Menunggu', 1, '2341720001', NULL),
-('/uploads/bebas_lab_2341720002.pdf', 'Diverifikasi', 2, '234172002', NULL),
-('/uploads/bebas_pustaka_234172003.pdf', 'Menunggu', 3, '2341720003', NULL),
-('/uploads/bebas_administrasi_234172004.pdf', 'Diverifikasi', 4, '2341720004', NULL);
+('/uploads/skripsi_2341720001.pdf', 'Menunggu', 1, '2341720001', '0001010101'),
+('/uploads/bebas_lab_2341720002.pdf', 'Diverifikasi', 2, '2341720002', '0001010101'),
+('/uploads/bebas_pustaka_234172003.pdf', 'Menunggu', 3, '2341720003', '0003030303'),
+('/uploads/bebas_administrasi_234172004.pdf', 'Diverifikasi', 4, '2341720004', '0002020202');
 
 INSERT INTO dokumen.Komentar (isi_komentar, id_upload) VALUES
-('Dokumen sudah lengkap', 2),
-('Dokumen sudah lengkap', 3);
+('Dokumen sudah lengkap', 12),
+('Dokumen sudah lengkap', 13);
+
+SELECT * FROM dokumen.UploadDokumen;
+
