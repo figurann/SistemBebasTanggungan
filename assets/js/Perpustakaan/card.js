@@ -23,7 +23,7 @@ const dashboardCards = [
     status: "pending",
     progress: 45,
     date: "2024-03-18",
-    action: "Lihat Detail",
+    action: "Lihat daftar",
     image: "../assets/images/perpustakaan/ceklist.jpeg",
     details: {
       fileName: "",
@@ -36,9 +36,9 @@ const dashboardCards = [
 
 // Fungsi untuk membuat kartu dashboard
 function createDashboardCard(cardData) {
-  const actionHtml = cardData.action.toLowerCase().includes("lihat detail")
+  const actionHtml = cardData.action.toLowerCase().includes("lihat detail".toLowerCase())
     ? `<a href="detail_page.html" class="card-action" data-card-id="${cardData.id}">${cardData.action}</a>`
-    : cardData.action.toLowerCase().includes("upload")
+    : cardData.action.toLowerCase().includes("lihat daftar".toLowerCase())
     ? `<a href="upload_page.html" class="card-action" data-card-id="${cardData.id}">${cardData.action}</a>`
     : `<button class="card-action" data-card-id="${cardData.id}">${cardData.action}</button>`;
 
