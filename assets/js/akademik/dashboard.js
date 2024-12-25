@@ -10,11 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Close dropdown when clicking outside
-    document.addEventListener("click", function (e) {
-      if (!profileContainer.contains(e.target)) {
-        profileDropdown.classList.remove("show");
+    document.addEventListener("DOMContentLoaded", () => {
+      const cardContainer = document.getElementById("card-container");
+      if (cardContainer) {
+        cardContainer.innerHTML = dashboardCards.map(createDashboardCard).join("");
+    
+        // Event listener for card actions
+        cardContainer.addEventListener("click", (e) => {
+          const actionButton = e.target.closest(".card-action");
+          if (actionButton && actionButton.tagName.toLowerCase() === 'button') {
+            const cardId = parseInt(actionButton.dataset.cardId);
+            handleCardAction(cardId);
+          }
+        });
       }
-    });
+    
+      // Additional listeners and initialization code
+    });    
   }
 
   // Logout functionality

@@ -118,6 +118,7 @@
 
 /* Status Colors */
 .status-pending {
+  background-color: white;
   color: #ffc107;
 }
 

@@ -2,7 +2,7 @@
 const dashboardCards = [
   {
     id: 1,
-    title: "Pengembalian Buku",
+    title: "Data Mahasiswa Peminjam",
     content: "Lihat daftar peminjaman mahasiswa.",
     status: "pending",
     progress: 70,
@@ -18,28 +18,12 @@ const dashboardCards = [
   },
   {
     id: 2,
-    title: "Status Tanggungan",
-    content: "Upload bukti pembayaran UKT semester ini.",
-    status: "approved",
-    progress: 100,
-    date: "2024-03-19",
-    action: "Lihat Detail",
-    image: "../assets/images/perpustakaan/papanKlip.jpeg",
-    details: {
-      semester: "Genap 2023/2024",
-      amount: "Rp 5.000.000",
-      paymentDate: "2024-02-15",
-      verifiedBy: "Admin Keuangan",
-    },
-  },
-  {
-    id: 3,
-    title: "Verifikasi Dokumen",
-    content: "Upload dokumen bebas peminjaman buku perpustakaan.",
+    title: "Pengembalian buku",
+    content: "Konfirmasi pengembalian buku oleh",
     status: "pending",
     progress: 45,
     date: "2024-03-18",
-    action: "Upload",
+    action: "Lihat Detail",
     image: "../assets/images/perpustakaan/ceklist.jpeg",
     details: {
       fileName: "",
@@ -52,6 +36,12 @@ const dashboardCards = [
 
 // Fungsi untuk membuat kartu dashboard
 function createDashboardCard(cardData) {
+  const actionHtml = cardData.action.toLowerCase().includes("lihat detail")
+    ? `<a href="detail_page.html" class="card-action" data-card-id="${cardData.id}">${cardData.action}</a>`
+    : cardData.action.toLowerCase().includes("upload")
+    ? `<a href="upload_page.html" class="card-action" data-card-id="${cardData.id}">${cardData.action}</a>`
+    : `<button class="card-action" data-card-id="${cardData.id}">${cardData.action}</button>`;
+
   return `
     <div class="dashboard-card">
       <div class="card-icon">
@@ -62,9 +52,7 @@ function createDashboardCard(cardData) {
         <p>${cardData.content}</p>
         <div class="progress-container">
           <div class="progress-bar">
-            <div class="progress-fill" style="width: ${
-              cardData.progress
-            }%;"></div>
+            <div class="progress-fill" style="width: ${cardData.progress}%;"></div>
           </div>
         </div>
         <span class="card-status status-${cardData.status}">
@@ -73,20 +61,19 @@ function createDashboardCard(cardData) {
       </div>
       <div class="card-footer">
         <span class="card-date">${formatDate(cardData.date)}</span>
-        <button class="card-action" data-card-id="${cardData.id}">${
-    cardData.action
-  }</button>
+        ${actionHtml}
       </div>
     </div>
   `;
 }
 
+
 // Fungsi format status
 function formatStatus(status) {
   const statusMap = {
-    pending: "Menunggu",
-    approved: "Disetujui",
-    rejected: "Ditolak",
+    pending: "Pending",
+    approved: "Approved",
+    rejected: "Rejected",
   };
   return statusMap[status] || status;
 }
