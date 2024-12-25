@@ -1,28 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.getElementById("loginForm");
+  const alertContainer = document.querySelector(".alert-container");
 
   function showAlert(type, title, message) {
-    const alertContainer = document.querySelector(".alert-container");
+    // Hapus alert sebelumnya
+    alertContainer.innerHTML = "";
+
     const alertElement = document.createElement("div");
     alertElement.className = `alert ${type}`;
 
     alertElement.innerHTML = `
-      <div class="alert-icon">
-        <i class="material-icons">${
-          type === "success" ? "check_circle" : "error"
-        }</i>
-      </div>
-      <div class="alert-content">
-        <h6 class="alert-title">${title}</h6>
-        <p class="alert-message">${message}</p>
-      </div>
-      <button class="alert-close" onclick="this.closest('.alert').remove()">
-        <i class="material-icons" style="font-size: 18px;">close</i>
-      </button>
-    `;
+          <div class="alert-icon">
+              <i class="material-icons">${
+                type === "success"
+                  ? "check_circle"
+                  : type === "error"
+                  ? "error"
+                  : "warning"
+              }</i>
+          </div>
+          <div class="alert-content">
+              <h6 class="alert-title">${title}</h6>
+              <p class="alert-message">${message}</p>
+          </div>
+          <button class="alert-close" onclick="this.closest('.alert').remove()">
+              <i class="material-icons" style="font-size: 18px;">close</i>
+          </button>
+      `;
 
     alertContainer.appendChild(alertElement);
 
+    // Hapus alert setelah 4 detik
     setTimeout(() => {
       alertElement.style.animation = "fadeOut 0.3s ease forwards";
       setTimeout(() => {
@@ -50,6 +58,8 @@ document.addEventListener("DOMContentLoaded", function () {
           "Berhasil",
           "Login berhasil! Anda akan dialihkan..."
         );
+
+        // Redirect berdasarkan role
         setTimeout(() => {
           switch (result.role) {
             case "mahasiswa":
@@ -63,6 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
               break;
             case "admin_perpus":
               window.location.href = "../modules/perpustakaan/dashboard.php";
+              break;
+            case "superadmin":
+              window.location.href = "../modules/superadmin/dashboard.php";
               break;
             default:
               showAlert("warning", "Peringatan", "Role tidak dikenali!");

@@ -2,33 +2,31 @@
 session_start();
 include '../config/config.php';
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+// Fungsi untuk menangani login
+function handleLogin($conn, $user, $pass)
+{
   try {
-    // Ambil input dari user
-    $user = htmlspecialchars(trim($_POST["username"]));
-    $pass = htmlspecialchars(trim($_POST["password"]));
-
     // Query untuk mendapatkan informasi pengguna
     $query = "SELECT 
-            u.username, 
-            u.password, 
-            u.level as role,
-            COALESCE(m.nama, a.nama) as nama
-        FROM pengguna.[User] u
-        LEFT JOIN pengguna.Mahasiswa m ON u.username = m.username
-        LEFT JOIN pengguna.Admin a ON u.username = a.username
-        WHERE u.username = ?";
+                u.username, 
+                u.password, 
+                u.level as role,
+                COALESCE(m.nama, a.nama) as nama
+            FROM pengguna.[User] u
+            LEFT JOIN pengguna.Mahasiswa m ON u.username = m.username
+            LEFT JOIN pengguna.Admin a ON u.username = a.username
+            WHERE u.username = ?";
 
     $stmt = sqlsrv_prepare($conn, $query, array(&$user));
 
     if ($stmt === false) {
-      throw new Exception("SQL Prepare Error");
+      throw new Exception("SQL Prepare Error: " . print_r(sqlsrv_errors(), true));
     }
 
     $result = sqlsrv_execute($stmt);
 
     if ($result === false) {
-      throw new Exception("Query execution failed");
+      throw new Exception("Query execution failed: " . print_r(sqlsrv_errors(), true));
     }
 
     $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
@@ -40,37 +38,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       $_SESSION['role'] = $row["role"];
       $_SESSION['nama'] = $row["nama"];
 
-      // Redirect sesuai level pengguna
-      if ($row["role"] === "mahasiswa") {
-        header("Location: ../modules/mahasiswa/dashboard.php");
-      } elseif ($row["role"] === "admin_pusat") {
-        header("Location: /dashboard/admin_pusat.php");
-      } elseif ($row["role"] === "admin_jurusan") {
-        header("Location: /dashboard/admin_jurusan.php");
-      } else {
-        header("Location: ../login.php");
-      }
-      exit();
+      return [
+        'success' => true,
+        'role' => $row["role"]
+      ];
     } else {
-      // Login gagal
-      echo json_encode([
-        "success" => false,
-        "message" => "Username atau password salah"
-      ]);
+      return [
+        'success' => false,
+        'message' => "Username atau password salah"
+      ];
     }
   } catch (Exception $e) {
     error_log("Login error: " . $e->getMessage());
-    http_response_code(500);
-    echo json_encode([
-      "success" => false,
-      "message" => "Terjadi kesalahan pada server"
-    ]);
+    return [
+      'success' => false,
+      'message' => "Terjadi kesalahan pada server: " . $e->getMessage()
+    ];
   }
+}
+
+// Proses login untuk request POST
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  $user = htmlspecialchars(trim($_POST["username"]));
+  $pass = htmlspecialchars(trim($_POST["password"]));
+
+  $loginResult = handleLogin($conn, $user, $pass);
+
+  // Kirim response JSON
+  header('Content-Type: application/json');
+  echo json_encode($loginResult);
+
+  // Tutup koneksi database
   sqlsrv_close($conn);
   exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -164,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Custom JS -->
-  <script src="../../assets/js/login.js"></script>
+  <script src="../assets/js/login.js"></script>
 </body>
 
 </html>
