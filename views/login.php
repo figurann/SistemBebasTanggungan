@@ -3,13 +3,13 @@ session_start();
 include '../config/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    try {
-        // Ambil input dari user
-        $user = htmlspecialchars(trim($_POST["username"]));
-        $pass = htmlspecialchars(trim($_POST["password"]));
+  try {
+    // Ambil input dari user
+    $user = htmlspecialchars(trim($_POST["username"]));
+    $pass = htmlspecialchars(trim($_POST["password"]));
 
-        // Query untuk mendapatkan informasi pengguna
-        $query = "SELECT 
+    // Query untuk mendapatkan informasi pengguna
+    $query = "SELECT 
             u.username, 
             u.password, 
             u.level as role,
@@ -19,55 +19,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         LEFT JOIN pengguna.Admin a ON u.username = a.username
         WHERE u.username = ?";
 
-        $stmt = sqlsrv_prepare($conn, $query, array(&$user));
+    $stmt = sqlsrv_prepare($conn, $query, array(&$user));
 
-        if ($stmt === false) {
-            throw new Exception("SQL Prepare Error");
-        }
-
-        $result = sqlsrv_execute($stmt);
-
-        if ($result === false) {
-            throw new Exception("Query execution failed");
-        }
-
-        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-
-        // Validasi password
-        if ($row && $pass === $row["password"]) {
-            // Set session
-            $_SESSION['user'] = $row["username"];
-            $_SESSION['role'] = $row["role"];
-            $_SESSION['nama'] = $row["nama"];
-            
-            // Redirect sesuai level pengguna
-            if ($row["role"] === "mahasiswa") {
-              header("Location: ../modules/mahasiswa/dashboard.php");
-          } elseif ($row["role"] === "admin_pusat") {
-              header("Location: /dashboard/admin_pusat.php");
-          } elseif ($row["role"] === "admin_jurusan") {
-              header("Location: /dashboard/admin_jurusan.php");
-          } else {
-              header("Location: ../login.php");
-          }
-          exit();
-        } else {
-            // Login gagal
-            echo json_encode([
-                "success" => false,
-                "message" => "Username atau password salah"
-            ]);
-        }
-    } catch (Exception $e) {
-        error_log("Login error: " . $e->getMessage());
-        http_response_code(500);
-        echo json_encode([
-            "success" => false,
-            "message" => "Terjadi kesalahan pada server"
-        ]);
+    if ($stmt === false) {
+      throw new Exception("SQL Prepare Error");
     }
-    sqlsrv_close($conn);
-    exit();
+
+    $result = sqlsrv_execute($stmt);
+
+    if ($result === false) {
+      throw new Exception("Query execution failed");
+    }
+
+    $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+
+    // Validasi password
+    if ($row && $pass === $row["password"]) {
+      // Set session
+      $_SESSION['user'] = $row["username"];
+      $_SESSION['role'] = $row["role"];
+      $_SESSION['nama'] = $row["nama"];
+
+      // Redirect sesuai level pengguna
+      if ($row["role"] === "mahasiswa") {
+        header("Location: ../modules/mahasiswa/dashboard.php");
+      } elseif ($row["role"] === "admin_pusat") {
+        header("Location: /dashboard/admin_pusat.php");
+      } elseif ($row["role"] === "admin_jurusan") {
+        header("Location: /dashboard/admin_jurusan.php");
+      } else {
+        header("Location: ../login.php");
+      }
+      exit();
+    } else {
+      // Login gagal
+      echo json_encode([
+        "success" => false,
+        "message" => "Username atau password salah"
+      ]);
+    }
+  } catch (Exception $e) {
+    error_log("Login error: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode([
+      "success" => false,
+      "message" => "Terjadi kesalahan pada server"
+    ]);
+  }
+  sqlsrv_close($conn);
+  exit();
 }
 ?>
 

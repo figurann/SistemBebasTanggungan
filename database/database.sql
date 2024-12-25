@@ -4,7 +4,6 @@ GO
 USE bebastang;
 GO
 
-
 -- Create Schemas
 CREATE SCHEMA pengguna AUTHORIZATION dbo;
 GO
@@ -143,4 +142,3 @@ INSERT INTO dokumen.Komentar (isi_komentar, id_upload) VALUES
 ('Dokumen sudah lengkap', 13);
 
 SELECT * FROM dokumen.UploadDokumen;
-

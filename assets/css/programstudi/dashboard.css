@@ -1,0 +1,159 @@
+/* ========= Base Styles ========= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+/* ========= Layout & Container Styles ========= */
+.container {
+  min-height: calc(100vh - 64px);
+}
+
+.content {
+  padding: 20px 30px;
+}
+
+.main-content {
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 124px);
+}
+
+/* ========= Header & Title Styles ========= */
+.title-section {
+  background-color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+}
+
+.title-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.main-title {
+  color: #333;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.5rem;
+}
+
+/* ========= Profile Section Styles ========= */
+.profile-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.profile-container:hover {
+  background-color: #f8f9fa;
+}
+
+.profile-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  min-width: 200px;
+  border-radius: 4px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.profile-dropdown.show {
+  display: block;
+  animation: dropdownFade 0.3s ease;
+}
+
+.profile-dropdown a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.profile-dropdown a:hover {
+  background-color: #f8f9fa;
+  color: #007bff;
+}
+
+/* ========= Animations ========= */
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========= Responsive Styles ========= */
+@media (max-width: 768px) {
+  .title-section {
+    padding: 15px;
+  }
+
+  .main-title {
+    font-size: 1.2rem;
+  }
+
+  .username {
+    display: none;
+  }
+
+  .profile-dropdown {
+    right: -10px;
+  }
+}

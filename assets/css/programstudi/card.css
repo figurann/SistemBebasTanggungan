@@ -1,0 +1,152 @@
+/* Card Container */
+#card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Card Base Styles */
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Card Components */
+.card-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  height: 120px;
+}
+
+.card-icon img {
+  width: auto;
+  height: auto;
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.card-content {
+  padding: 0 10px;
+  margin: 12px 0;
+}
+
+.card-content p {
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+/* Progress Bar */
+.progress-container {
+  margin: 12px 0;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  transition: width 0.5s ease, background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Card Footer */
+.card-footer {
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.card-status {
+  display: inline-block;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.card-date {
+  display: block;
+  margin: 5px 0;
+}
+
+.card-action {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 8px;
+}
+
+.card-action:hover {
+  background-color: #0056b3;
+}
+
+/* Status Colors */
+.status-pending {
+  color: #ffc107;
+}
+
+.status-approved {
+  color: #28a745;
+}
+
+.status-rejected {
+  color: #dc3545;
+}
+
+/* Card Hover Effects & Animations */
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card:hover .card-icon img {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  #card-container {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .dashboard-card {
+    max-width: 100%;
+  }
+}
