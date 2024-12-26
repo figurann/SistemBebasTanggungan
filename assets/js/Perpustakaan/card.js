@@ -1,44 +1,26 @@
 // Data dummy untuk kartu dashboard mahasiswa
 const dashboardCards = [
-  {
-    id: 1,
-    title: "Data Mahasiswa Peminjam",
-    content: "Lihat daftar peminjaman mahasiswa.",
-    status: "pending",
-    progress: 70,
-    date: "2024-03-20",
-    action: "Lihat Detail",
-    image: "../assets/images/perpustakaan/buku.jpeg",
-    details: {
-      fileName: "",
-      uploadDate: "",
-      verifiedBy: "",
-      notes: "",
+    {
+      id: 1,
+      title: "Pengembalian buku",
+      content: "Konfirmasi pengembalian buku oleh",
+      status: "pending",
+      progress: 45,
+      date: "2024-03-18",
+      action: "Lihat daftar",
+      image: "../assets/images/perpustakaan/ceklist.jpeg",
+      details: {
+        fileName: "",
+        uploadDate: "",
+        verifiedBy: "",
+        notes: "",
+      },
     },
-  },
-  {
-    id: 2,
-    title: "Pengembalian buku",
-    content: "Konfirmasi pengembalian buku oleh",
-    status: "pending",
-    progress: 45,
-    date: "2024-03-18",
-    action: "Lihat daftar",
-    image: "../assets/images/perpustakaan/ceklist.jpeg",
-    details: {
-      fileName: "",
-      uploadDate: "",
-      verifiedBy: "",
-      notes: "",
-    },
-  },
-];
+  ];
 
 // Fungsi untuk membuat kartu dashboard
 function createDashboardCard(cardData) {
-  const actionHtml = cardData.action.toLowerCase().includes("lihat detail".toLowerCase())
-    ? `<a href="detail_page.html" class="card-action" data-card-id="${cardData.id}">${cardData.action}</a>`
-    : cardData.action.toLowerCase().includes("lihat daftar".toLowerCase())
+  const actionHtml = cardData.action.toLowerCase().includes("lihat daftar".toLowerCase())
     ? `<a href="upload_page.html" class="card-action" data-card-id="${cardData.id}">${cardData.action}</a>`
     : `<button class="card-action" data-card-id="${cardData.id}">${cardData.action}</button>`;
 
@@ -71,7 +53,6 @@ function createDashboardCard(cardData) {
 // Fungsi format status
 function formatStatus(status) {
   const statusMap = {
-    pending: "Pending",
     approved: "Approved",
     rejected: "Rejected",
   };

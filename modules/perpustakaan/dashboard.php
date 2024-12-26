@@ -103,7 +103,7 @@
     </template>
 
     <!-- Scripts -->
-    <script src="../../assets/js/Perpustakaan/dashboard.js"></script>
-    <script src="../../assets/js/Perpustakaan/card.js"></script>
+    <script src="../../assets/js/perpustakaan/dashboard.js"></script>
+    <script src="../../assets/js/perpustakaan/card.js"></script>
   </body>
 </html>

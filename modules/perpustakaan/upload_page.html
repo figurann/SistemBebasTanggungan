@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Perpustakaan</title>
+    <!-- Pastikan CSS yang benar dimuat, ubah 'upload_page.html' ke 'upload_page.css' -->
+    <link rel="stylesheet" href="../../assets/css/perpustakaan/upload_page.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="title-section">
+        <div class="title-container">
+            <a href="../../mahasiswa/dashboard.html" class="title-link">
+                <img
+                    src="../../assets/images/logo_polinema.png"
+                    alt="Logo Polinema"
+                    class="logo"
+                />
+                <h1 class="main-title">Sistem Bebas Tanggungan</h1>
+            </a>
+        </div>
+
+        <div class="header-icons">
+            <div class="profile-container">
+                <img
+                    src="../../assets/images/mahasiswa/mahasiswa_1.jpg"
+                    alt="User Profile"
+                    class="profile-pic"
+                />
+                <span class="username">2341760168</span>
+                <div class="profile-dropdown">
+                    <a href="../../forgot_password.html">Reset Password</a>
+                    <a href="../../login.html" id="logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content Section -->
+    <div class="container">
+        <h1>Admin Perpustakaan</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Mahasiswa</th>
+                    <th>Nama Buku</th>
+                    <th>Tanggal Peminjaman</th>
+                    <th>Tanggal Pengembalian</th>
+                    <th>Konfirmasi</th>
+                    <th>Tanggungan</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Data akan dimuat di sini oleh JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pastikan untuk menggunakan 'upload_page.js' sebagai sumber script eksternal -->
+    <<script src="../../assets/js/Perpustakaan/upload_page.js"></script>
+</body>
+</html>
