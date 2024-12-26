@@ -36,10 +36,10 @@
                 <span class="username">Program Studi</span>
                 <div class="profile-dropdown">
                     <a href="../../views/forgot_password.php" class="dropdown-item">
-                        <i class="fas fa-key"></i> Reset Password
+                        Reset Password
                     </a>
                     <a href="../../views/login.php" id="logout" class="dropdown-item">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                        Logout
                     </a>
                 </div>
             </div>

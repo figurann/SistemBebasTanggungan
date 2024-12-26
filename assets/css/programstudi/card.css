@@ -262,29 +262,3 @@
   background-color: #28a745;
   color: white;
 }
-
-/* ========= Toast Notification ========= */
-.toast {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: #333;
-  color: white;
-  padding: 15px;
-  border-radius: 5px;
-  display: none;
-  z-index: 1100;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  align-items: center;
-  gap: 10px;
-}
-
-.toast-content {
-  display: flex;
-  align-items: center;
-}
-
-.toast-icon {
-  margin-right: 10px;
-  font-size: 20px;
-}
