@@ -1,114 +1,195 @@
-// ========= Event Listeners Initialization =========
-document.addEventListener("DOMContentLoaded", initializeApp);
-window.onerror = handleGlobalError;
-
-// ========= DOM Elements =========
-const DOM = {
-  navLinks: () => document.querySelectorAll(".nav-links li"),
-  profileContainer: () => document.querySelector(".profile-container"),
-  profileDropdown: () => document.querySelector(".profile-dropdown"),
-  logoutButton: () => document.getElementById("logout"),
+// ========= Konfigurasi =========
+const CONFIG = {
+  PATHS: {
+    LOGOUT: "../../views/login.php",
+  },
+  SELECTORS: {
+    NAV_LINKS: ".nav-links li",
+    PROFILE_CONTAINER: ".profile-container",
+    PROFILE_DROPDOWN: ".profile-dropdown",
+    LOGOUT_BUTTON: "#logout",
+  },
+  CLASSES: {
+    HOVER: "hover",
+    ACTIVE: "active",
+  },
+  TIMEOUT: {
+    TOAST: 3000,
+    ERROR: 3000,
+  },
 };
 
-// ========= Main Application Initialize =========
-function initializeApp() {
-  const elements = {
-    navLinks: DOM.navLinks(),
-    profileContainer: DOM.profileContainer(),
-    profileDropdown: DOM.profileDropdown(),
-    logoutButton: DOM.logoutButton(),
-  };
+// ========= Utilitas =========
+const Utils = {
+  createElement(tag, className, content) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (content) element.textContent = content;
+    return element;
+  },
 
-  initializeNavigationHandlers(elements);
-  initializeProfileHandlers(elements);
-  initializeLogoutHandler(elements);
-  setActiveMenu(elements.navLinks);
-}
+  showNotification(message, type = "info") {
+    const toast = document.getElementById("notification-toast");
+    const toastMessage = toast.querySelector(".toast-message");
+    const toastIcon = toast.querySelector(".toast-icon");
 
-// ========= Navigation Handlers =========
-function initializeNavigationHandlers({ navLinks }) {
-  navLinks.forEach((link) => {
-    link.addEventListener("mouseover", function () {
-      this.classList.add("hover");
-    });
-    link.addEventListener("mouseout", function () {
-      this.classList.remove("hover");
-    });
-    link.addEventListener("click", function (e) {
-      handleNavigation(e, this, navLinks);
-    });
-  });
-}
+    toastMessage.textContent = message;
 
-function handleNavigation(event, clickedLink, allLinks) {
-  if (!clickedLink.classList.contains("dropdown")) {
-    allLinks.forEach((item) => item.classList.remove("active"));
-    clickedLink.classList.add("active");
-  }
-}
+    const styles = {
+      success: {
+        backgroundColor: "#28a745",
+        iconClass: "fas fa-check-circle",
+      },
+      error: {
+        backgroundColor: "#dc3545",
+        iconClass: "fas fa-exclamation-circle",
+      },
+      info: {
+        backgroundColor: "#333",
+        iconClass: "fas fa-info-circle",
+      },
+    };
 
-// ========= Profile Handlers =========
-function initializeProfileHandlers({ profileContainer, profileDropdown }) {
-  document.addEventListener("click", (event) => {
-    if (!profileContainer.contains(event.target)) {
-      profileDropdown.style.display = "none";
-    }
-  });
+    const selectedStyle = styles[type] || styles.info;
 
-  profileContainer.addEventListener("mouseenter", () => {
-    profileDropdown.style.display = "block";
-  });
+    toast.style.backgroundColor = selectedStyle.backgroundColor;
+    toastIcon.className = `${selectedStyle.iconClass} toast-icon`;
 
-  profileContainer.addEventListener("mouseleave", () => {
-    profileDropdown.style.display = "none";
-  });
-}
+    toast.style.display = "flex";
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, CONFIG.TIMEOUT.TOAST);
+  },
 
-// ========= Logout Handler =========
-function initializeLogoutHandler({ logoutButton }) {
-  if (logoutButton) {
-    logoutButton.addEventListener("click", handleLogout);
-  }
-}
+  handleNetworkError(error) {
+    console.error("Kesalahan jaringan:", error);
+    this.showNotification("Terjadi kesalahan jaringan", "error");
+  },
+};
 
-function handleLogout(event) {
-  event.preventDefault();
-  console.log("Logout button clicked. Redirecting to login.php...");
+// ========= Manajemen DOM =========
+const DOMManager = {
+  getElements() {
+    return {
+      navLinks: document.querySelectorAll(CONFIG.SELECTORS.NAV_LINKS),
+      profileContainer: document.querySelector(
+        CONFIG.SELECTORS.PROFILE_CONTAINER
+      ),
+      profileDropdown: document.querySelector(
+        CONFIG.SELECTORS.PROFILE_DROPDOWN
+      ),
+      logoutButton: document.querySelector(CONFIG.SELECTORS.LOGOUT_BUTTON),
+    };
+  },
 
-  const logoutPath = "../../views/login.php";
-
-  fetch(logoutPath, { method: "HEAD" })
-    .then((response) => {
-      if (response.ok) {
-        window.location.href = logoutPath;
-      } else {
-        console.error("Error: File login.php not found.");
-        alert("Error: Cannot find the login page.");
+  setActiveMenu(navLinks) {
+    const currentPath = window.location.pathname;
+    navLinks.forEach((link) => {
+      const anchor = link.querySelector("a");
+      if (anchor && anchor.getAttribute("href") === currentPath) {
+        link.classList.add(CONFIG.CLASSES.ACTIVE);
       }
-    })
-    .catch(() => {
-      console.error("Network error. Redirecting with fallback...");
-      window.location.assign(logoutPath);
     });
-}
+  },
+};
 
-// ========= Menu State Management =========
-function setActiveMenu(navLinks) {
-  const currentPath = window.location.pathname;
-  navLinks.forEach((link) => {
-    const anchor = link.querySelector("a");
-    if (anchor && anchor.getAttribute("href") === currentPath) {
-      link.classList.add("active");
+// ========= Event Handlers =========
+const EventHandlers = {
+  initializeNavigation(navLinks) {
+    navLinks.forEach((link) => {
+      link.addEventListener("mouseover", () =>
+        link.classList.add(CONFIG.CLASSES.HOVER)
+      );
+
+      link.addEventListener("mouseout", () =>
+        link.classList.remove(CONFIG.CLASSES.HOVER)
+      );
+
+      link.addEventListener("click", (e) =>
+        this.handleNavClick(e, link, navLinks)
+      );
+    });
+  },
+
+  handleNavClick(event, clickedLink, allLinks) {
+    if (!clickedLink.classList.contains("dropdown")) {
+      allLinks.forEach((item) => item.classList.remove(CONFIG.CLASSES.ACTIVE));
+      clickedLink.classList.add(CONFIG.CLASSES.ACTIVE);
     }
-  });
+  },
+
+  initializeProfileDropdown(profileContainer, profileDropdown) {
+    document.addEventListener("click", (event) => {
+      if (!profileContainer.contains(event.target)) {
+        profileDropdown.style.display = "none";
+      }
+    });
+
+    profileContainer.addEventListener("mouseenter", () => {
+      profileDropdown.style.display = "block";
+    });
+
+    profileContainer.addEventListener("mouseleave", () => {
+      profileDropdown.style.display = "none";
+    });
+  },
+
+  initializeLogout(logoutButton) {
+    if (logoutButton) {
+      logoutButton.addEventListener("click", this.handleLogout);
+    }
+  },
+
+  handleLogout(event) {
+    event.preventDefault();
+
+    fetch(CONFIG.PATHS.LOGOUT, { method: "HEAD" })
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = CONFIG.PATHS.LOGOUT;
+        } else {
+          Utils.showNotification(
+            "Tidak dapat menemukan halaman login",
+            "error"
+          );
+        }
+      })
+      .catch((error) => {
+        Utils.handleNetworkError(error);
+        window.location.assign(CONFIG.PATHS.LOGOUT);
+      });
+  },
+};
+
+// ========= Inisialisasi Aplikasi =========
+function initializeApp() {
+  const elements = DOMManager.getElements();
+
+  EventHandlers.initializeNavigation(elements.navLinks);
+  EventHandlers.initializeProfileDropdown(
+    elements.profileContainer,
+    elements.profileDropdown
+  );
+  EventHandlers.initializeLogout(elements.logoutButton);
+
+  DOMManager.setActiveMenu(elements.navLinks);
 }
 
-// ========= Error Handling =========
+// ========= Error Handling Global =========
 function handleGlobalError(msg, url, lineNo, columnNo, error) {
-  console.error(
-    `Error: ${msg}\nURL: ${url}\nLine: ${lineNo}\nColumn: ${columnNo}\nError object: ${JSON.stringify(
-      error
-    )}`
-  );
+  console.error(`  
+    Error: ${msg}  
+    URL: ${url}  
+    Line: ${lineNo}  
+    Column: ${columnNo}  
+    Error object: ${JSON.stringify(error)}  
+  `);
+
+  Utils.showNotification("Terjadi kesalahan tidak terduga", "error");
+
   return false;
 }
+
+// ========= Event Listeners =========
+document.addEventListener("DOMContentLoaded", initializeApp);
+window.onerror = handleGlobalError;
