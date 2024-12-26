@@ -119,53 +119,89 @@ function showModal(modalType, data) {
 function createModalContent(type, data) {
   switch (type) {
     case "upload":
-      return `
-              <div class="modal">
-                  <div class="modal-content">
-                      <h3>Upload Dokumen - ${data.title}</h3>
-                      <form id="uploadForm">
-                          <input type="file" class="file-input" required>
-                          <div class="modal-buttons">
-                              <button type="button" class="modal-button modal-button-secondary" onclick="closeModal(this)">Batal</button>
-                              <button type="submit" class="modal-button modal-button-primary">Upload</button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-          `;
+      if (data.title == 'Biaya UKT') { 
+        return `
+          <div class="modal">
+            <div class="modal-content">
+              <h3>Upload Dokumen - ${data.title}</h3>
+              <form action="upload.php" method="post" enctype="multipart/form-data">
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="hidden" name="jenisDokumen" value="${data.title}">
+                <div class="modal-buttons">
+                  <button type="button" class="modal-button modal-button-secondary" onclick="closeModal(this)">Batal</button>
+                  <input type="submit" value="Upload File" name="submit" class="modal-button modal-button-primary">
+                </div>
+              </form>
+            </div>
+          </div>
+        `;
+      } else if (data.title == 'Laporan Tugas Akhir') { 
+        return `
+          <div class="modal">
+            <div class="modal-content">
+              <h3>Upload Dokumen - ${data.title}</h3>
+              <form action="upload.php" method="post" enctype="multipart/form-data">
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="hidden" name="jenisDokumen" value="${data.title}">
+                <div class="modal-buttons">
+                  <button type="button" class="modal-button modal-button-secondary" onclick="closeModal(this)">Batal</button>
+                  <input type="submit" value="Upload File" name="submit" class="modal-button modal-button-primary">
+                </div>
+              </form>
+            </div>
+          </div>
+        `;
+      } else if (data.title == 'Surat Bebas Peminjaman Buku') { 
+        return `
+          <div class="modal">
+            <div class="modal-content">
+              <h3>Upload Dokumen - ${data.title}</h3>
+              <form action="upload.php" method="post" enctype="multipart/form-data">
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="hidden" name="jenisDokumen" value="${data.title}">
+                <div class="modal-buttons">
+                  <button type="button" class="modal-button modal-button-secondary" onclick="closeModal(this)">Batal</button>
+                  <input type="submit" value="Upload File" name="submit" class="modal-button modal-button-primary">
+                </div>
+              </form>
+            </div>
+          </div>
+        `;
+      }
+      break;
+
     case "detail":
       return `
-              <div class="modal">
-                  <div class="modal-content">
-                      <h3>Detail ${data.title}</h3>
-                      <div class="detail-content">
-                          <p><strong>Status:</strong> ${data.status}</p>
-                          <p><strong>Progress:</strong> ${data.progress}%</p>
-                          <p><strong>Tanggal:</strong> ${formatDate(
-                            data.date
-                          )}</p>
-                      </div>
-                      <div class="modal-buttons">
-                          <button class="modal-button modal-button-secondary" onclick="closeModal(this)">Tutup</button>
-                      </div>
-                  </div>
-              </div>
-          `;
+        <div class="modal">
+          <div class="modal-content">
+            <h3>Detail ${data.title}</h3>
+            <div class="detail-content">
+              <p><strong>Status:</strong> ${data.status}</p>
+              <p><strong>Progress:</strong> ${data.progress}%</p>
+              <p><strong>Tanggal:</strong> ${formatDate(data.date)}</p>
+            </div>
+            <div class="modal-buttons">
+              <button class="modal-button modal-button-secondary" onclick="closeModal(this)">Tutup</button>
+            </div>
+          </div>
+        </div>
+      `;
+
     case "verification":
       return `
-              <div class="modal">
-                  <div class="modal-content">
-                      <h3>Verifikasi ${data.title}</h3>
-                      <div class="detail-content">
-                          <p>Status verifikasi sedang dalam proses.</p>
-                          <p>Silahkan cek kembali nanti.</p>
-                      </div>
-                      <div class="modal-buttons">
-                          <button class="modal-button modal-button-secondary" onclick="closeModal(this)">Tutup</button>
-                      </div>
-                  </div>
-              </div>
-          `;
+        <div class="modal">
+          <div class="modal-content">
+            <h3>Verifikasi ${data.title}</h3>
+            <div class="detail-content">
+              <p>Status verifikasi sedang dalam proses.</p>
+              <p>Silahkan cek kembali nanti.</p>
+            </div>
+            <div class="modal-buttons">
+              <button class="modal-button modal-button-secondary" onclick="closeModal(this)">Tutup</button>
+            </div>
+          </div>
+        </div>
+      `;
   }
 }
 
