@@ -1,129 +1,115 @@
-// Inisialisasi icons
-lucide.createIcons();
+document.addEventListener("DOMContentLoaded", function () {
+  // Add page transition class
+  document.body.classList.add("page-transition");
 
-// DOM Elements
-const modal = document.getElementById("documentModal");
-const closeModal = document.querySelector(".close-modal");
-const notification = document.getElementById("notification");
-const searchInput = document.querySelector(".search-box input");
-const filterSelects = document.querySelectorAll(".filter-select");
+  // Search and filter functionality
+  const searchInput = document.getElementById("searchInput");
+  const statusFilter = document.getElementById("statusFilter");
+  const kegiatanFilter = document.getElementById("kegiatanFilter");
+  const dataTable = document.getElementById("dataTable");
+  const tableRows = dataTable.getElementsByTagName("tr");
 
-// Event Listeners
-closeModal.onclick = () => (modal.style.display = "none");
-window.onclick = (e) => {
-  if (e.target == modal) {
-    modal.style.display = "none";
+  function filterTable() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const statusValue = statusFilter.value;
+    const kegiatanValue = kegiatanFilter.value;
+
+    for (let i = 1; i < tableRows.length; i++) {
+      const row = tableRows[i];
+      const nim = row.getAttribute("data-nim").toLowerCase();
+      const name = row.cells[1].textContent.toLowerCase();
+      const kegiatan = row.getAttribute("data-kegiatan");
+      const status = row.getAttribute("data-status");
+
+      const matchesSearch =
+        nim.includes(searchTerm) || name.includes(searchTerm);
+      const matchesStatus = statusValue === "all" || status === statusValue;
+      const matchesKegiatan =
+        kegiatanValue === "all" || kegiatan === kegiatanValue;
+
+      if (matchesSearch && matchesStatus && matchesKegiatan) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    }
   }
-};
 
-// Search functionality
-searchInput.addEventListener("input", function (e) {
-  const searchTerm = e.target.value.toLowerCase();
-  const rows = document.querySelectorAll(".data-table tbody tr");
+  searchInput.addEventListener("input", filterTable);
+  statusFilter.addEventListener("change", filterTable);
+  kegiatanFilter.addEventListener("change", filterTable);
 
-  rows.forEach((row) => {
-    const nim = row.cells[0].textContent.toLowerCase();
-    const nama = row.cells[1].textContent.toLowerCase();
-    const visible = nim.includes(searchTerm) || nama.includes(searchTerm);
-    row.style.display = visible ? "" : "none";
-  });
-});
+  // Modal functionality
+  const modal = document.getElementById("previewModal");
+  const closeModal = document.getElementsByClassName("close-modal")[0];
 
-// Filter functionality
-filterSelects.forEach((select) => {
-  select.addEventListener("change", function () {
-    applyFilters();
-  });
-});
-
-function applyFilters() {
-  const kategoriFilter = filterSelects[0].value.toLowerCase();
-  const statusFilter = filterSelects[1].value.toLowerCase();
-
-  const rows = document.querySelectorAll(".data-table tbody tr");
-
-  rows.forEach((row) => {
-    const kategori = row.cells[2].textContent.toLowerCase();
-    const status = row.cells[5].textContent.toLowerCase();
-
-    const matchKategori = !kategoriFilter || kategori === kategoriFilter;
-    const matchStatus = !statusFilter || status === statusFilter;
-
-    row.style.display = matchKategori && matchStatus ? "" : "none";
-  });
-}
-
-// View Document
-function viewDocument(id) {
-  // Simulasi data dokumen
-  const dummyDetails = {
-    nim: "2141720001",
-    nama: "Ahmad Fauzi",
-    kategori: "Prestasi",
-    kegiatan: "Juara 1 Lomba Programming",
-    tanggal: "15/01/2024",
-    bukti: "assets/images/sample-certificate.jpg",
+  window.openModal = function () {
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
   };
 
-  const detailsHTML = `
-        <div class="document-details">
-            <p><strong>NIM:</strong> ${dummyDetails.nim}</p>
-            <p><strong>Nama:</strong> ${dummyDetails.nama}</p>
-            <p><strong>Kategori:</strong> ${dummyDetails.kategori}</p>
-            <p><strong>Kegiatan:</strong> ${dummyDetails.kegiatan}</p>
-            <p><strong>Tanggal:</strong> ${dummyDetails.tanggal}</p>
-        </div>
-    `;
+  window.closeModal = function () {
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
+  };
 
-  document.getElementById("documentDetails").innerHTML = detailsHTML;
-  document.getElementById("previewImage").src = dummyDetails.bukti;
-  modal.style.display = "block";
-}
+  closeModal.onclick = window.closeModal;
 
-// Approve SKKM
-function approveSKKM(id) {
-  // Simulasi API call
-  setTimeout(() => {
-    showNotification("SKKM berhasil disetujui", "success");
-    updateStatus(id, "approved");
-  }, 500);
-}
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      window.closeModal();
+    }
+  };
 
-// Reject SKKM
-function rejectSKKM(id) {
-  // Simulasi API call
-  setTimeout(() => {
-    showNotification("SKKM ditolak", "error");
-    updateStatus(id, "rejected");
-  }, 500);
-}
+  // Document preview functionality
+  window.viewDocument = function (nim) {
+    const pdfPath = `../../../assets/documents/skkm/${nim}.pdf`;
+    const previewFrame = document.getElementById("previewFrame");
+    previewFrame.src = pdfPath;
+    openModal();
+  };
 
-// Update status in UI
-function updateStatus(id, status) {
-  const row = document.querySelector(`tr[data-id="${id}"]`);
-  if (row) {
+  // Verification functionality
+  window.verifySKKM = function (nim, action) {
+    const row = document.querySelector(`tr[data-nim="${nim}"]`);
     const statusCell = row.querySelector(".status-cell");
-    statusCell.className = `status-cell ${status}`;
-    statusCell.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+    const actionButtons = row.querySelector("td:last-child");
 
-    // Hide action buttons
-    const actionButtons = row.querySelector(".action-buttons");
-    actionButtons.innerHTML = `
-            <button class="btn btn-view" onclick="viewDocument(${id})">
-                <i data-lucide="file-text"></i>
-                View
-            </button>
-        `;
-    lucide.createIcons();
+    if (action === "approve") {
+      statusCell.textContent = "Disetujui";
+      statusCell.className = "status-cell approved";
+    } else {
+      statusCell.textContent = "Ditolak";
+      statusCell.className = "status-cell rejected";
+    }
+
+    // Remove action buttons after verification
+    actionButtons.innerHTML = "";
+
+    // Show notification
+    showNotification(
+      action === "approve" ? "SKKM berhasil diverifikasi!" : "SKKM ditolak!",
+      action === "approve" ? "success" : "error"
+    );
+  };
+
+  // Notification function
+  function showNotification(message, type) {
+    const notification = document.createElement("div");
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.classList.add("show");
+    }, 100);
+
+    setTimeout(() => {
+      notification.classList.remove("show");
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }, 3000);
   }
-}
-
-// Show notification
-function showNotification(message, type) {
-  notification.textContent = message;
-  notification.className = `notification ${type} show`;
-
-  setTimeout(() => {
-    notification.classList.remove("show");
-  }, 3000);
-}
+});

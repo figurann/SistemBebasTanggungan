@@ -1,22 +1,50 @@
 <?php
-// Simulasi session
-$_SESSION['user_id'] = 1;
-$_SESSION['role'] = 'admin';
-$_SESSION['nama'] = 'Admin SKKM';
-
-// Data dummy untuk SKKM
+// Data statis untuk contoh tampilan SKKM
 $dummy_data = [
     [
-        'id' => 1,
-        'nim' => '2141720001',
-        'nama_mahasiswa' => 'Ahmad Fauzi',
-        'kategori' => 'Prestasi',
-        'kegiatan' => 'Juara 1 Lomba Programming',
-        'tanggal' => '2024-01-15',
+        'nim' => '2024001',
+        'nama' => 'Mahasiswa 1',
+        'prodi' => 'Teknik Informatika',
+        'jenis_kegiatan' => 'Organisasi Kampus',
+        'nama_kegiatan' => 'Ketua BEM',
+        'poin' => 20,
+        'tahun' => '2023',
         'status' => 'pending',
-        'bukti' => 'sertifikat_1.pdf'
+        'bukti_path' => 'skkm_2024001.pdf'
     ],
-    // ... data lainnya tetap sama ...
+    [
+        'nim' => '2024002',
+        'nama' => 'Mahasiswa 2',
+        'prodi' => 'Sistem Informasi',
+        'jenis_kegiatan' => 'Lomba',
+        'nama_kegiatan' => 'Juara 1 Hackathon',
+        'poin' => 15,
+        'tahun' => '2023',
+        'status' => 'approved',
+        'bukti_path' => 'skkm_2024002.pdf'
+    ],
+    [
+        'nim' => '2024003',
+        'nama' => 'Mahasiswa 3',
+        'prodi' => 'Teknik Informatika',
+        'jenis_kegiatan' => 'Seminar',
+        'nama_kegiatan' => 'Workshop AI',
+        'poin' => 10,
+        'tahun' => '2023',
+        'status' => 'rejected',
+        'bukti_path' => 'skkm_2024003.pdf'
+    ],
+    [
+        'nim' => '2024004',
+        'nama' => 'Mahasiswa 4',
+        'prodi' => 'Sistem Informasi',
+        'jenis_kegiatan' => 'Kepanitiaan',
+        'nama_kegiatan' => 'Panitia Dies Natalis',
+        'poin' => 8,
+        'tahun' => '2023',
+        'status' => 'pending',
+        'bukti_path' => 'skkm_2024004.pdf'
+    ],
 ];
 ?>
 
@@ -27,139 +55,124 @@ $dummy_data = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verifikasi SKKM - Sistem Bebas Tanggungan</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/images/logo_polinema.png" type="image/x-icon">
     <!-- CSS -->
-    <link rel="stylesheet" href="../../../assets/css/programstudi/verifikasi/verifikasi-kompensasi.css">
-    <!-- Tambahkan base styling -->
-    <style>
-        .page-transition {
-            opacity: 0;
-            animation: fadeIn 0.3s ease forwards;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .data-table td {
-            vertical-align: middle;
-        }
-    </style>
+    <link rel="stylesheet" href="../../../assets/css/programstudi/verifikasi/verifikasi-skkm.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
-    <div class="container page-transition">
-        <div class="content-wrapper">
-            <!-- Header -->
-            <header class="page-header">
-                <div class="header-content">
-                    <img src="./assets/images/logo-polinema.png" alt="Logo Polinema" class="logo">
-                    <h1 class="page-title">Verifikasi SKKM</h1>
-                </div>
-                <div class="header-actions">
-                    <button class="btn btn-secondary">
-                        <i data-lucide="download"></i>
-                        Export Data
-                    </button>
-                </div>
-            </header>
+    <div class="container">
+        <div class="page-header">
+            <div class="header-content">
+                <img src="../../../assets/images/logo_polinema.png" alt="Logo Polinema" class="logo">
+                <h1 class="page-title">Verifikasi SKKM</h1>
+            </div>
+            <a href="../dashboard.php" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </a>
+        </div>
 
-            <!-- Main Content -->
-            <div class="verification-card">
-                <!-- Search and Filter -->
-                <div class="search-filter">
-                    <div class="search-box">
-                        <input type="text" placeholder="Cari berdasarkan NIM atau nama...">
-                        <i class="search-icon" data-lucide="search"></i>
-                    </div>
-                    <div class="filter-group">
-                        <select class="filter-select">
-                            <option value="">Semua Kategori</option>
-                            <option value="prestasi">Prestasi</option>
-                            <option value="organisasi">Organisasi</option>
-                            <option value="pelatihan">Pelatihan</option>
-                            <option value="kompetisi">Kompetisi</option>
-                        </select>
-                        <select class="filter-select">
-                            <option value="">Semua Status</option>
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
-                        </select>
-                    </div>
+        <div class="verification-card">
+            <div class="search-filter">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Cari berdasarkan NIM atau Nama...">
                 </div>
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">Semua Status</option>
+                    <option value="pending">Menunggu Verifikasi</option>
+                    <option value="approved">Disetujui</option>
+                    <option value="rejected">Ditolak</option>
+                </select>
+                <select id="kegiatanFilter" class="filter-select">
+                    <option value="all">Semua Jenis Kegiatan</option>
+                    <option value="Organisasi Kampus">Organisasi Kampus</option>
+                    <option value="Lomba">Lomba</option>
+                    <option value="Seminar">Seminar</option>
+                    <option value="Kepanitiaan">Kepanitiaan</option>
+                </select>
+            </div>
 
-                <!-- Table -->
-                <div class="table-wrapper">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>NIM</th>
-                                <th>Nama</th>
-                                <th>Kategori</th>
-                                <th>Kegiatan</th>
-                                <th>Tanggal</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($dummy_data as $data): ?>
-                                <tr data-id="<?php echo $data['id']; ?>">
-                                    <td><?php echo $data['nim']; ?></td>
-                                    <td><?php echo $data['nama_mahasiswa']; ?></td>
-                                    <td><?php echo $data['kategori']; ?></td>
-                                    <td><?php echo $data['kegiatan']; ?></td>
-                                    <td><?php echo date('d/m/Y', strtotime($data['tanggal'])); ?></td>
-                                    <td>
-                                        <span class="status-cell <?php echo $data['status']; ?>">
-                                            <?php echo ucfirst($data['status']); ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button class="btn btn-view" onclick="viewDocument(<?php echo $data['id']; ?>)">
-                                                <i data-lucide="file-text"></i>
-                                                View
-                                            </button>
-                                            <?php if ($data['status'] === 'pending'): ?>
-                                                <button class="btn btn-approve" onclick="approveSKKM(<?php echo $data['id']; ?>)">
-                                                    <i data-lucide="check"></i>
-                                                </button>
-                                                <button class="btn btn-reject" onclick="rejectSKKM(<?php echo $data['id']; ?>)">
-                                                    <i data-lucide="x"></i>
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+            <table id="dataTable" class="data-table">
+                <thead>
+                    <tr>
+                        <th>NIM</th>
+                        <th>Nama</th>
+                        <th>Program Studi</th>
+                        <th>Jenis Kegiatan</th>
+                        <th>Nama Kegiatan</th>
+                        <th>Poin</th>
+                        <th>Tahun</th>
+                        <th>Bukti</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($dummy_data as $row): ?>
+                        <tr data-nim="<?php echo $row['nim']; ?>" data-status="<?php echo $row['status']; ?>" data-kegiatan="<?php echo $row['jenis_kegiatan']; ?>">
+                            <td><?php echo $row['nim']; ?></td>
+                            <td><?php echo $row['nama']; ?></td>
+                            <td><?php echo $row['prodi']; ?></td>
+                            <td><?php echo $row['jenis_kegiatan']; ?></td>
+                            <td><?php echo $row['nama_kegiatan']; ?></td>
+                            <td><?php echo $row['poin']; ?></td>
+                            <td><?php echo $row['tahun']; ?></td>
+                            <td>
+                                <button class="btn btn-view" onclick="viewDocument('<?php echo $row['nim']; ?>')">
+                                    <i class="fas fa-eye"></i> Lihat Bukti
+                                </button>
+                            </td>
+                            <td>
+                                <span class="status-cell <?php echo $row['status']; ?>">
+                                    <?php
+                                    switch ($row['status']) {
+                                        case 'pending':
+                                            echo 'Menunggu Verifikasi';
+                                            break;
+                                        case 'approved':
+                                            echo 'Disetujui';
+                                            break;
+                                        case 'rejected':
+                                            echo 'Ditolak';
+                                            break;
+                                    }
+                                    ?>
+                                </span>
+                            </td>
+                            <td>
+                                <?php if ($row['status'] == 'pending'): ?>
+                                    <button class="btn btn-approve" onclick="verifySKKM('<?php echo $row['nim']; ?>', 'approve')">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-reject" onclick="verifySKKM('<?php echo $row['nim']; ?>', 'reject')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Modal Preview Bukti SKKM -->
+        <div id="previewModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Bukti SKKM</h2>
+                <div class="bukti-preview">
+                    <iframe id="previewFrame" class="preview-frame" src="" frameborder="0"></iframe>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="documentModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Detail SKKM</h2>
-            <div id="documentDetails"></div>
-            <div class="bukti-preview">
-                <img src="" alt="Preview Dokumen" class="preview-image" id="previewImage">
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification -->
-    <div id="notification" class="notification"></div>
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="../../../assets/js/programstudi/verifikasi/verifikasi-kompensasi.js"></script>
+    <!-- JavaScript -->
+    <script src="../../../assets/js/programstudi/verifikasi/verifikasi-skkm.js"></script>
 </body>
 
 </html>
