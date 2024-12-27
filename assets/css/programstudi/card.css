@@ -115,129 +115,6 @@
   transform: scale(1.1) rotate(5deg);
 }
 
-/* ========= Modal Styles ========= */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity var(--transition-speed) ease;
-}
-
-.modal {
-  background-color: var(--white);
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--text-color);
-}
-
-.modal-close:hover {
-  color: var(--primary-color);
-}
-
-/* ========= File Upload Styles ========= */
-.file-upload-container {
-  margin-bottom: 20px;
-}
-
-.file-input {
-  display: none;
-}
-
-.file-upload-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px dashed var(--primary-color);
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color var(--transition-speed) ease;
-}
-
-.file-upload-label:hover {
-  background-color: rgba(0, 123, 255, 0.05);
-}
-
-/* ========= Modal Buttons ========= */
-.modal-buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.modal-button {
-  flex: 1;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color var(--transition-speed) ease;
-}
-
-.modal-button-secondary {
-  background-color: var(--secondary-color);
-  color: white;
-}
-
-.modal-button-secondary:hover {
-  background-color: #5a6268;
-}
-
-.modal-button-primary {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.modal-button-primary:hover {
-  background-color: #0056b3;
-}
-
-/* ========= Responsive Styles ========= */
-@media (max-width: 768px) {
-  #card-container {
-    grid-template-columns: 1fr;
-    padding: 16px;
-  }
-
-  .dashboard-card {
-    max-width: 100%;
-  }
-
-  .modal-buttons {
-    flex-direction: column;
-  }
-
-  .modal-button {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-}
-
 /* ========= Utility Styles ========= */
 .error-message,
 .success-message {
@@ -261,4 +138,16 @@
 .success-message {
   background-color: #28a745;
   color: white;
+}
+
+/* ========= Responsive Styles ========= */
+@media (max-width: 768px) {
+  #card-container {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .dashboard-card {
+    max-width: 100%;
+  }
 }
