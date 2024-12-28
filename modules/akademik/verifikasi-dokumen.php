@@ -1,145 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Akademik - verifikasi Dokumen</title>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Dokumen Tugas Akhir - Sistem Bebas Tanggungan</title>
 
     <!-- Favicon -->
-    <link
-      rel="shortcut icon"
-      href="../../assets/images/logo_polinema.png"
-      type="image/x-icon"
-    />
+    <link rel="shortcut icon" href="../assets/images/logo_polinema.png" type="image/x-icon">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../assets/css/programstudi/verifikasi/verifikasi-ukt.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="../../assets/css/mahasiswa/dashboard.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <style>
-      /* Add custom CSS styles */
-      .container {
-        padding: 20px;
-      }
-
-      /* Flex container for features */
-      .features {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap; /* Ensures features stack on smaller screens */
-      }
-
-      .feature-container {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 20px;
-        background-color: #f9f9f9;
-        flex: 1 1 300px; /* Ensures each feature box grows but maintains a minimum width */
-        text-align: center;
-        box-sizing: border-box; /* Include padding in width calculation */
-      }
-
-      .feature-container i {
-        font-size: 40px;
-        color: #007bff;
-        margin-bottom: 15px;
-      }
-
-      .feature-container h2 {
-        margin-bottom: 10px;
-      }
-
-      .feature-container p {
-        margin-bottom: 15px;
-      }
-
-      .btn {
-        display: inline-block;
-        padding: 10px 15px;
-        color: #fff;
-        background-color: green;
-        text-decoration: none;
-        border-radius: 4px;
-        text-align: center;
-      }
-
-      .btn:hover {
-        background-color: #0056b3;
-      }
-
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 20px auto;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            text-align: center;
-            padding: 8px;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr th {
-            background-color: #007bff;
-        }
-
-        /* Tambahkan CSS untuk tombol */
-        .btn-success {
-            background-color: green;
-        }
-
-        .btn-danger {
-            background-color: red;
-            margin-left: 5px;
-        }
-
-        .btn:hover {
-            opacity: 0.8;
-        }
-    </style>
-  </head>
-
-  <body>
-    <header class="title-section">
-      <div class="title-container">
-        <a href="../dashboard_aka.html" class="title-link">
-          <img
-            src="../../assets/images/logo_polinema.png"
-            alt="Logo Polinema"
-            class="logo"
-          />
-          <h1 class="main-title">Sistem Bebas Tanggungan</h1>
-        </a>
-      </div>
-
-        <div class="profile-container">
-          <img
-            src=""
-            alt="User Profile"
-            class="profile-pic"
-          />
-          <span class="username">Admin Akademik</span>
-
-          <div class="profile-dropdown">
-            <a href="../forgot_password.html">Reset Password</a>
-            <a href="../login.html" id="logout">Logout</a>
-          </div>
-        </div>
-      </div>
-    </header>
-
+<body>
     <div class="container">
-      <!-- Main Content -->
-      <main class="main-content">
-        <div class="features">
-            <h1 style="text-align: center;">Daftar Dokumen Yang Harus Diverifikasi</h1>
-            <table>
+        <div class="page-header">
+            <div class="header-content">
+                <img src="../../assets/images/logo_polinema.png" alt="Logo Polinema" class="logo">
+                <h1 class="page-title">Verifikasi Dokumen Tugas Akhir</h1>
+            </div>
+            <a href="../dashboard.php" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+
+        <div class="verification-card">
+            <div class="search-filter">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Cari berdasarkan NIM atau Nama...">
+                </div>
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">Semua Status</option>
+                    <option value="pending">Menunggu Verifikasi</option>
+                    <option value="approved">Disetujui</option>
+                    <option value="rejected">Ditolak</option>
+                </select>
+            </div>
+
+            <table id="dataTable" class="data-table">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -267,6 +166,6 @@
             }
         }
         </script>
-    <script src="../../assets/js/mahasiswa/dashboard.js"></script>
+    <script src="../../../assets/js/programstudi/verifikasi/verifikasi-ukt.js"></script>
   </body>
 </html>

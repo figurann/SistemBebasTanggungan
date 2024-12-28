@@ -1,45 +1,3 @@
-<?php
-// Data statis untuk contoh tampilan
-$dummy_data = [
-    [
-        'nim' => '2024001',
-        'nama' => 'Mahasiswa 1',
-        'prodi' => 'Teknik Informatika',
-        'nominal' => 5000000,
-        'tanggal_bayar' => '2024-01-15',
-        'status' => 'pending',
-        'bukti_path' => 'bukti_2024001.jpg'
-    ],
-    [
-        'nim' => '2024002',
-        'nama' => 'Mahasiswa 2',
-        'prodi' => 'Sistem Informasi',
-        'nominal' => 4500000,
-        'tanggal_bayar' => '2024-01-14',
-        'status' => 'approved',
-        'bukti_path' => 'bukti_2024002.jpg'
-    ],
-    [
-        'nim' => '2024003',
-        'nama' => 'Mahasiswa 3',
-        'prodi' => 'Teknik Informatika',
-        'nominal' => 5000000,
-        'tanggal_bayar' => '2024-01-13',
-        'status' => 'rejected',
-        'bukti_path' => 'bukti_2024003.jpg'
-    ],
-    [
-        'nim' => '2024004',
-        'nama' => 'Mahasiswa 4',
-        'prodi' => 'Sistem Informasi',
-        'nominal' => 4500000,
-        'tanggal_bayar' => '2024-01-12',
-        'status' => 'pending',
-        'bukti_path' => 'bukti_2024004.jpg'
-    ],
-];
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -219,7 +177,7 @@ $dummy_data = [
                 }
             }
         }
-        </script>
+    </script>
 
     <!-- JavaScript -->
     <script src="../../../assets/js/programstudi/verifikasi/verifikasi-ukt.js"></script>
