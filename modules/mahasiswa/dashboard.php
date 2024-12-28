@@ -10,8 +10,8 @@ if (!isset($_SESSION['user'])) {
 
 // Ambil data mahasiswa dari database
 $username = $_SESSION['user'];
-$query = "SELECT m.nim 
-          FROM pengguna.Mahasiswa m 
+$query = "SELECT m.nim, d.status 
+          FROM pengguna.Mahasiswa m
           WHERE m.username = ?";
 
 $stmt = sqlsrv_prepare($conn, $query, array($username));
@@ -28,7 +28,6 @@ if (sqlsrv_execute($stmt)) {
 }
 
 sqlsrv_close($conn);
-
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -46,6 +45,43 @@ sqlsrv_close($conn);
     <link rel="stylesheet" href="../../assets/css/mahasiswa/card.css?v=1.1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
+
+<style>
+table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table.data-table th, table.data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table.data-table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+table.data-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table.data-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table.data-table td[style] {
+    font-weight: bold; /* Menebalkan teks status jika ada style */
+}
+table.data-table th {
+    background-color: #007bff; /* Mengubah latar belakang menjadi biru */
+    color: #fff; /* Mengubah warna teks menjadi putih untuk kontras */
+}
+
+
+</style>
 
 <body>
     <!-- Header Section -->
@@ -72,6 +108,7 @@ sqlsrv_close($conn);
 
     <!-- Main Container -->
     <div class="container">
+        
         <!-- Main Content -->
         <main class="main-content">
             <div class="content">
@@ -79,6 +116,55 @@ sqlsrv_close($conn);
                     <!-- Cards will be dynamically inserted here by JavaScript -->
                 </div>
             </div>
+            <div class="content">
+                <div id="card-container">
+                    <table id="dataTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Mahasiswa</th>
+                                <th>NIM</th>
+                                <th>Status Verifikasi</th>
+                                <th>Jenis Dokumen</th>
+                                <th>Komentar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // Koneksi ke database SQL Server
+                            include '../../config/config.php';
+
+                            // Query untuk mengambil data dokumen termasuk path_dokumen
+                            $query = "SELECT m.nama, m.nim, d.status, j.nama_dokumen, k.isi_komentar, d.ID
+                            FROM pengguna.Mahasiswa m 
+                            INNER JOIN dokumen.UploadDokumen d ON d.NIM = m.NIM
+                            INNER JOIN dokumen.JenisDokumen j ON d.id_dokumen = j.ID
+                            LEFT JOIN dokumen.Komentar k ON d.ID = k.id_upload
+                            WHERE m.nim = ?";
+                            $stmt = sqlsrv_query($conn, $query,array($username));
+                            
+                            if ($stmt === false) {
+                                die(print_r(sqlsrv_errors(), true));
+                            }
+
+                            $no = 1;
+                            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                                $status_class = ($row['status'] == 'Sudah Diverifikasi') ? 'style="color: green;"' : '';
+                                ?>
+                                <tr data-id="<?= htmlspecialchars($row['ID']) ?>">
+                                    <td><?= $no++ ?></td>
+                                    <td><?= htmlspecialchars($row['nama']) ?></td>
+                                    <td><?= htmlspecialchars($row['nim']) ?></td>
+                                    <td <?= $status_class ?>><?= htmlspecialchars($row['status']) ?></td>
+                                    <td><?= htmlspecialchars($row['nama_dokumen']) ?></td>
+                                    <td><?= htmlspecialchars($row['isi_komentar'] ?? '') ?></td>
+                                </tr>
+                            <?php } 
+                            sqlsrv_free_stmt($stmt);
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
         </main>
     </div>
 
