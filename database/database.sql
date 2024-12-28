@@ -94,6 +94,36 @@ CREATE TABLE dokumen.Komentar (
     CONSTRAINT FK_Komentar_Upload FOREIGN KEY(id_upload) REFERENCES dokumen.UploadDokumen(ID)
 );
 
+CREATE TABLE pengguna.JumlahSKKM (
+    ID INT NOT NULL IDENTITY,
+    NIM VARCHAR(10) NOT NULL,
+    jumlah_skkm INT NOT NULL DEFAULT 0, -- Jumlah SKKM mahasiswa, default 0
+	[status] NVARCHAR(20) NOT NULL DEFAULT 'Menunggu',
+    CONSTRAINT PK_JumlahSKKM PRIMARY KEY(ID),
+    CONSTRAINT FK_JumlahSKKM_Mahasiswa FOREIGN KEY(NIM) REFERENCES pengguna.Mahasiswa(NIM)
+);
+
+-- Table TOEIC Mahasiswa
+CREATE TABLE pengguna.NilaiTOEIC (
+    ID INT NOT NULL IDENTITY,
+    NIM VARCHAR(10) NOT NULL,
+    nilai_toeic INT NOT NULL DEFAULT 0, -- Nilai TOEIC mahasiswa, default 0
+	[status] NVARCHAR(20) NOT NULL DEFAULT 'Menunggu',
+    CONSTRAINT PK_NilaiTOEIC PRIMARY KEY(ID),
+    CONSTRAINT FK_NilaiTOEIC_Mahasiswa FOREIGN KEY(NIM) REFERENCES pengguna.Mahasiswa(NIM)
+);
+
+-- Table Jumlah Kompen Mahasiswa
+CREATE TABLE pengguna.JumlahKompen (
+    ID INT NOT NULL IDENTITY,
+    NIM VARCHAR(10) NOT NULL,
+    jumlah_kompen INT NOT NULL DEFAULT 0, -- Jumlah kompen mahasiswa, default 0
+	jumlah_kompen_selesai INT NOT NULL, 
+	[status] NVARCHAR(20) NOT NULL DEFAULT 'Menunggu',
+    CONSTRAINT PK_JumlahKompen PRIMARY KEY(ID),
+    CONSTRAINT FK_JumlahKompen_Mahasiswa FOREIGN KEY(NIM) REFERENCES pengguna.Mahasiswa(NIM)
+);
+
 INSERT INTO prodi.ProgramStudi (nama_prodi, jurusan) VALUES
 ('D-IV Teknik Informatika', 'Teknologi Informasi'),
 ('D-IV Sistem Informasi Bisnis', 'Teknologi Informasi'),
@@ -125,9 +155,30 @@ INSERT INTO pengguna.Mahasiswa (NIM, nama, NIK, tempat_lahir, tanggal_lahir, ala
 ('2341720004', 'Andi Wijaya', '1234567890123461', 'Yogyakarta', '2000-06-06', 'Jl. Mhs 4', '081234567895', 'Laki-laki', 4, '2341720004'),
 ('2341720005', 'Dewi Lestari', '1234567890123462', 'Semarang', '2000-07-07', 'Jl. Mhs 5', '081234567896', 'Perempuan', 5, '2341720005');
 
+INSERT INTO pengguna.JumlahSKKM (NIM, jumlah_skkm) VALUES
+('2341720001', 10),
+('2341720002', 15),
+('2341720003', 8),
+('2341720004', 10),
+('2341720005', 7);
+
+INSERT INTO pengguna.NilaiTOEIC (NIM, nilai_toeic) VALUES
+('2341720001', 800),
+('2341720002', 750),
+('2341720003', 600),
+('2341720004', 500),
+('2341720005', 300);
+
+INSERT INTO pengguna.JumlahKompen (NIM, jumlah_kompen, jumlah_kompen_selesai) VALUES
+('2341720001', 10, 10),
+('2341720002', 15, 15),
+('2341720003', 8, 4),
+('2341720004', 10, 6),
+('2341720005', 7, 7);
+
 INSERT INTO dokumen.JenisDokumen (nama_dokumen, tingkat) VALUES
 ('Laporan Skripsi', 'jurusan'),
-('Surat Bebas Lab', 'jurusan'),
+('Surat Bebas Kompen', 'jurusan'),
 ('Surat Bebas Pustaka', 'pusat'),
 ('Surat Bebas Administrasi', 'pusat');
 
@@ -140,5 +191,6 @@ INSERT INTO dokumen.UploadDokumen (path_dokumen, status, id_dokumen, NIM, NIDN) 
 INSERT INTO dokumen.Komentar (isi_komentar, id_upload) VALUES
 ('Dokumen sudah lengkap', 12),
 ('Dokumen sudah lengkap', 13);
+
 
 SELECT * FROM dokumen.UploadDokumen;
