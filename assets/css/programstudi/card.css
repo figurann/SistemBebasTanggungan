@@ -77,15 +77,19 @@
 }
 
 .card-action {
-  width: 100%;
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: none;
-  background-color: var(--primary-color);
-  color: white;
-  cursor: pointer;
-  transition: background-color var(--transition-speed) ease;
-  margin-top: 8px;
+  display: inline-block; /* Pastikan tombol adalah elemen blok-level */
+  text-align: center; /* Pusatkan teks secara horizontal */
+  vertical-align: middle; /* Penyesuaian untuk konten vertikal */
+  line-height: 2; /* Pastikan garis sejajar dengan ukuran tombol */
+  padding: 10px 20px; /* Ruang di dalam tombol */
+  background-color: #007bff; /* Warna latar belakang tombol */
+  color: #fff; /* Warna teks */
+  border: none; /* Hapus border */
+  border-radius: 5px; /* Tambahkan radius untuk tombol */
+  text-decoration: none; /* Hapus underline */
+  font-size: 16px; /* Ukuran font */
+  cursor: pointer; /* Ganti kursor saat hover */
+  transition: background-color 0.3s ease; 
 }
 
 .card-action:hover {
