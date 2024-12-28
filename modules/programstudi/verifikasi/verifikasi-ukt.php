@@ -84,58 +84,60 @@ $dummy_data = [
             <table id="dataTable" class="data-table">
                 <thead>
                     <tr>
+                        <th>No</th>
+                        <th>Nama Mahasiswa</th>
                         <th>NIM</th>
-                        <th>Nama</th>
-                        <th>Program Studi</th>
-                        <th>Nominal UKT</th>
-                        <th>Tanggal Bayar</th>
-                        <th>Bukti</th>
-                        <th>Status</th>
+                        <th>Dokumen</th>
+                        <th>Status Verifikasi</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($dummy_data as $row): ?>
-                        <tr data-nim="<?php echo $row['nim']; ?>" data-status="<?php echo $row['status']; ?>">
-                            <td><?php echo $row['nim']; ?></td>
-                            <td><?php echo $row['nama']; ?></td>
-                            <td><?php echo $row['prodi']; ?></td>
-                            <td>Rp <?php echo number_format($row['nominal'], 0, ',', '.'); ?></td>
-                            <td><?php echo date('d/m/Y', strtotime($row['tanggal_bayar'])); ?></td>
+                    <?php
+                    // Koneksi ke database SQL Server
+                    include '../../../config/config.php';
+
+                    // Query untuk mengambil data dokumen termasuk path_dokumen
+                    $query = "SELECT m.nama, m.nim, d.path_dokumen, d.status, d.ID
+                             FROM pengguna.Mahasiswa m 
+                             INNER JOIN dokumen.UploadDokumen d ON d.NIM = m.NIM 
+                             INNER JOIN pengguna.Admin a ON d.NIDN = a.NIDN
+                             WHERE a.NIDN = '0001010101'
+                             ORDER BY d.NIM DESC";
+                    $stmt = sqlsrv_query($conn, $query);
+                    
+                    if ($stmt === false) {
+                        die(print_r(sqlsrv_errors(), true));
+                    }
+
+                    $no = 1;
+                    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                        $status_class = ($row['status'] == 'Sudah Diverifikasi') ? 'style="color: green;"' : '';
+                        ?>
+                        <tr data-id="<?= htmlspecialchars($row['ID']) ?>">
+                            <td><?= $no++ ?></td>
+                            <td><?= htmlspecialchars($row['nama']) ?></td>
+                            <td><?= htmlspecialchars($row['nim']) ?></td>
                             <td>
-                                <button class="btn btn-view" onclick="viewDocument('<?php echo $row['nim']; ?>')">
-                                    <i class="fas fa-eye"></i> Lihat Bukti
-                                </button>
+                                <?php if($row['path_dokumen']): ?>
+                                    <a href="../../mahasiswa/<?= htmlspecialchars($row['path_dokumen']) ?>" target="_blank" class="btn-view">
+                                        <i class="fas fa-file-pdf"></i> Lihat Dokumen
+                                    </a>
+                                <?php else: ?>
+                                    <span>Tidak ada file</span>
+                                <?php endif; ?>
                             </td>
+                            <td <?= $status_class ?>><?= htmlspecialchars($row['status']) ?></td>
                             <td>
-                                <span class="status-cell <?php echo $row['status']; ?>">
-                                    <?php
-                                    switch ($row['status']) {
-                                        case 'pending':
-                                            echo 'Menunggu Verifikasi';
-                                            break;
-                                        case 'approved':
-                                            echo 'Disetujui';
-                                            break;
-                                        case 'rejected':
-                                            echo 'Ditolak';
-                                            break;
-                                    }
-                                    ?>
-                                </span>
-                            </td>
-                            <td>
-                                <?php if ($row['status'] == 'pending'): ?>
-                                    <button class="btn btn-approve" onclick="verifyUKT('<?php echo $row['nim']; ?>', 'approve')">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                    <button class="btn btn-reject" onclick="verifyUKT('<?php echo $row['nim']; ?>', 'reject')">
-                                        <i class="fas fa-times"></i>
-                                    </button>
+                                <?php if($row['status'] != 'Sudah Diverifikasi' && $row['status'] != 'Ditolak'): ?>
+                                    <button class="btn btn-approve" onclick="verifikasi(<?= htmlspecialchars($row['ID']) ?>)">Verifikasi</button>
+                                    <button class="btn btn btn-reject" onclick="tolakDokumen(<?= htmlspecialchars($row['ID']) ?>)">Tolak</button>
                                 <?php endif; ?>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php } 
+                    sqlsrv_free_stmt($stmt);
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -151,6 +153,73 @@ $dummy_data = [
             </div>
         </div>
     </div>
+    <script>
+        function verifikasi(id) {
+            if(confirm('Apakah Anda yakin ingin memverifikasi dokumen ini?')) {
+                fetch('verifikasi_proses.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'id=' + id
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        const row = document.querySelector(`tr[data-id="${id}"]`);
+                        const statusCell = row.querySelector("td:nth-child(5)");
+                        const buttonCell = row.querySelector("td:nth-child(6)");
+                        statusCell.textContent = "Sudah Diverifikasi";
+                        statusCell.style.color = "green";
+                        buttonCell.innerHTML = '';
+                        alert('Dokumen berhasil diverifikasi!');
+                        location.reload();
+                    } else {
+                        alert('Gagal memverifikasi dokumen!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat memverifikasi dokumen!');
+                });
+            }
+        }
+
+        function tolakDokumen(id) {
+            const alasan = prompt('Masukkan alasan penolakan:');
+            if (alasan) {
+                if(confirm('Apakah Anda yakin ingin menolak dokumen ini?')) {
+                    fetch('tolak_dokumen.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `id=${id}&alasan=${encodeURIComponent(alasan)}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.success) {
+                            const row = document.querySelector(`tr[data-id="${id}"]`);
+                            const statusCell = row.querySelector("td:nth-child(5)");
+                            const buttonCell = row.querySelector("td:nth-child(6)");
+                            statusCell.textContent = "Ditolak";
+                            statusCell.style.color = "red";
+                            buttonCell.innerHTML = '';
+                            alert('Dokumen telah ditolak!');
+                            location.reload();
+                        } else {
+                            console.error('Error details:', data.error);
+                            alert('Gagal menolak dokumen! Error: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat menolak dokumen: ' + error.message);
+                    });
+                }
+            }
+        }
+        </script>
 
     <!-- JavaScript -->
     <script src="../../../assets/js/programstudi/verifikasi/verifikasi-ukt.js"></script>
