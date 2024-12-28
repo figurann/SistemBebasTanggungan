@@ -11,7 +11,8 @@ function handleLogin($conn, $user, $pass)
                 u.username, 
                 u.password, 
                 u.level as role,
-                COALESCE(m.nama, a.nama) as nama
+                COALESCE(m.nama, a.nama) as nama,
+                m.nim as nim  /* Tambahan kolom nim */
             FROM pengguna.[User] u
             LEFT JOIN pengguna.Mahasiswa m ON u.username = m.username
             LEFT JOIN pengguna.Admin a ON u.username = a.username
@@ -37,6 +38,7 @@ function handleLogin($conn, $user, $pass)
       $_SESSION['user'] = $row["username"];
       $_SESSION['role'] = $row["role"];
       $_SESSION['nama'] = $row["nama"];
+      $_SESSION['nim'] = $row["nim"];  
 
       return [
         'success' => true,
