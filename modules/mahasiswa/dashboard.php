@@ -1,3 +1,35 @@
+<?php
+session_start();
+include '../../config/config.php';
+
+// Cek jika user belum login
+if (!isset($_SESSION['user'])) {
+    header('Location: ../../views/login.php');
+    exit();
+}
+
+// Ambil data mahasiswa dari database
+$username = $_SESSION['user'];
+$query = "SELECT m.nim 
+          FROM pengguna.Mahasiswa m 
+          WHERE m.username = ?";
+
+$stmt = sqlsrv_prepare($conn, $query, array($username));
+
+if ($stmt === false) {
+    die("Error in preparing statement: " . print_r(sqlsrv_errors(), true));
+}
+
+$nim = '';
+if (sqlsrv_execute($stmt)) {
+    if ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $nim = $row['nim'];
+    }
+}
+
+sqlsrv_close($conn);
+
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -26,14 +58,15 @@
         </div>
 
         <div class="header-icons">
-            <div class="profile-container">
-                <img src="../../assets/images/mahasiswa/mahasiswa_1.jpg" alt="User Profile" class="profile-pic" />
-                <span class="username">2341760168</span>
-                <div class="profile-dropdown">
-                    <a href="../../views/forgot_password.php">Reset Password</a>
-                    <a href="../../views/login.php" id="logout">Logout</a>
-                </div>
-            </div>
+        <div class="profile-container">
+         <img src="../../assets/images/mahasiswa/mahasiswa_1.jpg" alt="User Profile" class="profile-pic" />
+    <span class="username"><?php echo htmlspecialchars($_SESSION['user']); ?></span>
+    <div class="profile-dropdown">
+        <a href="../../views/forgot_password.php">Reset Password</a>
+        <a href="../../views/login.php" id="logout">Logout</a>
+    </div>
+</div>
+</div>
         </div>
     </header>
 
