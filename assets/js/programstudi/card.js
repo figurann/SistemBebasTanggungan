@@ -2,37 +2,33 @@
 const dashboardCards = [
   {
     id: 1,
-    title: "Verifikasi Biaya UKT",
-    content: "Informasi mengenai biaya UKT dan status pembayarannya.",
-    status: "approved",
-    action: "Verifikasi",
-    image: "../../assets/images/programstudi/verifikasi_bayarukt.png",
-  },
-  {
-    id: 2,
     title: "Verifikasi Surat Bebas Kompensasi",
     content: "Informasi mengenai surat bebas kompensasi.",
     status: "pending",
     action: "Verifikasi",
     image: "../../assets/images/programstudi/verifikasi_dokumen.png",
+    link: "../../modules/programstudi/verifikasi/verifikasi-kompensasi.php",
   },
   {
-    id: 3,
+    id: 2,
     title: "Verifikasi SKKM",
     content: "Informasi mengenai status SKKM Anda.",
     status: "pending",
     action: "Verifikasi",
     image: "../../assets/images/programstudi/verifikasi_skkm.png",
+    link: "../../modules/programstudi/verifikasi/verifikasi-skkm.php",
   },
   {
-    id: 4,
+    id: 3,
     title: "Verifikasi TOEIC",
     content: "Informasi mengenai status TOEIC Anda.",
     status: "approved",
     action: "Verifikasi",
     image: "../../assets/images/programstudi/verifikasi_toeic.png",
+    link: "../../modules/programstudi/verifikasi/verifikasi-toeic.php",
   },
 ];
+
 
 // ========= Dashboard Cards Initialization =========
 function initializeDashboardCards() {
@@ -54,13 +50,14 @@ function createDashboardCard(cardData) {
         <p>${cardData.content}</p>  
       </div>  
       <div class="card-footer">  
-        <button class="card-action" data-card-id="${cardData.id}">  
+        <a href="${cardData.link}" class="card-action" data-card-id="${cardData.id}">  
           ${cardData.action}  
-        </button>  
+        </a>  
       </div>  
     </div>  
   `;
 }
+
 
 // ========= Initialization =========
 document.addEventListener("DOMContentLoaded", initializeDashboardCards);
