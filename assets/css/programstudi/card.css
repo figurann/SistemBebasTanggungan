@@ -93,6 +93,11 @@
 }
 
 .card-action:hover {
+  background-color: #0056b3; /* Warna tombol saat hover */
+}
+
+
+.card-action:hover {
   background-color: #0056b3;
 }
 
