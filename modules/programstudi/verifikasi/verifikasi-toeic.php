@@ -19,7 +19,7 @@
         <div class="page-header">
             <div class="header-content">
                 <img src="../../../assets/images/logo_polinema.png" alt="Logo Polinema" class="logo">
-                <h1 class="page-title">Verifikasi Pembayaran UKT</h1>
+                <h1 class="page-title">Verifikasi Nilai TOEIC</h1>
             </div>
             <a href="../dashboard.php" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Kembali
