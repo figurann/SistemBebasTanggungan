@@ -60,7 +60,7 @@
                              FROM pengguna.Mahasiswa m 
                              INNER JOIN dokumen.UploadDokumen d ON d.NIM = m.NIM 
                              INNER JOIN pengguna.Admin a ON d.NIDN = a.NIDN
-                             WHERE a.NIDN = '0001010101'
+                             WHERE a.NIDN = '0002020202'
                              ORDER BY d.NIM DESC";
                     $stmt = sqlsrv_query($conn, $query);
 

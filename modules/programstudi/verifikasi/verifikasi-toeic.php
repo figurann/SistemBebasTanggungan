@@ -1,49 +1,3 @@
-<?php
-// Data statis untuk contoh tampilan TOEIC
-$dummy_data = [
-    [
-        'nim' => '2024001',
-        'nama' => 'Mahasiswa 1',
-        'prodi' => 'Teknik Informatika',
-        'skor_toeic' => 785,
-        'tanggal_test' => '2024-01-15',
-        'tempat_test' => 'UPT Bahasa Polinema',
-        'status' => 'pending',
-        'bukti_path' => 'toeic_2024001.pdf'
-    ],
-    [
-        'nim' => '2024002',
-        'nama' => 'Mahasiswa 2',
-        'prodi' => 'Sistem Informasi',
-        'skor_toeic' => 650,
-        'tanggal_test' => '2024-01-14',
-        'tempat_test' => 'UPT Bahasa Polinema',
-        'status' => 'approved',
-        'bukti_path' => 'toeic_2024002.pdf'
-    ],
-    [
-        'nim' => '2024003',
-        'nama' => 'Mahasiswa 3',
-        'prodi' => 'Teknik Informatika',
-        'skor_toeic' => 450,
-        'tanggal_test' => '2024-01-13',
-        'tempat_test' => 'International Test Center',
-        'status' => 'rejected',
-        'bukti_path' => 'toeic_2024003.pdf'
-    ],
-    [
-        'nim' => '2024004',
-        'nama' => 'Mahasiswa 4',
-        'prodi' => 'Sistem Informasi',
-        'skor_toeic' => 550,
-        'tanggal_test' => '2024-01-12',
-        'tempat_test' => 'UPT Bahasa Polinema',
-        'status' => 'pending',
-        'bukti_path' => 'toeic_2024004.pdf'
-    ],
-];
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -57,7 +11,7 @@ $dummy_data = [
     <!-- CSS -->
     <link rel="stylesheet" href="../../../assets/css/programstudi/verifikasi/verifikasi-toeic.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">    
 </head>
 
 <body>
@@ -65,7 +19,7 @@ $dummy_data = [
         <div class="page-header">
             <div class="header-content">
                 <img src="../../../assets/images/logo_polinema.png" alt="Logo Polinema" class="logo">
-                <h1 class="page-title">Verifikasi Sertifikat TOEIC</h1>
+                <h1 class="page-title">Verifikasi Pembayaran UKT</h1>
             </div>
             <a href="../dashboard.php" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Kembali
@@ -83,89 +37,123 @@ $dummy_data = [
                     <option value="approved">Disetujui</option>
                     <option value="rejected">Ditolak</option>
                 </select>
-                <select id="skorFilter" class="filter-select">
-                    <option value="all">Semua Skor</option>
-                    <option value="high">Skor ≥ 700</option>
-                    <option value="medium">500-699</option>
-                    <option value="low">
-                        < 500</option>
-                </select>
             </div>
 
             <table id="dataTable" class="data-table">
                 <thead>
                     <tr>
+                        <th>No</th>
+                        <th>Nama Mahasiswa</th>
                         <th>NIM</th>
-                        <th>Nama</th>
-                        <th>Program Studi</th>
-                        <th>Skor TOEIC</th>
-                        <th>Tanggal Test</th>
-                        <th>Tempat Test</th>
-                        <th>Bukti</th>
-                        <th>Status</th>
+                        <th>Nilai</th>
+                        <th>Status Verifikasi</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($dummy_data as $row): ?>
-                        <tr data-nim="<?php echo $row['nim']; ?>"
-                            data-status="<?php echo $row['status']; ?>"
-                            data-skor="<?php echo $row['skor_toeic']; ?>">
-                            <td><?php echo $row['nim']; ?></td>
-                            <td><?php echo $row['nama']; ?></td>
-                            <td><?php echo $row['prodi']; ?></td>
-                            <td><?php echo $row['skor_toeic']; ?></td>
-                            <td><?php echo date('d/m/Y', strtotime($row['tanggal_test'])); ?></td>
-                            <td><?php echo $row['tempat_test']; ?></td>
+                    <?php
+                    // Koneksi ke database SQL Server
+                    include '../../../config/config.php';
+
+                    // Query untuk mengambil data dokumen termasuk path_dokumen
+                    $query = "SELECT m.nama, m.NIM, t.nilai_toeic, t.status, t.ID
+                             FROM pengguna.Mahasiswa m JOIN 
+                             pengguna.NilaiTOEIC t ON m.NIM = t.NIM
+                             ";
+                    $stmt = sqlsrv_query($conn, $query);
+                    
+                    if ($stmt === false) {
+                        die(print_r(sqlsrv_errors(), true));
+                    }
+
+                    $no = 1;
+                    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                        $status_class = ($row['status'] == 'Sudah Diverifikasi') ? 'style="color: green;"' : '';
+                        ?>
+                        <tr data-id="<?= htmlspecialchars($row['ID']) ?>">
+                            <td><?= $no++ ?></td>
+                            <td><?= htmlspecialchars($row['nama']) ?></td>
+                            <td><?= htmlspecialchars($row['NIM']) ?></td>
+                            <td><?= htmlspecialchars($row['nilai_toeic']) ?></td>
+                            <td <?= $status_class ?>><?= htmlspecialchars($row['status']) ?></td>
                             <td>
-                                <button class="btn btn-view" onclick="viewDocument('<?php echo $row['nim']; ?>')">
-                                    <i class="fas fa-eye"></i> Lihat Sertifikat
-                                </button>
-                            </td>
-                            <td>
-                                <span class="status-cell <?php echo $row['status']; ?>">
-                                    <?php
-                                    switch ($row['status']) {
-                                        case 'pending':
-                                            echo 'Menunggu Verifikasi';
-                                            break;
-                                        case 'approved':
-                                            echo 'Disetujui';
-                                            break;
-                                        case 'rejected':
-                                            echo 'Ditolak';
-                                            break;
-                                    }
-                                    ?>
-                                </span>
-                            </td>
-                            <td>
-                                <?php if ($row['status'] == 'pending'): ?>
-                                    <button class="btn btn-approve" onclick="verifyTOEIC('<?php echo $row['nim']; ?>', 'approve')">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                    <button class="btn btn-reject" onclick="verifyTOEIC('<?php echo $row['nim']; ?>', 'reject')">
-                                        <i class="fas fa-times"></i>
-                                    </button>
+                                <?php if($row['status'] != 'Sudah Diverifikasi' && $row['status'] != 'Ditolak'): ?>
+                                    <button class="btn btn-approve" onclick="verifikasi(<?= htmlspecialchars($row['ID']) ?>)"><i class="fas fa-check"></i></button>
+                                    <button class="btn btn-reject" onclick="tolakDokumen(<?= htmlspecialchars($row['ID']) ?>)"><i class="fas fa-times"></i></button>
                                 <?php endif; ?>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php } 
+                    sqlsrv_free_stmt($stmt);
+                    ?>
                 </tbody>
             </table>
         </div>
 
-        <!-- Modal Preview Sertifikat TOEIC -->
-        <div id="previewModal" class="modal">
-            <div class="modal-content">
-                <span class="close-modal">&times;</span>
-                <h2>Sertifikat TOEIC</h2>
-                <div class="bukti-preview">
-                    <iframe id="previewFrame" class="preview-frame" src="" frameborder="0"></iframe>
-                </div>
-            </div>
-        </div>
     </div>
+    <script>
+        function verifikasi(id) {
+            if(confirm('Apakah Anda yakin ingin memverifikasi Nilai ini?')) {
+                fetch('proses_verifikasi_toeic.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'id=' + id
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        const row = document.querySelector(`tr[data-id="${id}"]`);
+                        const statusCell = row.querySelector("td:nth-child(5)");
+                        const buttonCell = row.querySelector("td:nth-child(6)");
+                        statusCell.textContent = "Sudah Diverifikasi";
+                        statusCell.style.color = "green";
+                        buttonCell.innerHTML = '';
+                        alert('Nilai berhasil diverifikasi!');
+                        location.reload();
+                    } else {
+                        alert('Gagal memverifikasi nilai!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat memverifikasi nilai!');
+                });
+            }
+        }
+
+        function tolakDokumen(id) {
+            if(confirm('Apakah Anda yakin ingin menolak nilai ini?')) {
+                fetch('tolak_toeic.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'id=' + id
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        const row = document.querySelector(`tr[data-id="${id}"]`);
+                        const statusCell = row.querySelector("td:nth-child(5)");
+                        const buttonCell = row.querySelector("td:nth-child(6)");
+                        statusCell.textContent = "Sudah Diverifikasi";
+                        statusCell.style.color = "green";
+                        buttonCell.innerHTML = '';
+                        alert('Nilai telah ditolak karena tidak memenuhi kriteria!');
+                        location.reload();
+                    } else {
+                        alert('Gagal menolak nilai!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menolak nilai!');
+                });
+            }
+        }
+    </script>
 
     <!-- JavaScript -->
     <script src="../../../assets/js/programstudi/verifikasi/verifikasi-toeic.js"></script>

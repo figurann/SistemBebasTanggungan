@@ -1,28 +1,3 @@
-<?php
-// Data statis untuk contoh tampilan
-$dummy_data = [
-    [
-        'nim' => '2024001',
-        'nama' => 'Mahasiswa 1',
-        'prodi' => 'Teknik Informatika',
-        'jenis' => 'Alpha',
-        'semester' => 'Ganjil 2023/2024',
-        'status' => 'pending',
-        'bukti_path' => 'bukti_2024001.jpg'
-    ],
-    [
-        'nim' => '2024002',
-        'nama' => 'Mahasiswa 2',
-        'prodi' => 'Sistem Informasi',
-        'jenis' => 'Sakit',
-        'semester' => 'Ganjil 2023/2024',
-        'status' => 'approved',
-        'bukti_path' => 'bukti_2024002.jpg'
-    ],
-    // Tambahkan data dummy lainnya sesuai kebutuhan
-];
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -56,93 +31,129 @@ $dummy_data = [
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="Cari berdasarkan NIM atau Nama...">
                 </div>
-                <div class="filter-group">
-                    <select id="statusFilter" class="filter-select">
-                        <option value="all">Semua Status</option>
-                        <option value="pending">Menunggu Verifikasi</option>
-                        <option value="approved">Disetujui</option>
-                        <option value="rejected">Ditolak</option>
-                    </select>
-                    <select id="semesterFilter" class="filter-select">
-                        <option value="all">Semua Semester</option>
-                        <option value="Ganjil 2023/2024">Ganjil 2023/2024</option>
-                        <option value="Genap 2023/2024">Genap 2023/2024</option>
-                    </select>
-                </div>
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">Semua Status</option>
+                    <option value="pending">Menunggu Verifikasi</option>
+                    <option value="approved">Disetujui</option>
+                    <option value="rejected">Ditolak</option>
+                </select>
             </div>
 
-            <div class="table-wrapper">
-                <table id="dataTable" class="data-table">
-                    <thead>
-                        <tr>
-                            <th>NIM</th>
-                            <th>Nama</th>
-                            <th>Program Studi</th>
-                            <th>Jenis</th>
-                            <th>Semester</th>
-                            <th>Bukti</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
+            <table id="dataTable" class="data-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>NIM</th>
+                        <th>Jumlah Kompen</th>
+                        <th>Jumlah Kompen Lunas</th>
+                        <th>Status Verifikasi</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Koneksi ke database SQL Server
+                    include '../../../config/config.php';
+
+                    // Query untuk mengambil data dokumen termasuk path_dokumen
+                    $query = "SELECT m.nama, m.NIM, t.jumlah_kompen, t.jumlah_kompen_selesai, t.status, t.ID
+                             FROM pengguna.Mahasiswa m JOIN 
+                             pengguna.JumlahKompen t ON m.NIM = t.NIM
+                             ";
+                    $stmt = sqlsrv_query($conn, $query);
+                    
+                    if ($stmt === false) {
+                        die(print_r(sqlsrv_errors(), true));
+                    }
+
+                    $no = 1;
+                    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                        $status_class = ($row['status'] == 'Sudah Diverifikasi') ? 'style="color: green;"' : '';
+                        ?>
+                        <tr data-id="<?= htmlspecialchars($row['ID']) ?>">
+                            <td><?= $no++ ?></td>
+                            <td><?= htmlspecialchars($row['nama']) ?></td>
+                            <td><?= htmlspecialchars($row['NIM']) ?></td>
+                            <td><?= htmlspecialchars($row['jumlah_kompen']) ?></td>
+                            <td><?= htmlspecialchars($row['jumlah_kompen_selesai']) ?></td>
+                            <td <?= $status_class ?>><?= htmlspecialchars($row['status']) ?></td>
+                            <td>
+                                <?php if($row['status'] != 'Sudah Diverifikasi' && $row['status'] != 'Ditolak'): ?>
+                                    <button class="btn btn-approve" onclick="verifikasi(<?= htmlspecialchars($row['ID']) ?>)"><i class="fas fa-check"></i></button>
+                                    <button class="btn btn-reject" onclick="tolakDokumen(<?= htmlspecialchars($row['ID']) ?>)"><i class="fas fa-times"></i></button>
+                                <?php endif; ?>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($dummy_data as $row): ?>
-                            <tr data-nim="<?php echo $row['nim']; ?>" data-status="<?php echo $row['status']; ?>">
-                                <td><?php echo $row['nim']; ?></td>
-                                <td><?php echo $row['nama']; ?></td>
-                                <td><?php echo $row['prodi']; ?></td>
-                                <td><?php echo $row['jenis']; ?></td>
-                                <td><?php echo $row['semester']; ?></td>
-                                <td>
-                                    <button class="btn btn-view" onclick="viewDocument('<?php echo $row['nim']; ?>')">
-                                        <i class="fas fa-eye"></i> Lihat Bukti
-                                    </button>
-                                </td>
-                                <td>
-                                    <span class="status-cell <?php echo $row['status']; ?>">
-                                        <?php
-                                        switch ($row['status']) {
-                                            case 'pending':
-                                                echo 'Menunggu Verifikasi';
-                                                break;
-                                            case 'approved':
-                                                echo 'Disetujui';
-                                                break;
-                                            case 'rejected':
-                                                echo 'Ditolak';
-                                                break;
-                                        }
-                                        ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <?php if ($row['status'] == 'pending'): ?>
-                                        <button class="btn btn-approve" onclick="verifyKompensasi('<?php echo $row['nim']; ?>', 'approve')">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                        <button class="btn btn-reject" onclick="verifyKompensasi('<?php echo $row['nim']; ?>', 'reject')">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+                    <?php } 
+                    sqlsrv_free_stmt($stmt);
+                    ?>
+                </tbody>
+            </table>
         </div>
+        <script>
+        function verifikasi(id) {
+            if(confirm('Apakah Anda yakin ingin memverifikasi Kompen ini?')) {
+                fetch('proses_verifikasi_kompen.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'id=' + id
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        const row = document.querySelector(`tr[data-id="${id}"]`);
+                        const statusCell = row.querySelector("td:nth-child(5)");
+                        const buttonCell = row.querySelector("td:nth-child(6)");
+                        statusCell.textContent = "Sudah Diverifikasi";
+                        statusCell.style.color = "green";
+                        buttonCell.innerHTML = '';
+                        alert('Kompen berhasil diverifikasi!');
+                        location.reload();
+                    } else {
+                        alert('Gagal memverifikasi Kompen!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat memverifikasi Kompen!');
+                });
+            }
+        }
 
-        <!-- Modal Preview Bukti Kompensasi -->
-        <div id="previewModal" class="modal">
-            <div class="modal-content">
-                <span class="close-modal">&times;</span>
-                <h2>Bukti Kompensasi</h2>
-                <div class="bukti-preview">
-                    <img id="previewImage" class="preview-image" src="" alt="Bukti Kompensasi">
-                </div>
-            </div>
-        </div>
-    </div>
+        function tolakDokumen(id) {
+            if(confirm('Apakah Anda yakin ingin menolak Kompen ini?')) {
+                fetch('tolak_kompen.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'id=' + id
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        const row = document.querySelector(`tr[data-id="${id}"]`);
+                        const statusCell = row.querySelector("td:nth-child(5)");
+                        const buttonCell = row.querySelector("td:nth-child(6)");
+                        statusCell.textContent = "Sudah Diverifikasi";
+                        statusCell.style.color = "green";
+                        buttonCell.innerHTML = '';
+                        alert('Kompen telah ditolak karena tidak memenuhi kriteria!');
+                        location.reload();
+                    } else {
+                        alert('Gagal menolak Kompen!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menolak Kompen!');
+                });
+            }
+        }
+    </script>
 
     <!-- JavaScript -->
     <script src="../../../assets/js/programstudi/verifikasi/verifikasi-kompensasi.js"></script>

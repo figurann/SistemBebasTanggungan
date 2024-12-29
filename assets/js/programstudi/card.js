@@ -2,8 +2,8 @@
 const dashboardCards = [
   {
     id: 1,
-    title: "Verifikasi Surat Bebas Kompensasi",
-    content: "Informasi mengenai surat bebas kompensasi.",
+    title: "Verifikasi Bebas Kompensasi",
+    content: "Informasi mengenai jumlah kompen yang telah dikerjakan.",
     status: "pending",
     action: "Verifikasi",
     image: "../../assets/images/programstudi/verifikasi_dokumen.png",
@@ -12,7 +12,7 @@ const dashboardCards = [
   {
     id: 2,
     title: "Verifikasi SKKM",
-    content: "Informasi mengenai status SKKM Anda.",
+    content: "Informasi mengenai status SKKM Mahasiswa.",
     status: "pending",
     action: "Verifikasi",
     image: "../../assets/images/programstudi/verifikasi_skkm.png",
@@ -21,7 +21,7 @@ const dashboardCards = [
   {
     id: 3,
     title: "Verifikasi TOEIC",
-    content: "Informasi mengenai status TOEIC Anda.",
+    content: "Informasi mengenai status TOEIC Mahasiswa.",
     status: "approved",
     action: "Verifikasi",
     image: "../../assets/images/programstudi/verifikasi_toeic.png",
