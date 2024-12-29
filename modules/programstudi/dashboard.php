@@ -32,7 +32,7 @@
 
         <div class="header-icons">
             <div class="profile-container">
-                <img src="../../assets/images/programstudi/programstudi_1.jpg" alt="User Profile" class="profile-pic">
+                <img src="../../assets/images/programstudi/profilepicture-admin.png" alt="User Profile" class="profile-pic">
                 <span class="username">Program Studi</span>
                 <div class="profile-dropdown">
                     <a href="../../views/forgot_password.php" class="dropdown-item">

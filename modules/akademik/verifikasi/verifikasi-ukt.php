@@ -9,7 +9,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="../../assets/images/logo_polinema.png" type="image/x-icon">
     <!-- CSS -->
-    <link rel="stylesheet" href="../../../assets/css/programstudi/verifikasi/verifikasi-ukt.css">
+    <link rel="stylesheet" href="../../../assets/css/akademik/verifikasi/verifikasi-ukt.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -63,7 +63,7 @@
                              WHERE a.NIDN = '0001010101'
                              ORDER BY d.NIM DESC";
                     $stmt = sqlsrv_query($conn, $query);
-                    
+
                     if ($stmt === false) {
                         die(print_r(sqlsrv_errors(), true));
                     }
@@ -71,13 +71,13 @@
                     $no = 1;
                     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                         $status_class = ($row['status'] == 'Sudah Diverifikasi') ? 'style="color: green;"' : '';
-                        ?>
+                    ?>
                         <tr data-id="<?= htmlspecialchars($row['ID']) ?>">
                             <td><?= $no++ ?></td>
                             <td><?= htmlspecialchars($row['nama']) ?></td>
                             <td><?= htmlspecialchars($row['nim']) ?></td>
                             <td>
-                                <?php if($row['path_dokumen']): ?>
+                                <?php if ($row['path_dokumen']): ?>
                                     <a href="../../mahasiswa/<?= htmlspecialchars($row['path_dokumen']) ?>" target="_blank" class="btn-view">
                                         <i class="fas fa-file-pdf"></i> Lihat Dokumen
                                     </a>
@@ -87,13 +87,13 @@
                             </td>
                             <td <?= $status_class ?>><?= htmlspecialchars($row['status']) ?></td>
                             <td>
-                                <?php if($row['status'] != 'Sudah Diverifikasi' && $row['status'] != 'Ditolak'): ?>
+                                <?php if ($row['status'] != 'Sudah Diverifikasi' && $row['status'] != 'Ditolak'): ?>
                                     <button class="btn btn-approve" onclick="verifikasi(<?= htmlspecialchars($row['ID']) ?>)">Verifikasi</button>
                                     <button class="btn btn btn-reject" onclick="tolakDokumen(<?= htmlspecialchars($row['ID']) ?>)">Tolak</button>
                                 <?php endif; ?>
                             </td>
                         </tr>
-                    <?php } 
+                    <?php }
                     sqlsrv_free_stmt($stmt);
                     ?>
                 </tbody>
@@ -113,74 +113,74 @@
     </div>
     <script>
         function verifikasi(id) {
-            if(confirm('Apakah Anda yakin ingin memverifikasi dokumen ini?')) {
+            if (confirm('Apakah Anda yakin ingin memverifikasi dokumen ini?')) {
                 fetch('verifikasi_proses.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'id=' + id
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if(data.success) {
-                        const row = document.querySelector(`tr[data-id="${id}"]`);
-                        const statusCell = row.querySelector("td:nth-child(5)");
-                        const buttonCell = row.querySelector("td:nth-child(6)");
-                        statusCell.textContent = "Sudah Diverifikasi";
-                        statusCell.style.color = "green";
-                        buttonCell.innerHTML = '';
-                        alert('Dokumen berhasil diverifikasi!');
-                        location.reload();
-                    } else {
-                        alert('Gagal memverifikasi dokumen!');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan saat memverifikasi dokumen!');
-                });
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'id=' + id
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const row = document.querySelector(`tr[data-id="${id}"]`);
+                            const statusCell = row.querySelector("td:nth-child(5)");
+                            const buttonCell = row.querySelector("td:nth-child(6)");
+                            statusCell.textContent = "Sudah Diverifikasi";
+                            statusCell.style.color = "green";
+                            buttonCell.innerHTML = '';
+                            alert('Dokumen berhasil diverifikasi!');
+                            location.reload();
+                        } else {
+                            alert('Gagal memverifikasi dokumen!');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat memverifikasi dokumen!');
+                    });
             }
         }
 
         function tolakDokumen(id) {
             const alasan = prompt('Masukkan alasan penolakan:');
             if (alasan) {
-                if(confirm('Apakah Anda yakin ingin menolak dokumen ini?')) {
+                if (confirm('Apakah Anda yakin ingin menolak dokumen ini?')) {
                     fetch('tolak_dokumen.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: `id=${id}&alasan=${encodeURIComponent(alasan)}`
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.success) {
-                            const row = document.querySelector(`tr[data-id="${id}"]`);
-                            const statusCell = row.querySelector("td:nth-child(5)");
-                            const buttonCell = row.querySelector("td:nth-child(6)");
-                            statusCell.textContent = "Ditolak";
-                            statusCell.style.color = "red";
-                            buttonCell.innerHTML = '';
-                            alert('Dokumen telah ditolak!');
-                            location.reload();
-                        } else {
-                            console.error('Error details:', data.error);
-                            alert('Gagal menolak dokumen! Error: ' + data.error);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat menolak dokumen: ' + error.message);
-                    });
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `id=${id}&alasan=${encodeURIComponent(alasan)}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const row = document.querySelector(`tr[data-id="${id}"]`);
+                                const statusCell = row.querySelector("td:nth-child(5)");
+                                const buttonCell = row.querySelector("td:nth-child(6)");
+                                statusCell.textContent = "Ditolak";
+                                statusCell.style.color = "red";
+                                buttonCell.innerHTML = '';
+                                alert('Dokumen telah ditolak!');
+                                location.reload();
+                            } else {
+                                console.error('Error details:', data.error);
+                                alert('Gagal menolak dokumen! Error: ' + data.error);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan saat menolak dokumen: ' + error.message);
+                        });
                 }
             }
         }
     </script>
 
     <!-- JavaScript -->
-    <script src="../../../assets/js/programstudi/verifikasi/verifikasi-ukt.js"></script>
+    <script src="../../../assets/js/akademik/verifikasi/verifikasi-ukt.js"></script>
 </body>
 
 </html>

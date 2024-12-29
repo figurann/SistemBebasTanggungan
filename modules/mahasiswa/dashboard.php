@@ -187,7 +187,7 @@ sqlsrv_close($conn);
                             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                                 $status_class = '';
                                 switch ($row['status']) {
-                                    case 'Sudah Diverifikasi':
+                                    case 'Diverifikasi':
                                         $status_class = 'status-verified'; // Kelas untuk Disetujui  
                                         break;
                                     case 'Menunggu':

@@ -1,121 +1,195 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Profile dropdown functionality
-  const profileContainer = document.querySelector(".profile-container");
-  const profileDropdown = document.querySelector(".profile-dropdown");
+// ========= Konfigurasi =========
+const CONFIG = {
+  PATHS: {
+    LOGOUT: "../../views/login.php",
+  },
+  SELECTORS: {
+    NAV_LINKS: ".nav-links li",
+    PROFILE_CONTAINER: ".profile-container",
+    PROFILE_DROPDOWN: ".profile-dropdown",
+    LOGOUT_BUTTON: "#logout",
+  },
+  CLASSES: {
+    HOVER: "hover",
+    ACTIVE: "active",
+  },
+  TIMEOUT: {
+    TOAST: 3000,
+    ERROR: 3000,
+  },
+};
 
-  if (profileContainer && profileDropdown) {
-    profileContainer.addEventListener("click", function (e) {
-      e.stopPropagation();
-      profileDropdown.classList.toggle("show");
-    });
+// ========= Utilitas =========
+const Utils = {
+  createElement(tag, className, content) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (content) element.textContent = content;
+    return element;
+  },
 
-    // Close dropdown when clicking outside
-    document.addEventListener("DOMContentLoaded", () => {
-      const cardContainer = document.getElementById("card-container");
-      if (cardContainer) {
-        cardContainer.innerHTML = dashboardCards.map(createDashboardCard).join("");
-    
-        // Event listener for card actions
-        cardContainer.addEventListener("click", (e) => {
-          const actionButton = e.target.closest(".card-action");
-          if (actionButton && actionButton.tagName.toLowerCase() === 'button') {
-            const cardId = parseInt(actionButton.dataset.cardId);
-            handleCardAction(cardId);
-          }
-        });
+  showNotification(message, type = "info") {
+    const toast = document.getElementById("notification-toast");
+    const toastMessage = toast.querySelector(".toast-message");
+    const toastIcon = toast.querySelector(".toast-icon");
+
+    toastMessage.textContent = message;
+
+    const styles = {
+      success: {
+        backgroundColor: "#28a745",
+        iconClass: "fas fa-check-circle",
+      },
+      error: {
+        backgroundColor: "#dc3545",
+        iconClass: "fas fa-exclamation-circle",
+      },
+      info: {
+        backgroundColor: "#333",
+        iconClass: "fas fa-info-circle",
+      },
+    };
+
+    const selectedStyle = styles[type] || styles.info;
+
+    toast.style.backgroundColor = selectedStyle.backgroundColor;
+    toastIcon.className = `${selectedStyle.iconClass} toast-icon`;
+
+    toast.style.display = "flex";
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, CONFIG.TIMEOUT.TOAST);
+  },
+
+  handleNetworkError(error) {
+    console.error("Kesalahan jaringan:", error);
+    this.showNotification("Terjadi kesalahan jaringan", "error");
+  },
+};
+
+// ========= Manajemen DOM =========
+const DOMManager = {
+  getElements() {
+    return {
+      navLinks: document.querySelectorAll(CONFIG.SELECTORS.NAV_LINKS),
+      profileContainer: document.querySelector(
+        CONFIG.SELECTORS.PROFILE_CONTAINER
+      ),
+      profileDropdown: document.querySelector(
+        CONFIG.SELECTORS.PROFILE_DROPDOWN
+      ),
+      logoutButton: document.querySelector(CONFIG.SELECTORS.LOGOUT_BUTTON),
+    };
+  },
+
+  setActiveMenu(navLinks) {
+    const currentPath = window.location.pathname;
+    navLinks.forEach((link) => {
+      const anchor = link.querySelector("a");
+      if (anchor && anchor.getAttribute("href") === currentPath) {
+        link.classList.add(CONFIG.CLASSES.ACTIVE);
       }
-    
-      // Additional listeners and initialization code
-    });    
-  }
-
-  // Logout functionality
-  const logoutButton = document.getElementById("logout");
-  if (logoutButton) {
-    logoutButton.addEventListener("click", function (e) {
-      e.preventDefault();
-      window.location.href = "../login.html";
     });
-  }
+  },
+};
 
-  // Active menu highlighting with dropdown support
-  const currentLocation = window.location.pathname;
-  const menuItems = document.querySelectorAll(".nav-links li a");
+// ========= Event Handlers =========
+const EventHandlers = {
+  initializeNavigation(navLinks) {
+    navLinks.forEach((link) => {
+      link.addEventListener("mouseover", () =>
+        link.classList.add(CONFIG.CLASSES.HOVER)
+      );
 
-  menuItems.forEach((item) => {
-    // Check main menu items
-    if (item.getAttribute("href") === currentLocation) {
-      item.parentElement.classList.add("active");
+      link.addEventListener("mouseout", () =>
+        link.classList.remove(CONFIG.CLASSES.HOVER)
+      );
+
+      link.addEventListener("click", (e) =>
+        this.handleNavClick(e, link, navLinks)
+      );
+    });
+  },
+
+  handleNavClick(event, clickedLink, allLinks) {
+    if (!clickedLink.classList.contains("dropdown")) {
+      allLinks.forEach((item) => item.classList.remove(CONFIG.CLASSES.ACTIVE));
+      clickedLink.classList.add(CONFIG.CLASSES.ACTIVE);
     }
+  },
 
-    // Check dropdown items
-    const dropdownLinks = item.parentElement.querySelectorAll(
-      ".dropdown-content a"
-    );
-    dropdownLinks.forEach((dropdownLink) => {
-      if (dropdownLink.getAttribute("href") === currentLocation) {
-        item.parentElement.classList.add("active");
+  initializeProfileDropdown(profileContainer, profileDropdown) {
+    document.addEventListener("click", (event) => {
+      if (!profileContainer.contains(event.target)) {
+        profileDropdown.style.display = "none";
       }
     });
-  });
 
-  // Enhanced dropdown menu behavior
-  const dropdowns = document.querySelectorAll(".dropdown");
-
-  dropdowns.forEach((dropdown) => {
-    const dropdownContent = dropdown.querySelector(".dropdown-content");
-    let timeoutId;
-
-    // Show dropdown
-    dropdown.addEventListener("mouseenter", function () {
-      clearTimeout(timeoutId);
-      dropdowns.forEach((d) => {
-        if (d !== dropdown) {
-          d.querySelector(".dropdown-content").style.display = "none";
-        }
-      });
-      dropdownContent.style.display = "block";
+    profileContainer.addEventListener("mouseenter", () => {
+      profileDropdown.style.display = "block";
     });
 
-    // Hide dropdown with delay
-    dropdown.addEventListener("mouseleave", function () {
-      timeoutId = setTimeout(() => {
-        dropdownContent.style.display = "none";
-      }, 200); // Small delay to prevent accidental mouseout
+    profileContainer.addEventListener("mouseleave", () => {
+      profileDropdown.style.display = "none";
     });
+  },
 
-    // Handle touch events for mobile
-    dropdown.addEventListener("touchstart", function (e) {
-      e.preventDefault();
-      dropdowns.forEach((d) => {
-        if (d !== dropdown) {
-          d.querySelector(".dropdown-content").style.display = "none";
-        }
-      });
-      dropdownContent.style.display =
-        dropdownContent.style.display === "block" ? "none" : "block";
-    });
-  });
-
-  // Close dropdowns when clicking outside
-  document.addEventListener("click", function (e) {
-    if (!e.target.closest(".dropdown")) {
-      document.querySelectorAll(".dropdown-content").forEach((dropdown) => {
-        dropdown.style.display = "none";
-      });
+  initializeLogout(logoutButton) {
+    if (logoutButton) {
+      logoutButton.addEventListener("click", this.handleLogout);
     }
-  });
+  },
 
-  // Handle window resize
-  let resizeTimer;
-  window.addEventListener("resize", function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () {
-      if (window.innerWidth > 768) {
-        document.querySelectorAll(".dropdown-content").forEach((dropdown) => {
-          dropdown.style.removeProperty("display");
-        });
-      }
-    }, 250);
-  });
-});
+  handleLogout(event) {
+    event.preventDefault();
+
+    fetch(CONFIG.PATHS.LOGOUT, { method: "HEAD" })
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = CONFIG.PATHS.LOGOUT;
+        } else {
+          Utils.showNotification(
+            "Tidak dapat menemukan halaman login",
+            "error"
+          );
+        }
+      })
+      .catch((error) => {
+        Utils.handleNetworkError(error);
+        window.location.assign(CONFIG.PATHS.LOGOUT);
+      });
+  },
+};
+
+// ========= Inisialisasi Aplikasi =========
+function initializeApp() {
+  const elements = DOMManager.getElements();
+
+  EventHandlers.initializeNavigation(elements.navLinks);
+  EventHandlers.initializeProfileDropdown(
+    elements.profileContainer,
+    elements.profileDropdown
+  );
+  EventHandlers.initializeLogout(elements.logoutButton);
+
+  DOMManager.setActiveMenu(elements.navLinks);
+}
+
+// ========= Error Handling Global =========
+function handleGlobalError(msg, url, lineNo, columnNo, error) {
+  console.error(`  
+    Error: ${msg}  
+    URL: ${url}  
+    Line: ${lineNo}  
+    Column: ${columnNo}  
+    Error object: ${JSON.stringify(error)}  
+  `);
+
+  Utils.showNotification("Terjadi kesalahan tidak terduga", "error");
+
+  return false;
+}
+
+// ========= Event Listeners =========
+document.addEventListener("DOMContentLoaded", initializeApp);
+window.onerror = handleGlobalError;
